@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { X, Send, MessageSquare } from "lucide-react";
+import { X, Send, MessageSquare, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Message {
   role: "user" | "assistant";
@@ -9,28 +10,9 @@ interface Message {
 const suggestedQuestions = [
   "What's your biggest weakness?",
   "Tell me about a project that failed",
-  "Why did you leave Quantum Labs?",
+  "Why should we hire you over someone with a tech background?",
   "What would your last manager say about you?",
 ];
-
-const mockResponses: Record<string, string> = {
-  "What's your biggest weakness?":
-    "I tend to over-engineer solutions early on. I've gotten better at shipping MVPs first, but my instinct is still to design for scale before we've validated the idea. I counterbalance this by timboxing my design phase and forcing myself to write a one-pager before any code.",
-  "Tell me about a project that failed":
-    "At TechFlow, I led an ambitious attempt to build a real-time analytics dashboard from scratch instead of using an existing solution. We spent 3 months building something that Metabase could have handled in a week. The lesson: not-invented-here syndrome is real, and sometimes the best engineering decision is choosing not to build.",
-  "Why did you leave Quantum Labs?":
-    "I haven't left yet — I'm currently exploring what's next. The honest reason: I've accomplished what I set out to do (the migration is complete, the team is strong), and I'm looking for the next big technical challenge. I want to be somewhere I'm slightly scared of the problem.",
-  "What would your last manager say about you?":
-    "They'd probably say I'm the person they trust to figure out ambiguous problems, but that I sometimes need to be reminded to celebrate wins instead of immediately moving to the next thing. They once told me: 'You're great at building systems, and you need to get equally good at building yourself up.'",
-};
-
-const getResponse = (msg: string): string => {
-  const lower = msg.toLowerCase();
-  for (const [key, val] of Object.entries(mockResponses)) {
-    if (lower.includes(key.toLowerCase().slice(0, 20))) return val;
-  }
-  return "That's a great question. In a production version, this would connect to an AI model trained on my experience, projects, and perspectives. For now, try one of the suggested questions to see how this works!";
-};
 
 interface ChatDrawerProps {
   isOpen: boolean;
@@ -41,39 +23,97 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hey! I'm Mikaela's AI representative. Ask me anything about her experience, projects, or working style. I'll give you honest answers — including the uncomfortable ones.",
+      content: "Hey! I'm Mikaela's AI representative. Ask me anything about her experience, skills, or working style. I'll give you honest answers — including the uncomfortable ones.",
     },
   ]);
   const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSend = (text?: string) => {
+  const handleSend = async (text?: string) => {
     const msg = text || input.trim();
-    if (!msg) return;
+    if (!msg || isLoading) return;
 
-    setMessages((prev) => [...prev, { role: "user", content: msg }]);
+    const userMsg: Message = { role: "user", content: msg };
+    const newMessages = [...messages, userMsg];
+    setMessages(newMessages);
     setInput("");
-    setIsTyping(true);
+    setIsLoading(true);
 
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { role: "assistant", content: getResponse(msg) }]);
-      setIsTyping(false);
-    }, 1000 + Math.random() * 1000);
+    try {
+      const resp = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({ messages: newMessages }),
+        }
+      );
+
+      if (!resp.ok || !resp.body) {
+        throw new Error("Stream failed");
+      }
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let assistantContent = "";
+
+      // Add empty assistant message
+      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        let newlineIdx: number;
+        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+          let line = buffer.slice(0, newlineIdx);
+          buffer = buffer.slice(newlineIdx + 1);
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (!line.startsWith("data: ")) continue;
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") break;
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) {
+              assistantContent += content;
+              const final = assistantContent;
+              setMessages((prev) =>
+                prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: final } : m))
+              );
+            }
+          } catch {
+            buffer = line + "\n" + buffer;
+            break;
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Chat error:", e);
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Sorry, I had trouble responding. Please try again." },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!isOpen) return null;
 
   return (
     <>
-      {/* Overlay */}
       <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-sm" onClick={onClose} />
-
-      {/* Drawer */}
       <div className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-md bg-card border-l border-border flex flex-col animate-slide-in-right">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
@@ -83,7 +123,7 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
             </div>
             <div>
               <p className="text-sm font-body font-semibold text-foreground">Ask AI About Mikaela</p>
-              <p className="text-xs text-muted-foreground font-body">Honest answers, always</p>
+              <p className="text-xs text-muted-foreground font-body">Brutally honest answers</p>
             </div>
           </div>
           <button onClick={onClose} className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary">
@@ -106,14 +146,10 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
               </div>
             </div>
           ))}
-          {isTyping && (
+          {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
             <div className="flex justify-start">
               <div className="bg-secondary px-4 py-3 rounded-2xl rounded-bl-md">
-                <div className="flex gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce [animation-delay:0ms]" />
-                  <span className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce [animation-delay:150ms]" />
-                  <span className="w-2 h-2 rounded-full bg-muted-foreground/40 animate-bounce [animation-delay:300ms]" />
-                </div>
+                <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
               </div>
             </div>
           )}
@@ -147,7 +183,7 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
             />
             <button
               onClick={() => handleSend()}
-              disabled={!input.trim()}
+              disabled={!input.trim() || isLoading}
               className="px-4 py-3 bg-primary text-primary-foreground rounded-xl hover:brightness-110 transition-all disabled:opacity-40"
             >
               <Send className="w-4 h-4" />

@@ -1,12 +1,13 @@
 import { MessageSquare, ChevronDown } from "lucide-react";
+import { useProfile } from "@/hooks/usePortfolioData";
 
 interface HeroSectionProps {
   onOpenChat: () => void;
 }
 
-const companies = ["Acme Corp", "TechFlow", "Buildwise", "Quantum Labs", "NovaPay"];
-
 const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
+  const { data: profile } = useProfile();
+
   return (
     <section id="hero" className="min-h-screen flex flex-col items-center justify-center pt-20 pb-12 px-6 relative">
       <div className="max-w-3xl mx-auto text-center space-y-8">
@@ -14,30 +15,28 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
         <div className="inline-flex items-center gap-2 px-4 py-2 glass-card text-sm font-body">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
           <span className="text-muted-foreground">
-            Open to <span className="text-foreground font-medium">Staff Engineer</span> at{" "}
-            <span className="text-foreground font-medium">Series B+</span>
+            {profile?.status_badge || "🟢 Open to Senior PO roles"}
           </span>
         </div>
 
         {/* Name */}
         <h1 className="text-6xl md:text-8xl font-display leading-[0.95] tracking-tight text-foreground">
-          Mikaela Bertucci
+          {profile?.full_name || "Mikaela Bertucci"}
         </h1>
 
         {/* Title */}
         <p className="text-2xl md:text-3xl font-display italic text-primary">
-          Staff Software Engineer
+          {profile?.title || "Senior Product Owner"}
         </p>
 
         {/* Positioning */}
         <p className="text-lg text-muted-foreground font-body max-w-xl mx-auto leading-relaxed">
-          Building high-performance systems at the intersection of product and infrastructure.
-          10+ years shipping what matters.
+          {profile?.positioning || "I use AI to save my teams 20+ hours a week in requirement gathering."}
         </p>
 
         {/* Company badges */}
         <div className="flex flex-wrap items-center justify-center gap-3">
-          {companies.map((company) => (
+          {(profile?.company_badges || ["BC Government"]).map((company: string) => (
             <span
               key={company}
               className="px-4 py-1.5 text-xs font-body font-medium tracking-wide text-muted-foreground bg-secondary rounded-full border border-border/50"
