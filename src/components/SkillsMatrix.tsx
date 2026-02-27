@@ -58,6 +58,11 @@ const SkillsMatrix = () => {
                   {grouped[cat].map((skill) => (
                     <li key={skill.id} className="text-sm text-muted-foreground font-body">
                       {skill.name}
+                      {skill.note && (
+                        <p className="mt-1 text-xs text-primary/70 italic leading-relaxed">
+                          💡 {skill.note}
+                        </p>
+                      )}
                     </li>
                   ))}
                 </ul>
