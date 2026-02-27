@@ -1,30 +1,31 @@
 import { useState } from "react";
-import { Search, Lightbulb } from "lucide-react";
+import { Search, Lightbulb, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
-const strongFitJD = `Staff Software Engineer — Platform Infrastructure
+const strongFitJD = `Senior Product Owner — Digital Government Services
 
-We're a Series C developer tools company looking for a Staff Engineer to lead our platform infrastructure team. You'll design and build distributed systems that power our core product, mentor senior engineers, and drive technical strategy.
-
-Requirements:
-- 8+ years of software engineering experience
-- Deep expertise in TypeScript, Node.js, and React
-- Experience building and operating distributed systems at scale
-- Strong system design skills and experience with microservices
-- Track record of mentoring and leading engineers
-- Experience with PostgreSQL, Redis, and event-driven architectures
-- Familiarity with CI/CD, observability, and DevOps practices`;
-
-const weakFitJD = `Senior iOS Engineer — Mobile Platform
-
-We're looking for a Senior iOS Engineer to own our mobile platform. You'll architect Swift/SwiftUI applications, contribute to our design system, and work closely with our ML team to ship on-device intelligence features.
+We're looking for a Senior Product Owner to lead our digital transformation initiatives within a provincial government ministry. You'll own the product vision for citizen-facing registry systems and drive AI integration to modernize service delivery.
 
 Requirements:
-- 5+ years of native iOS development with Swift
-- Deep knowledge of SwiftUI, UIKit, and Core Data
-- Experience with on-device ML (Core ML, Create ML)
-- Published apps on the App Store
-- Experience with Xcode performance profiling
-- Understanding of Apple Human Interface Guidelines`;
+- 8+ years in product ownership or management
+- Deep experience with government/public sector delivery
+- Track record of modernizing legacy systems
+- Experience with agile methodologies (CSM/CSPO preferred)
+- Stakeholder management across multiple departments
+- Familiarity with AI tools for productivity and requirements`;
+
+const weakFitJD = `Senior Full-Stack Engineer — Platform Team
+
+We're looking for a Senior Full-Stack Engineer to build and maintain our core platform. You'll write production code daily in TypeScript/React, design APIs, and own the full development lifecycle.
+
+Requirements:
+- 5+ years of professional software engineering
+- Expert-level TypeScript, React, and Node.js
+- Experience building and deploying microservices
+- Strong understanding of CI/CD pipelines
+- Database design and optimization (PostgreSQL)
+- Code review and mentorship of junior developers`;
 
 interface AnalysisResult {
   verdict: "strong-fit" | "worth-conversation" | "not-your-person";
@@ -35,58 +36,30 @@ interface AnalysisResult {
   recommendation: string;
 }
 
-const mockAnalyze = (jd: string): AnalysisResult => {
-  const isStrong = jd.toLowerCase().includes("typescript") || jd.toLowerCase().includes("distributed systems");
-
-  if (isStrong) {
-    return {
-      verdict: "strong-fit",
-      verdictLabel: "Strong Fit",
-      opening: "This is squarely in my wheelhouse. I've spent the last 5+ years building exactly these kinds of systems — distributed infrastructure, platform teams, TypeScript at scale. I'd be excited about this role.",
-      gaps: [
-        "I haven't led a platform team larger than 8 people — if this role manages 15+, there's a ramp-up period.",
-        "My experience with your specific stack may differ in details (e.g., I've used Kafka more than RabbitMQ).",
-      ],
-      transfers: [
-        "Led monolith-to-microservices migration processing 2M+ events/day",
-        "Promoted 3 engineers through hands-on mentorship in the last 18 months",
-        "Built and operated systems at 99.97% uptime handling $50M+ ARR",
-      ],
-      recommendation: "I'd recommend a conversation. My experience maps directly to what you're building, and I can bring hard-won lessons from doing this exact work at two previous companies.",
-    };
-  }
-
-  return {
-    verdict: "not-your-person",
-    verdictLabel: "Probably Not Your Person",
-    opening: "I want to be honest — native iOS isn't my strength. I've built mobile experiences with React Native, but I haven't shipped production Swift code or worked extensively with Core ML. You deserve someone who lives and breathes this platform.",
-    gaps: [
-      "No production Swift/SwiftUI experience",
-      "Haven't published apps on the App Store",
-      "No experience with Core ML or on-device ML pipelines",
-      "Limited knowledge of Apple's HIG at the depth you'd need",
-    ],
-    transfers: [
-      "Strong engineering fundamentals and system design thinking would transfer",
-      "Experience with cross-platform mobile (React Native) provides some context",
-      "Track record of learning new stacks quickly — but this role needs day-one expertise",
-    ],
-    recommendation: "I'd pass on this one, and I'd encourage you to find someone with deep iOS roots. My time would be better spent where my existing expertise creates immediate value. No hard feelings — this is how honest matching should work.",
-  };
-};
-
 const JDAnalyzer = () => {
   const [jdText, setJdText] = useState("");
   const [result, setResult] = useState<AnalysisResult | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!jdText.trim()) return;
     setIsAnalyzing(true);
-    setTimeout(() => {
-      setResult(mockAnalyze(jdText));
+    setResult(null);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("jd-analyzer", {
+        body: { jobDescription: jdText },
+      });
+
+      if (error) throw error;
+      if (data?.error) throw new Error(data.error);
+      setResult(data as AnalysisResult);
+    } catch (e: any) {
+      console.error("JD analysis error:", e);
+      toast.error("Analysis failed. Please try again.");
+    } finally {
       setIsAnalyzing(false);
-    }, 1500);
+    }
   };
 
   const verdictStyles = {
@@ -105,7 +78,6 @@ const JDAnalyzer = () => {
           </p>
         </div>
 
-        {/* Toggle examples */}
         <div className="flex flex-wrap gap-3 mb-6">
           <button
             onClick={() => { setJdText(strongFitJD); setResult(null); }}
@@ -121,7 +93,6 @@ const JDAnalyzer = () => {
           </button>
         </div>
 
-        {/* Textarea */}
         <div className="glass-card p-1 mb-6">
           <textarea
             value={jdText}
@@ -136,21 +107,18 @@ const JDAnalyzer = () => {
           disabled={!jdText.trim() || isAnalyzing}
           className="flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-body font-semibold text-sm rounded-lg glow-primary hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          <Search className="w-4 h-4" />
+          {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
           {isAnalyzing ? "Analyzing…" : "Analyze Fit"}
         </button>
 
-        {/* Results */}
         {result && (
           <div className="mt-10 space-y-8 animate-fade-in">
-            {/* Verdict */}
             <div className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-body font-semibold border ${verdictStyles[result.verdict]}`}>
               {result.verdictLabel}
             </div>
 
             <p className="text-foreground font-body leading-relaxed">{result.opening}</p>
 
-            {/* Gaps */}
             <div>
               <h4 className="text-xs tracking-[0.2em] uppercase text-accent font-body mb-3">Where I Don't Fit</h4>
               <ul className="space-y-2">
@@ -163,7 +131,6 @@ const JDAnalyzer = () => {
               </ul>
             </div>
 
-            {/* Transfers */}
             <div>
               <h4 className="text-xs tracking-[0.2em] uppercase text-primary font-body mb-3">What Transfers</h4>
               <ul className="space-y-2">
@@ -176,13 +143,11 @@ const JDAnalyzer = () => {
               </ul>
             </div>
 
-            {/* Recommendation */}
             <div>
               <h4 className="text-xs tracking-[0.2em] uppercase text-foreground/70 font-body mb-3">My Recommendation</h4>
               <p className="text-sm text-foreground font-body leading-relaxed">{result.recommendation}</p>
             </div>
 
-            {/* Philosophy callout */}
             <div className="glass-card p-6 border-l-2 border-primary/50">
               <div className="flex items-start gap-3">
                 <Lightbulb className="w-5 h-5 text-primary shrink-0 mt-0.5" />

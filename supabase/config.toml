@@ -1,0 +1,7 @@
+project_id = "djywjrpyldfnqzrylnmv"
+
+[functions.chat]
+verify_jwt = false
+
+[functions.jd-analyzer]
+verify_jwt = false
