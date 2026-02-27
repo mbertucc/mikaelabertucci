@@ -13,6 +13,10 @@ const Index = () => {
 
   return (
     <div className="bg-background min-h-screen">
+      {/* Prototype banner */}
+      <div className="fixed top-0 left-0 right-0 z-[60] bg-primary/90 backdrop-blur-sm text-primary-foreground text-center py-2 px-4 text-sm font-body">
+        🚧 This portfolio is a <strong>prototype</strong> and currently a work in progress. Stay tuned!
+      </div>
       <Navbar onOpenChat={() => setChatOpen(true)} />
       <main>
         <HeroSection onOpenChat={() => setChatOpen(true)} />
