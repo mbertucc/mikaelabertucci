@@ -34,6 +34,11 @@
     --input: 222 30% 22%;
     --ring: 43 96% 56%;
 
+    --teal: 142 69% 58%;
+    --teal-foreground: 222 47% 11%;
+    --amber-warm: 27 42% 64%;
+    --amber-warm-foreground: 222 47% 11%;
+
     --radius: 0.75rem;
 
     --sidebar-background: 222 47% 9%;
