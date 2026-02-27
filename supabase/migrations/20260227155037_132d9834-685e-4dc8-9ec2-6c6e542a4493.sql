@@ -1,0 +1,1 @@
+UPDATE public.profile SET company_badges = ARRAY['Real Estate Applications', 'Registry Applications'], updated_at = now();

@@ -41,7 +41,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
 
         {/* Company badges */}
         <div className="flex flex-wrap items-center justify-center gap-3">
-          {(profile?.company_badges || ["Real Estate", "Registries"]).map((company: string) => (
+          {(profile?.company_badges || ["Real Estate Applications", "Registry Applications"]).map((company: string) => (
             <span
               key={company}
               className="px-4 py-1.5 text-xs font-body font-medium tracking-wide text-muted-foreground bg-secondary rounded-full border border-border/50"
