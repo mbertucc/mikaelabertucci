@@ -1,0 +1,1 @@
+UPDATE public.ai_instructions SET value = REPLACE(value, 'AI-Native Product Owner', 'Agentic Product Architect'), updated_at = now() WHERE key = 'system_prompt';
