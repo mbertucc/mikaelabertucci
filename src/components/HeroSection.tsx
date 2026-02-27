@@ -32,7 +32,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
         {/* Positioning — AI-Augmented Leadership */}
         <div className="max-w-xl mx-auto space-y-2">
           <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            {profile?.positioning || "I have saved 20 hours per week as a Product Owner by partnering with AI to augment my role. This is a proven statistic."}
+            {profile?.positioning || "I save 20 hours a week by using AI to handle the tedious parts of being a Product Owner. It takes care of the first drafts for my Story Maps and Epics, so I can spend my time actually solving problems for the five registries I lead."}
           </p>
           <p className="text-sm text-primary/80 font-body italic">
             AI-Augmented Leadership — I don't ramp up. I dive in.
@@ -41,7 +41,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
 
         {/* Company badges */}
         <div className="flex flex-wrap items-center justify-center gap-3">
-          {(profile?.company_badges || ["BC Government"]).map((company: string) => (
+          {(profile?.company_badges || ["Real Estate", "Registries"]).map((company: string) => (
             <span
               key={company}
               className="px-4 py-1.5 text-xs font-body font-medium tracking-wide text-muted-foreground bg-secondary rounded-full border border-border/50"
