@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import { X, Send, MessageSquare, Loader2 } from "lucide-react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { X, Send, MessageSquare, Loader2, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   role: "user" | "assistant";
@@ -142,7 +143,11 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
                     : "bg-secondary text-secondary-foreground rounded-bl-md"
                 }`}
               >
-                {msg.content}
+                {msg.role === "assistant" ? (
+                  <AssistantMessage content={msg.content} />
+                ) : (
+                  msg.content
+                )}
               </div>
             </div>
           ))}
@@ -194,5 +199,93 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
     </>
   );
 };
+
+/* Renders assistant markdown with callout boxes for brutal honesty statements */
+const CALLOUT_PATTERNS = [
+  /I[''\u2019]m probably not your person/i,
+  /not your person/i,
+  /underutilizing my/i,
+  /built for teams moving toward/i,
+  /built for high-velocity/i,
+  /If you want a Product Owner who spends/i,
+];
+
+function AssistantMessage({ content }: { content: string }) {
+  const segments = useMemo(() => {
+    const lines = content.split("\n");
+    const result: { type: "md" | "callout"; text: string }[] = [];
+    let currentMd: string[] = [];
+
+    const flushMd = () => {
+      if (currentMd.length > 0) {
+        result.push({ type: "md", text: currentMd.join("\n") });
+        currentMd = [];
+      }
+    };
+
+    for (const line of lines) {
+      if (CALLOUT_PATTERNS.some((p) => p.test(line))) {
+        flushMd();
+        result.push({ type: "callout", text: line });
+      } else {
+        currentMd.push(line);
+      }
+    }
+    flushMd();
+    return result;
+  }, [content]);
+
+  return (
+    <div className="chat-markdown space-y-3">
+      {segments.map((seg, i) =>
+        seg.type === "callout" ? (
+          <div
+            key={i}
+            className="flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-200 text-xs leading-relaxed"
+          >
+            <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-400" />
+            <span>{seg.text}</span>
+          </div>
+        ) : (
+          <ReactMarkdown
+            key={i}
+            components={{
+              h3: ({ children }) => (
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-primary mt-3 mb-1.5">
+                  {children}
+                </h3>
+              ),
+              strong: ({ children }) => (
+                <strong className="font-semibold text-foreground">{children}</strong>
+              ),
+              ul: ({ children }) => (
+                <ul className="list-disc list-outside ml-4 space-y-1">{children}</ul>
+              ),
+              ol: ({ children }) => (
+                <ol className="list-decimal list-outside ml-4 space-y-1">{children}</ol>
+              ),
+              li: ({ children }) => <li className="text-sm leading-relaxed">{children}</li>,
+              code: ({ children, className }) => {
+                const isBlock = className?.includes("language-");
+                return isBlock ? (
+                  <pre className="bg-background/50 rounded-md p-2 overflow-x-auto text-xs my-2">
+                    <code>{children}</code>
+                  </pre>
+                ) : (
+                  <code className="bg-background/50 text-primary px-1 py-0.5 rounded text-xs font-mono">
+                    {children}
+                  </code>
+                );
+              },
+              p: ({ children }) => <p className="leading-relaxed mb-2 last:mb-0">{children}</p>,
+            }}
+          >
+            {seg.text}
+          </ReactMarkdown>
+        )
+      )}
+    </div>
+  );
+}
 
 export default ChatDrawer;
