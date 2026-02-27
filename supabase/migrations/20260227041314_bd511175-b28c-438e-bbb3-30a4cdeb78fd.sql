@@ -1,0 +1,1 @@
+ALTER TABLE public.skills ADD COLUMN note text DEFAULT NULL;
