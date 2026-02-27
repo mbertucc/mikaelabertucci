@@ -19,24 +19,31 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const [instructionsRes, faqRes, experiencesRes, skillsRes] = await Promise.all([
+    const [instructionsRes, faqRes, experiencesRes, skillsRes, profileRes] = await Promise.all([
       supabase.from("ai_instructions").select("*"),
       supabase.from("faq").select("*").order("sort_order"),
       supabase.from("experiences").select("*").order("sort_order"),
       supabase.from("skills").select("*").order("sort_order"),
+      supabase.from("profile").select("*").limit(1),
     ]);
 
     const systemPromptRow = (instructionsRes.data || []).find((r: any) => r.key === "system_prompt");
     let systemPrompt = systemPromptRow?.value || "You are a helpful assistant.";
+
+    // Enrich with profile context
+    const profile = (profileRes.data || [])[0];
+    const profileContext = profile
+      ? `Name: ${profile.full_name}\nTitle: ${profile.title}\nPositioning: ${profile.positioning}\nStatus: ${profile.status_badge}\nCompanies: ${(profile.company_badges || []).join(", ")}`
+      : "";
 
     // Enrich with FAQ context
     const faqContext = (faqRes.data || []).map((f: any) => `Q: ${f.question}\nA: ${f.answer}`).join("\n\n");
     const expContext = (experiencesRes.data || []).map((e: any) =>
       `${e.company} (${e.date_range}) - ${e.title_progression}\nAchievements: ${(e.achievements || []).join("; ")}\nSituation: ${e.ai_situation}\nApproach: ${e.ai_approach}\nTechnical: ${e.ai_technical_work}\nLessons: ${e.ai_lessons_learned}`
     ).join("\n\n");
-    const skillsContext = (skillsRes.data || []).map((s: any) => `${s.name}: ${s.category}`).join(", ");
+    const skillsContext = (skillsRes.data || []).map((s: any) => `${s.name}: ${s.category}${s.note ? ` (Note: ${s.note})` : ""}`).join(", ");
 
-    systemPrompt += `\n\nFAQ KNOWLEDGE:\n${faqContext}\n\nEXPERIENCE DETAILS:\n${expContext}\n\nSKILLS: ${skillsContext}`;
+    systemPrompt += `\n\nCANDIDATE PROFILE:\n${profileContext}\n\nFAQ KNOWLEDGE:\n${faqContext}\n\nEXPERIENCE DETAILS:\n${expContext}\n\nSKILLS: ${skillsContext}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
