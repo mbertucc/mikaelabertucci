@@ -1,0 +1,1 @@
+UPDATE public.profile SET title = 'Agentic Product Architect | Level 5 Spec-Writer', updated_at = now();
