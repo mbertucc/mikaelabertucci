@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ExperienceSection from "@/components/ExperienceSection";
+import DarkFactorySection from "@/components/DarkFactorySection";
 import SkillsMatrix from "@/components/SkillsMatrix";
 import JDAnalyzer from "@/components/JDAnalyzer";
 import ChatDrawer from "@/components/ChatDrawer";
@@ -16,6 +17,7 @@ const Index = () => {
       <main>
         <HeroSection onOpenChat={() => setChatOpen(true)} />
         <ExperienceSection />
+        <DarkFactorySection />
         <SkillsMatrix />
         <JDAnalyzer />
       </main>
