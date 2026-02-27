@@ -1,0 +1,1 @@
+UPDATE public.profile SET positioning = 'I save 20 hours a week by using AI to handle the tedious parts of being a Product Owner. It takes care of the first drafts for my Story Maps and Epics, so I can spend my time actually solving problems for the five registries I lead.', company_badges = ARRAY['Real Estate', 'Registries'], updated_at = now();
