@@ -24,21 +24,27 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const [instructionsRes, experiencesRes, skillsRes] = await Promise.all([
+    const [instructionsRes, experiencesRes, skillsRes, profileRes] = await Promise.all([
       supabase.from("ai_instructions").select("*"),
       supabase.from("experiences").select("*").order("sort_order"),
       supabase.from("skills").select("*").order("sort_order"),
+      supabase.from("profile").select("*").limit(1),
     ]);
 
     const jdPromptRow = (instructionsRes.data || []).find((r: any) => r.key === "jd_analyzer_prompt");
     let systemPrompt = jdPromptRow?.value || "Analyze this job description for fit.";
 
+    const profile = (profileRes.data || [])[0];
+    const profileContext = profile
+      ? `Name: ${profile.full_name}\nTitle: ${profile.title}\nPositioning: ${profile.positioning}\nStatus: ${profile.status_badge}`
+      : "";
+
     const expContext = (experiencesRes.data || []).map((e: any) =>
       `${e.company} (${e.date_range}) - ${e.title_progression}: ${(e.achievements || []).join("; ")}`
     ).join("\n");
-    const skillsContext = (skillsRes.data || []).map((s: any) => `${s.name} (${s.category})`).join(", ");
+    const skillsContext = (skillsRes.data || []).map((s: any) => `${s.name} (${s.category})${s.note ? ` [Note: ${s.note}]` : ""}`).join(", ");
 
-    systemPrompt += `\n\nMY EXPERIENCE:\n${expContext}\n\nMY SKILLS: ${skillsContext}`;
+    systemPrompt += `\n\nCANDIDATE PROFILE:\n${profileContext}\n\nMY EXPERIENCE:\n${expContext}\n\nMY SKILLS: ${skillsContext}`;
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
