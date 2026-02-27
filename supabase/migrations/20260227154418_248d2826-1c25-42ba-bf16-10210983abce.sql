@@ -1,0 +1,1 @@
+UPDATE public.profile SET title = 'Agentic Product Owner | Level 5 Intent Architect', updated_at = now();
