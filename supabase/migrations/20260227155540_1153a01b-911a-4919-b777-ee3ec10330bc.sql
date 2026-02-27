@@ -1,0 +1,1 @@
+UPDATE public.experiences SET date_range = '2021 – 2022', updated_at = now() WHERE id = '0e9e020f-6403-41e2-82df-3af87e346cc9';
