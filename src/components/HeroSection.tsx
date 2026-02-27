@@ -29,10 +29,15 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
           {profile?.title || "Senior Product Owner"}
         </p>
 
-        {/* Positioning */}
-        <p className="text-lg text-muted-foreground font-body max-w-xl mx-auto leading-relaxed">
-          {profile?.positioning || "I use AI to save my teams 20+ hours a week in requirement gathering."}
-        </p>
+        {/* Positioning — AI-Augmented Leadership */}
+        <div className="max-w-xl mx-auto space-y-2">
+          <p className="text-lg text-muted-foreground font-body leading-relaxed">
+            {profile?.positioning || "I have saved 20 hours per week as a Product Owner by partnering with AI to augment my role. This is a proven statistic."}
+          </p>
+          <p className="text-sm text-primary/80 font-body italic">
+            AI-Augmented Leadership — I don't ramp up. I dive in.
+          </p>
+        </div>
 
         {/* Company badges */}
         <div className="flex flex-wrap items-center justify-center gap-3">
