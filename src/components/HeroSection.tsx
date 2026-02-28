@@ -26,7 +26,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
 
         {/* Title */}
         <p className="text-2xl md:text-3xl font-display italic text-primary">
-          {profile?.title || "Agentic Product Owner | Level 5 Intent Architect"}
+          {profile?.title || "Agentic Product Owner | Context Engineer"}
         </p>
 
         {/* Positioning — AI-Augmented Leadership */}
