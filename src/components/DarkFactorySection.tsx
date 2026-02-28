@@ -30,9 +30,9 @@ const steps = [
     accent: "teal" as const,
     icon: Rocket,
     content:
-      "A **high-fidelity User Story** with business rules, scenarios, edge cases, error handling, and Gherkin/Markdown specification that an AI developer agent can build from **immediately** — without human clarification.",
-    stat: "0",
-    statLabel: "Clarification Rounds",
+      "A **complete, hand-off-ready User Story** with business rules, scenarios, edge cases, error handling, and Gherkin/Markdown specification that **Designers and Developers** can build from immediately — reducing requirement clarification loops by **90%**.",
+    stat: "90%",
+    statLabel: "Fewer Clarification Loops",
   },
 ];
 
