@@ -15,7 +15,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
         <div className="inline-flex items-center gap-2 px-4 py-2 glass-card text-sm font-body">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
           <span className="text-muted-foreground">
-            {profile?.status_badge || "🟢 Open to Senior PO roles"}
+            {profile?.status_badge || "🟢 Open to Level 5 \"Dark Factory\" environments where Spec is the Product"}
           </span>
         </div>
 
@@ -32,7 +32,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
         {/* Positioning — AI-Augmented Leadership */}
         <div className="max-w-xl mx-auto space-y-2">
           <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            {profile?.positioning || "I save 20 hours a week by using AI to handle the tedious parts of being a Product Owner. It takes care of the first drafts for my Story Maps and Epics, so I can spend my time actually solving problems for the five registries I lead."}
+            {profile?.positioning || "I save 20 hours a week by using AI to handle the tedious parts of being a Product Owner. I build positive team environments, set the vision, and inspire others to believe in it — so my teams don't just deliver, they want to deliver."}
           </p>
           <p className="text-sm text-primary/80 font-body italic">
             AI-Augmented Leadership — I don't ramp up. I dive in.
