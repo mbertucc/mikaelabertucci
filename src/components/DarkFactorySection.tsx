@@ -19,7 +19,7 @@ const steps = [
     accent: "primary" as const,
     icon: Cpu,
     content:
-      "I use **custom AI agents** to extract epics, stories, scenarios, business rules, validation logic, and compliance triggers in minutes — saving **20 hours** of manual analysis per legislative package.",
+      "I build **custom AI agents** using a **context engineering** approach to extract epics, stories, scenarios, business rules, validation logic, and compliance triggers in minutes — saving **20 hours** of manual analysis per legislative package.",
     stat: "20hrs",
     statLabel: "Saved Per Package",
   },
