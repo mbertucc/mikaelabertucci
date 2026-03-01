@@ -14,8 +14,8 @@ export default {
   	},
   	extend: {
   		fontFamily: {
-  			display: [
-  				'Playfair Display"',
+			display: [
+				'Playfair Display',
   				'Georgia',
   				'serif'
   			],
