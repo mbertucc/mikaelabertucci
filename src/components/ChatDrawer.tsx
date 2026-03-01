@@ -241,9 +241,9 @@ function AssistantMessage({ content }: { content: string }) {
         seg.type === "callout" ? (
           <div
             key={i}
-            className="flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-amber-200 text-xs leading-relaxed"
+            className="flex items-start gap-2 rounded-lg border border-[hsl(var(--amber-warm)/0.3)] bg-[hsl(var(--amber-warm)/0.1)] text-foreground text-xs leading-relaxed"
           >
-            <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-400" />
+            <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[hsl(var(--amber-warm))]" />
             <span>{seg.text}</span>
           </div>
         ) : (
