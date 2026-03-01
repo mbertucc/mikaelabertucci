@@ -15,17 +15,17 @@ export default {
   	extend: {
   		fontFamily: {
 			display: [
-				'Playfair Display',
+				'DM Serif Display',
   				'Georgia',
   				'serif'
   			],
   			body: [
-  				'Inter',
+  				'Source Sans 3',
   				'system-ui',
   				'sans-serif'
   			],
   			sans: [
-  				'Roboto',
+  				'Source Sans 3',
   				'ui-sans-serif',
   				'system-ui',
   				'-apple-system',
@@ -33,11 +33,10 @@ export default {
   				'Segoe UI',
   				'Helvetica Neue',
   				'Arial',
-  				'Noto Sans',
   				'sans-serif'
   			],
   			serif: [
-  				'Libre Caslon Text',
+  				'DM Serif Display',
   				'ui-serif',
   				'Georgia',
   				'Cambria',
@@ -46,14 +45,12 @@ export default {
   				'serif'
   			],
   			mono: [
-  				'Roboto Mono',
+  				'JetBrains Mono',
   				'ui-monospace',
   				'SFMono-Regular',
   				'Menlo',
   				'Monaco',
   				'Consolas',
-  				'Liberation Mono',
-  				'Courier New',
   				'monospace'
   			]
   		},
