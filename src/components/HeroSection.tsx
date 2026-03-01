@@ -32,7 +32,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
         {/* Positioning — AI-Augmented Leadership */}
         <div className="max-w-xl mx-auto space-y-2">
           <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            {profile?.positioning || "I save 20 hours a week letting AI handle the grunt work. That means I spend my time where it counts — setting vision, solving real problems, and building teams that don't just deliver. They want to."}
+            {profile?.positioning || "I save 20 hours a week letting AI handle the grunt work. That means I spend my time where it counts — setting vision, solving real problems, and building teams that don't just deliver. They want to. I also mentor others to augment their own roles with AI — freeing up brain power for creativity and leaning into what's actually possible for their careers."}
           </p>
           <p className="text-sm text-primary/80 font-body italic">
             AI-Augmented Leadership — I don't ramp up. I dive in.
