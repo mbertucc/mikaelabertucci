@@ -117,7 +117,7 @@ const DarkFactorySection = () => {
   }, []);
 
   return (
-    <section id="dark-factory" className="py-14 px-6" ref={ref}>
+    <section id="dark-factory" className="py-20 px-6" ref={ref}>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">
