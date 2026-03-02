@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from "react";
-import { FileText, Cpu, Rocket, Clock, FileCheck, Layers, Brain } from "lucide-react";
+import { FileText, Cpu, Rocket } from "lucide-react";
 
 const steps = [
   {
@@ -61,46 +60,10 @@ const accentStyles = {
   },
 };
 
-const useAnimatedNumber = (target: number, isVisible: boolean, duration = 1200) => {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!isVisible) return;
-    const start = performance.now();
-    const animate = (now: number) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(target * eased * 10) / 10);
-      if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-  }, [isVisible, target, duration]);
-  return value;
-};
-
-const impactStats = [
-  { target: 116.5, unit: "hrs", label: "Saved Per Feature", icon: Clock, accent: "primary" as const, decimals: true },
-  { target: 35, unit: "%", label: "Quality Lift", icon: FileCheck, accent: "teal" as const, decimals: false },
-  { target: 60, unit: "+", label: "Stories Drafted", icon: Layers, accent: "amber-warm" as const, decimals: false },
-  { target: 50, unit: "%", label: "Less Cognitive Load", icon: Brain, accent: "primary" as const, decimals: false },
-];
-
 const DarkFactorySection = () => {
-  const [visible, setVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold: 0.15 }
-    );
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
 
   return (
-    <section id="dark-factory" className="py-24 px-6" ref={ref}>
+    <section id="dark-factory" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16 space-y-4">
@@ -111,11 +74,10 @@ const DarkFactorySection = () => {
             The Agentic Product Owner Workflow
           </h2>
           <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
-            From Law to Logic — using the{" "}
+            Case Study:{" "}
             <span className="text-[hsl(var(--amber-warm))] font-medium">
-              Manufactured Home Registry
-            </span>{" "}
-            as a case study.
+              Manufactured Home Registry Transfer
+            </span>
           </p>
         </div>
 
@@ -184,34 +146,6 @@ const DarkFactorySection = () => {
           </span>
         </div>
 
-        {/* Impact Stats — compact row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
-          {impactStats.map((stat) => {
-            const Icon = stat.icon;
-            const val = useAnimatedNumber(stat.target, visible);
-            const s = accentStyles[stat.accent];
-            return (
-              <div key={stat.label} className="glass-card p-5 space-y-2">
-                <div className={`inline-flex p-2 rounded-lg ${s.bg}`}>
-                  <Icon className={`w-4 h-4 ${s.text}`} />
-                </div>
-                <div>
-                  <span className={`font-display text-2xl font-bold ${s.text}`}>
-                    {stat.decimals ? val.toFixed(1) : Math.round(val)}
-                  </span>
-                  <span className={`text-sm font-display ${s.text}`}>{stat.unit}</span>
-                </div>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-foreground font-body font-medium">
-                  {stat.label}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-
-        <p className="text-center text-xs text-muted-foreground font-body mt-6">
-          Proven through a 6-week sprint cycle on the Manufactured Home Registry Self Serve feature.
-        </p>
       </div>
     </section>
   );
