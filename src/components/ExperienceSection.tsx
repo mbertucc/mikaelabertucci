@@ -21,7 +21,7 @@ const renderBulletText = (text: string) => {
 };
 
 const SECTIONS = [
-  { key: "ai_situation", label: "Situation" },
+  { key: "ai_situation", label: "Challenge" },
   { key: "ai_approach", label: "Approach" },
   { key: "ai_technical_work", label: "Technical Work" },
   { key: "achievements", label: "Outcome" },
