@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { LucideIcon } from "lucide-react";
 
 interface StatRingProps {
   value: number;
@@ -8,9 +9,10 @@ interface StatRingProps {
   size?: number;
   strokeWidth?: number;
   colorClass?: string;
+  icon?: LucideIcon;
 }
 
-const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, colorClass = "stroke-primary" }: StatRingProps) => {
+const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, colorClass = "stroke-primary", icon: Icon }: StatRingProps) => {
   const [animatedValue, setAnimatedValue] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<SVGSVGElement>(null);
@@ -61,6 +63,7 @@ const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, c
         />
       </svg>
       <div className="text-center mt-1">
+        {Icon && <Icon className="w-4 h-4 text-muted-foreground mx-auto mb-0.5" />}
         <span className="font-display text-2xl text-foreground font-bold">{animatedValue}{unit}</span>
       </div>
       <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body text-center leading-tight">{label}</p>
