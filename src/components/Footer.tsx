@@ -5,7 +5,7 @@ const Footer = () => {
   const { data: profile } = useProfile();
 
   return (
-    <footer className="border-t border-border py-16 px-6">
+    <footer className="border-t border-border py-10 px-6">
       <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         <div className="text-center md:text-left">
           <p className="font-display text-xl text-foreground">{profile?.full_name || "Mikaela Bertucci"}</p>

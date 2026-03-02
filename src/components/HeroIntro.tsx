@@ -4,8 +4,8 @@ const HeroIntro = () => {
   const { data: profile } = useProfile();
 
   return (
-    <section id="hero" className="pt-28 pb-4 px-6">
-      <div className="max-w-5xl mx-auto text-center space-y-10">
+    <section id="hero" className="pt-24 pb-2 px-6">
+      <div className="max-w-5xl mx-auto text-center space-y-6">
         {/* Status badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 glass-card text-sm font-body">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
