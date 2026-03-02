@@ -48,7 +48,7 @@ const AdminLogin = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             required
-            className="w-full px-4 py-3 bg-secondary rounded-lg text-sm font-body text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
+            className="w-full px-4 py-3 bg-background border border-border rounded-lg text-sm font-body text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
           />
           <input
             type="password"
@@ -56,7 +56,7 @@ const AdminLogin = () => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
             required
-            className="w-full px-4 py-3 bg-secondary rounded-lg text-sm font-body text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
+            className="w-full px-4 py-3 bg-background border border-border rounded-lg text-sm font-body text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
           />
           <button
             type="submit"
