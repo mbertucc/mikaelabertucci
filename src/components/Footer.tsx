@@ -30,7 +30,7 @@ const Footer = () => {
           )}
         </div>
 
-        <p className="text-xs text-muted-foreground/60 font-body text-center md:text-right">
+        <p className="text-xs text-muted-foreground/80 font-body text-center md:text-right">
           This portfolio is AI-queryable.
           <br />
           Ask it anything.
