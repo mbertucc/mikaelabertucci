@@ -155,8 +155,8 @@ const DarkFactorySection = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className={`p-2.5 rounded-lg ${s.bg}`}>
-                    <Icon className={`w-5 h-5 ${s.text}`} />
+                  <div className={`p-3 rounded-lg ${s.bg}`}>
+                    <Icon className={`w-6 h-6 ${s.text}`} strokeWidth={2.25} />
                   </div>
                   <h3 className="font-display text-xl text-foreground">
                     {step.title}
@@ -214,8 +214,8 @@ const DarkFactorySection = () => {
                   className={`glass-card p-5 space-y-2 cursor-pointer transition-all duration-200 ${isActive ? "ring-1 ring-primary/30 scale-[1.02]" : ""}`}
                   onMouseEnter={() => setActiveStat(stat.key as StatKey)}
                 >
-                  <div className={`inline-flex p-2 rounded-lg ${s.bg}`}>
-                    <Icon className={`w-4 h-4 ${s.text}`} />
+                  <div className={`inline-flex p-2.5 rounded-lg ${s.bg}`}>
+                    <Icon className={`w-5 h-5 ${s.text}`} strokeWidth={2.25} />
                   </div>
                   <div>
                     <span className={`font-display text-2xl font-bold ${s.text}`}>

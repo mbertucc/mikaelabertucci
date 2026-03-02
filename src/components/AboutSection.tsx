@@ -69,7 +69,7 @@ const AboutSection = () => {
                 onMouseEnter={() => setActiveMetric("velocity")}
               >
                 <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : ""}`}>
-                  <Zap className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "velocity" ? "text-primary scale-125" : "text-primary"}`} />
+                  <Zap className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "velocity" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
                   <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : "text-muted-foreground"}`}>Velocity</p>
                 </div>
                 <StatRing value={3} max={5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
@@ -82,7 +82,7 @@ const AboutSection = () => {
                 onMouseEnter={() => setActiveMetric("precision")}
               >
                 <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "precision" ? "text-primary" : ""}`}>
-                  <Target className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "precision" ? "text-primary scale-125" : "text-primary"}`} />
+                  <Target className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "precision" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
                   <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "precision" ? "text-primary" : "text-muted-foreground"}`}>Precision</p>
                 </div>
                 <StatRing value={95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
@@ -95,7 +95,7 @@ const AboutSection = () => {
                 onMouseEnter={() => setActiveMetric("culture")}
               >
                 <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "culture" ? "text-primary" : ""}`}>
-                  <Users className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "culture" ? "text-primary scale-125" : "text-primary"}`} />
+                  <Users className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "culture" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
                   <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "culture" ? "text-primary" : "text-muted-foreground"}`}>Culture</p>
                 </div>
                 <StatRing value={80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
