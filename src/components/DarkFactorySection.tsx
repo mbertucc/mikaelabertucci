@@ -87,11 +87,24 @@ const impactStats = [
 
 type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
 
-const statDescriptions: Record<Exclude<StatKey, null>, string> = {
-  saved: "By deploying a multilevel agent tailored to the Manufactured Home Registry, I automated the heavy lifting of discovery and drafting for this feature.",
-  quality: "The 35% quality lift comes from a partnership: the multilevel agent systematically uncovers deep edge cases and business requirements that often go unnoticed, then I confirm each finding with the business to ensure final accuracy — a collaborative validation loop that consistently elevates documentation quality.",
-  stories: "My agentic workflow generated 60+ user stories, each pre-validated for technical feasibility and FOIPPA privacy standards.",
-  cognitive: "With 16 multilevel agents managing the tactical overhead across different products, I can focus entirely on high-level vision and team leadership.",
+const statDescriptions: Record<Exclude<StatKey, null>, string[]> = {
+  saved: [
+    "Multilevel agent tailored to the Manufactured Home Registry.",
+    "Automated the heavy lifting of discovery and drafting for this feature.",
+  ],
+  quality: [
+    "Agent systematically uncovers deep edge cases & business requirements.",
+    "Each finding confirmed with the business for final accuracy.",
+    "Collaborative validation loop that consistently elevates documentation quality.",
+  ],
+  stories: [
+    "60+ user stories generated via agentic workflow.",
+    "Each pre-validated for technical feasibility and FOIPPA privacy standards.",
+  ],
+  cognitive: [
+    "16 multilevel agents manage tactical overhead across different products.",
+    "Frees me to focus entirely on high-level vision and team leadership.",
+  ],
 };
 
 const statHoverLabels: Record<Exclude<StatKey, null>, string> = {
@@ -233,21 +246,30 @@ const DarkFactorySection = () => {
 
           {/* Hover Detail Area */}
           <div className="mt-6 min-h-[5rem] md:min-h-[3.5rem]">
-            <p
+            <div
               key={activeStat || "default"}
-              className="text-sm text-muted-foreground font-body leading-relaxed animate-fade-in"
+              className="animate-fade-in"
             >
               {activeStat ? (
                 <>
-                  <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mr-2">
-                    {statHoverLabels[activeStat]} ›
-                  </span>
-                  {statDescriptions[activeStat]}
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mb-2">
+                    {statHoverLabels[activeStat]}
+                  </p>
+                  <ul className="space-y-1.5">
+                    {statDescriptions[activeStat].map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground font-body leading-relaxed">
+                        <span className="mt-1.5 shrink-0 w-1 h-1 rounded-full bg-primary" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </>
               ) : (
-                "Hover over a metric to learn what it measures and why it matters."
+                <p className="text-sm text-muted-foreground font-body leading-relaxed">
+                  Hover over a metric to learn what it measures and why it matters.
+                </p>
               )}
-            </p>
+            </div>
           </div>
         </div>
 

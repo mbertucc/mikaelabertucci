@@ -6,13 +6,24 @@ import StatRing from "@/components/StatRing";
 
 type MetricKey = "velocity" | "precision" | "culture" | null;
 
-const metricDescriptions: Record<Exclude<MetricKey, null>, string> = {
-  velocity:
-    "To achieve 3x faster time-to-draft, I utilize a multi-stage Product Owner Agent with a 'Chain of Thought' workflow. The Discovery stage scans raw meeting transcripts, legislation, and policy manuals to extract core requirements. The Story Architect stage maps those into standardized Gherkin format. The Reviewer stage validates against our Definition of Ready before I ever see it — meaning stories arrive 90% complete, so I focus on the 10% requiring human intuition.",
-  precision:
-    "Hitting 95% Requirement Precision is about pre-emptive problem solving. The Edge-Case Agent hunts for 'what-if' scenarios that cause mid-sprint pivots. The Consistency Agent ensures no new requirement contradicts a previous story. The result is a 75% increase in accuracy, virtually eliminating the clarification loops that traditionally slow down development.",
-  culture:
-    "80% Higher Team Satisfaction is a direct result of clarity. Stories delivered with 95% precision mean developers code instead of chasing missing details. 20 hours of automated PO overhead gets reinvested into unblocking the team. Sprint planning is 50% faster because the Context Engineering ensures every item is truly Ready — creating a thrive culture led by vision, not bottlenecks.",
+const metricDescriptions: Record<Exclude<MetricKey, null>, string[]> = {
+  velocity: [
+    "Multi-stage Product Owner Agent with a 'Chain of Thought' workflow.",
+    "Discovery stage scans transcripts, legislation & policy to extract requirements.",
+    "Story Architect maps findings into standardized Gherkin format.",
+    "Reviewer validates against Definition of Ready — stories arrive 90% complete.",
+  ],
+  precision: [
+    "Edge-Case Agent hunts for 'what-if' scenarios that cause mid-sprint pivots.",
+    "Consistency Agent ensures no new requirement contradicts a previous story.",
+    "75% increase in accuracy — virtually eliminating clarification loops.",
+  ],
+  culture: [
+    "95% precision means developers code instead of chasing missing details.",
+    "20 hrs of automated PO overhead reinvested into unblocking the team.",
+    "Sprint planning is 50% faster — every item arrives truly Ready.",
+    "Result: a thrive culture led by vision, not bottlenecks.",
+  ],
 };
 
 const metricLabels: Record<Exclude<MetricKey, null>, string> = {
@@ -28,7 +39,7 @@ const AboutSection = () => {
   const { data: profile } = useProfile();
   const [activeMetric, setActiveMetric] = useState<MetricKey>(null);
 
-  const displayText = activeMetric ? metricDescriptions[activeMetric] : defaultText;
+  const displayItems = activeMetric ? metricDescriptions[activeMetric] : null;
 
   return (
     <section id="about" className="py-8 px-6">
@@ -107,17 +118,30 @@ const AboutSection = () => {
             <div className="mt-6 border-t border-border/20 pt-5">
               <div className="min-h-[5.5rem] md:min-h-[4.5rem] flex items-start gap-3">
                 <div className="flex-1 relative">
-                  <p
+                  <div
                     key={activeMetric || "default"}
-                    className="text-sm text-muted-foreground font-body leading-relaxed animate-fade-in"
+                    className="animate-fade-in"
                   >
                     {activeMetric && (
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mr-2">
-                        {metricLabels[activeMetric]} ›
-                      </span>
+                      <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mb-2">
+                        {metricLabels[activeMetric]}
+                      </p>
                     )}
-                    {displayText}
-                  </p>
+                    {displayItems ? (
+                      <ul className="space-y-1.5">
+                        {displayItems.map((item, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground font-body leading-relaxed">
+                            <span className="text-primary mt-1.5 shrink-0 w-1 h-1 rounded-full bg-primary" />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-sm text-muted-foreground font-body leading-relaxed">
+                        {defaultText}
+                      </p>
+                    )}
+                  </div>
                 </div>
                 {activeMetric && (
                   <button
