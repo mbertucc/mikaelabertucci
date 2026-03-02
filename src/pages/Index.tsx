@@ -1,8 +1,9 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
+import HeroIntro from "@/components/HeroIntro";
 import AboutSection from "@/components/AboutSection";
 import ImpactDashboardSection from "@/components/ImpactDashboardSection";
+import HeroCTA from "@/components/HeroCTA";
 import ExperienceSection from "@/components/ExperienceSection";
 import DarkFactorySection from "@/components/DarkFactorySection";
 import SkillsMatrix from "@/components/SkillsMatrix";
@@ -23,9 +24,10 @@ const Index = () => {
     <div className="bg-background min-h-screen">
       <Navbar onOpenChat={() => handleOpenChat()} />
       <main>
-        <HeroSection onOpenChat={() => handleOpenChat()} />
+        <HeroIntro />
         <AboutSection />
         <ImpactDashboardSection />
+        <HeroCTA onOpenChat={() => handleOpenChat()} />
         <ExperienceSection />
         <DarkFactorySection />
         <SkillsMatrix />
