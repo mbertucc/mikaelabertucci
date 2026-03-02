@@ -1,5 +1,7 @@
 import { MessageSquare, ChevronDown } from "lucide-react";
 import { useProfile } from "@/hooks/usePortfolioData";
+import StatRing from "@/components/StatRing";
+import AnimatedCounter from "@/components/AnimatedCounter";
 
 interface HeroSectionProps {
   onOpenChat: () => void;
@@ -10,7 +12,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
 
   return (
     <section id="hero" className="min-h-screen flex flex-col items-center justify-center pt-20 pb-12 px-6 relative">
-      <div className="max-w-3xl mx-auto text-center space-y-8">
+      <div className="max-w-5xl mx-auto text-center space-y-10">
         {/* Status badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 glass-card text-sm font-body">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
@@ -29,14 +31,22 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
           {profile?.title || "Agentic Product Owner | Context Engineer"}
         </p>
 
-        {/* Positioning — AI-Augmented Leadership */}
-        <div className="max-w-xl mx-auto space-y-2">
-          <p className="text-lg text-muted-foreground font-body leading-relaxed">
-            {profile?.positioning || "I save 20 hours a week letting AI handle the grunt work. That means I spend my time where it counts — setting vision, solving real problems, and building teams that don't just deliver. They want to. I also mentor others to augment their own roles with AI — freeing up brain power for creativity and leaning into what's actually possible for their careers."}
+        {/* Dashboard-style stat bar */}
+        <div className="glass-card p-6 md:p-8 max-w-3xl mx-auto">
+          <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body mb-6 text-left">
+            AI-Augmented Impact Dashboard
           </p>
-          <p className="text-sm text-primary/80 font-body italic">
-            AI-Augmented Leadership — I don't ramp up. I dive in.
-          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            <StatRing value={20} max={40} label="Hours Saved Weekly" unit="h" size={90} />
+            <StatRing value={90} max={100} label="Fewer Clarification Loops" unit="%" colorClass="stroke-[hsl(var(--teal))]" size={90} />
+            <AnimatedCounter value={200} suffix="+" label="Pages Synthesized" />
+            <AnimatedCounter value={5} label="AI Agents Built" prefix="" />
+          </div>
+          <div className="mt-6 pt-5 border-t border-border/30">
+            <p className="text-sm text-muted-foreground font-body leading-relaxed text-center max-w-xl mx-auto">
+              {profile?.positioning || "I save 20 hours a week letting AI handle the grunt work. That means I spend my time where it counts — setting vision, solving real problems, and building teams that don't just deliver — they thrive."}
+            </p>
+          </div>
         </div>
 
         {/* Company badges */}
