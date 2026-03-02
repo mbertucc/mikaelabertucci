@@ -38,7 +38,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             <StatRing value={20} max={40} label="Hours Saved Weekly" unit="h" size={90} icon={Clock} hideRing />
             <StatRing value={90} max={100} label="Fewer Clarification Loops" unit="%" size={90} icon={RefreshCw} hideRing />
-            <StatRing value={2000} max={2500} label="Pages Analyzed" unit="+" size={90} colorClass="stroke-[hsl(var(--accent))]" icon={FileText} />
+            <StatRing value={2000} max={2500} label="Pages Analyzed" unit="+" size={90} icon={FileText} hideRing />
             <StatRing value={16} max={20} label="AI Agents Built" unit="" size={90} colorClass="stroke-[hsl(var(--primary))]" icon={Bot} />
           </div>
           <div className="mt-6 pt-5 border-t border-border/30">
