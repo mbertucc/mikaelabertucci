@@ -1,0 +1,1 @@
+DELETE FROM skills WHERE id = '2d28ef5f-70ad-4ecd-8814-2ebb912fb2f4';
