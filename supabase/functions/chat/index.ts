@@ -33,7 +33,7 @@ serve(async (req) => {
     // Enrich with profile context
     const profile = (profileRes.data || [])[0];
     const profileContext = profile
-      ? `Name: ${profile.full_name}\nTitle: ${profile.title}\nPositioning: ${profile.positioning}\nStatus: ${profile.status_badge}\nCompanies: ${(profile.company_badges || []).join(", ")}`
+      ? `Name: ${profile.full_name}\nTitle: ${profile.title}\nEmail: ${profile.email || ""}\nPositioning: ${profile.positioning}\nStatus: ${profile.status_badge}\nCompanies: ${(profile.company_badges || []).join(", ")}`
       : "";
 
     // Enrich with FAQ, experience, and skills context
