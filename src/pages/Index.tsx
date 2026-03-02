@@ -6,6 +6,7 @@ import AboutSection from "@/components/AboutSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import DarkFactorySection from "@/components/DarkFactorySection";
 import SkillsMatrix from "@/components/SkillsMatrix";
+import BeyondWorkSection from "@/components/BeyondWorkSection";
 import JDAnalyzer from "@/components/JDAnalyzer";
 import ChatDrawer from "@/components/ChatDrawer";
 import Footer from "@/components/Footer";
@@ -38,6 +39,7 @@ const Index = () => {
         <ExperienceSection />
         <DarkFactorySection />
         <SkillsMatrix />
+        <BeyondWorkSection />
         <JDAnalyzer />
       </main>
       <Footer />
