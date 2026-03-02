@@ -58,7 +58,7 @@ const AboutSection = () => {
           <div className="border-t border-border/30" />
 
           {/* Bottom: Impact Dashboard */}
-          <div onMouseLeave={() => setActiveMetric(null)}>
+          <div className="py-1" onMouseLeave={() => setActiveMetric(null)}>
             <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body mb-6 text-left">
               AI-Augmented Impact Dashboard
             </p>
