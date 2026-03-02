@@ -4,7 +4,7 @@ const HeroIntro = () => {
   const { data: profile } = useProfile();
 
   return (
-    <section id="hero" className="pt-28 pb-12 px-6">
+    <section id="hero" className="pt-28 pb-4 px-6">
       <div className="max-w-5xl mx-auto text-center space-y-10">
         {/* Status badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 glass-card text-sm font-body">
