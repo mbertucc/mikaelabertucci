@@ -46,7 +46,7 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
             className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground font-body text-sm font-medium rounded-lg glow-primary hover:brightness-110 transition-all"
           >
             <MessageSquare className="w-4 h-4" />
-            Ask AI
+            Ask AI About Me
           </button>
         </div>
       </div>
