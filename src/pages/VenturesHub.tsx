@@ -281,23 +281,40 @@ const VenturesHubContent = () => {
           <button onClick={() => navigate("/")} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-body text-sm">
             <ArrowLeft className="w-4 h-4" /> Back to Portfolio
           </button>
-          <span className="font-display text-lg text-primary tracking-wide">Ventures</span>
+          <span className="font-display text-lg text-primary tracking-wide">True Hire</span>
         </div>
       </div>
 
       <main className="pt-24 pb-20 px-6 max-w-6xl mx-auto">
         {/* Master Hero */}
-        <header className="text-center mb-8 space-y-4">
+        <header className="text-center mb-8 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-body font-medium tracking-wide uppercase">
-            <Network className="w-3.5 h-3.5" /> Venture Ecosystem
+            <Network className="w-3.5 h-3.5" /> True Hire
           </div>
           <h1 className="font-display text-4xl md:text-5xl text-foreground tracking-wide">
-            The Agentic Recruitment<br />Ecosystem
+            True Hire
           </h1>
-          <p className="font-body text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Three interconnected products forming a complete, AI-driven recruitment platform — 
-            connecting job seekers, recruiters, and verified credentials in one trusted network.
-          </p>
+
+          {/* Problem Statement */}
+          <div className="max-w-3xl mx-auto glass-card p-6 text-left space-y-3">
+            <h2 className="font-display text-sm uppercase tracking-[0.2em] text-primary">The Problem</h2>
+            <p className="font-body text-sm text-muted-foreground leading-relaxed">
+              Companies can't trust who they're hiring. Candidates lie on resumes, fabricate credentials, 
+              swap out between interview and day one, and in some cases are fronts for insider threats. 
+              There is no reliable way to verify that the person you interviewed is the person who shows up — 
+              or that their background is real.
+            </p>
+          </div>
+
+          {/* What True Hire Solves */}
+          <div className="max-w-3xl mx-auto glass-card p-6 text-left space-y-3">
+            <h2 className="font-display text-sm uppercase tracking-[0.2em] text-primary">What True Hire Solves</h2>
+            <p className="font-body text-sm text-muted-foreground leading-relaxed">
+              True Hire is a three-part recruitment ecosystem that ensures every candidate is real, credentialed, and honest. 
+              Job seekers build verified, AI-powered portfolios. Recruiters find and evaluate candidates through an intelligent agent. 
+              A credential verification layer connects both sides — so companies know exactly who they're hiring.
+            </p>
+          </div>
         </header>
 
         {/* Flow Diagram */}
