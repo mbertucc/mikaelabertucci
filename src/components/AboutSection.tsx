@@ -8,7 +8,7 @@ type MetricKey = "velocity" | "precision" | "culture" | null;
 
 const metricDescriptions: Record<Exclude<MetricKey, null>, string> = {
   velocity:
-    "To achieve 3x faster time-to-draft, I utilize a multi-agent 'Chain of Thought' workflow. The Discovery Agent scans raw meeting transcripts, legislation, and policy manuals to extract core requirements. The Story Architect maps those into standardized Gherkin format. The Reviewer Agent validates against our Definition of Ready before I ever see it — meaning stories arrive 90% complete, so I focus on the 10% requiring human intuition.",
+    "To achieve 3x faster time-to-draft, I utilize a multi-stage Product Owner Agent with a 'Chain of Thought' workflow. The Discovery stage scans raw meeting transcripts, legislation, and policy manuals to extract core requirements. The Story Architect stage maps those into standardized Gherkin format. The Reviewer stage validates against our Definition of Ready before I ever see it — meaning stories arrive 90% complete, so I focus on the 10% requiring human intuition.",
   precision:
     "Hitting 95% Requirement Precision is about pre-emptive problem solving. The Edge-Case Agent hunts for 'what-if' scenarios that cause mid-sprint pivots. The Consistency Agent ensures no new requirement contradicts a previous story. The result is a 75% increase in accuracy, virtually eliminating the clarification loops that traditionally slow down development.",
   culture:
