@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import AboutSection from "@/components/AboutSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import DarkFactorySection from "@/components/DarkFactorySection";
 import SkillsMatrix from "@/components/SkillsMatrix";
@@ -22,6 +23,7 @@ const Index = () => {
       <Navbar onOpenChat={() => handleOpenChat()} />
       <main>
         <HeroSection onOpenChat={() => handleOpenChat()} />
+        <AboutSection />
         <ExperienceSection />
         <DarkFactorySection />
         <SkillsMatrix />
