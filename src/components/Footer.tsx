@@ -1,4 +1,5 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail, Lock } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useProfile } from "@/hooks/usePortfolioData";
 
 const Footer = () => {
@@ -30,11 +31,17 @@ const Footer = () => {
           )}
         </div>
 
-        <p className="text-xs text-muted-foreground/80 font-body text-center md:text-right">
-          This portfolio is AI-queryable.
-          <br />
-          Ask it anything.
-        </p>
+        <div className="flex flex-col items-center md:items-end gap-2">
+          <p className="text-xs text-muted-foreground/80 font-body text-center md:text-right">
+            This portfolio is AI-queryable.
+            <br />
+            Ask it anything.
+          </p>
+          <Link to="/admin/login" className="inline-flex items-center gap-1 text-xs text-muted-foreground/40 hover:text-muted-foreground transition-colors">
+            <Lock className="w-3 h-3" />
+            Admin
+          </Link>
+        </div>
       </div>
     </footer>
   );
