@@ -1,7 +1,6 @@
 import { MessageSquare, ChevronDown } from "lucide-react";
 import { useProfile } from "@/hooks/usePortfolioData";
 import StatRing from "@/components/StatRing";
-import AnimatedCounter from "@/components/AnimatedCounter";
 
 interface HeroSectionProps {
   onOpenChat: () => void;
@@ -39,8 +38,8 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             <StatRing value={20} max={40} label="Hours Saved Weekly" unit="h" size={90} />
             <StatRing value={90} max={100} label="Fewer Clarification Loops" unit="%" colorClass="stroke-[hsl(var(--teal))]" size={90} />
-            <AnimatedCounter value={200} suffix="+" label="Pages Synthesized" />
-            <AnimatedCounter value={5} label="AI Agents Built" prefix="" />
+            <StatRing value={2000} max={2500} label="Pages Analyzed" unit="+" size={90} colorClass="stroke-[hsl(var(--accent))]" />
+            <StatRing value={16} max={20} label="AI Agents Built" unit="" size={90} colorClass="stroke-[hsl(var(--primary))]" />
           </div>
           <div className="mt-6 pt-5 border-t border-border/30">
             <p className="text-sm text-muted-foreground font-body leading-relaxed text-center max-w-xl mx-auto">
