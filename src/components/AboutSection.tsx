@@ -22,9 +22,6 @@ const AboutSection = () => {
 
           {/* Bio */}
           <div className="space-y-4 text-center md:text-left">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body">
-              About Me
-            </p>
             <h2 className="text-3xl md:text-4xl font-display text-foreground">
               {profile?.full_name || "Mikaela Bertucci"}
             </h2>
