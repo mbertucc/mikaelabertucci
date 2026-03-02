@@ -7,7 +7,7 @@ import { ThemeProvider } from "next-themes";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
-import Ventures from "./pages/Ventures";
+import VenturesHub from "./pages/VenturesHub";
 import UserManagement from "./pages/UserManagement";
 import NotFound from "./pages/NotFound";
 
@@ -23,7 +23,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/admin" element={<Admin />} />
-            <Route path="/ventures" element={<Ventures />} />
+            <Route path="/ventures" element={<VenturesHub />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/users" element={<UserManagement />} />
             <Route path="*" element={<NotFound />} />
