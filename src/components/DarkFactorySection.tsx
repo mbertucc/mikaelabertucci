@@ -116,6 +116,36 @@ const buildStatHoverLabels = (m: SiteMetrics): Record<Exclude<StatKey, null>, st
   cognitive: `${m.dark_factory_cognitive_load}% Less Cognitive Load`,
 });
 
+const ImpactStatCard = ({ stat, visible, isActive, onHover }: {
+  stat: ReturnType<typeof buildImpactStats>[number];
+  visible: boolean;
+  isActive: boolean;
+  onHover: () => void;
+}) => {
+  const Icon = stat.icon;
+  const val = useAnimatedNumber(stat.target, visible);
+  const s = accentStyles[stat.accent];
+  return (
+    <div
+      className={`glass-card p-5 space-y-2 cursor-pointer transition-all duration-200 ${isActive ? "ring-1 ring-primary/30 scale-[1.02]" : ""}`}
+      onMouseEnter={onHover}
+    >
+      <div className={`inline-flex p-2.5 rounded-lg ${s.bg}`}>
+        <Icon className={`w-5 h-5 ${s.text}`} strokeWidth={2.25} />
+      </div>
+      <div>
+        <span className={`font-display text-2xl font-bold ${s.text}`}>
+          {stat.decimals ? val.toFixed(1) : Math.round(val)}
+        </span>
+        <span className={`text-sm font-display ${s.text}`}>{stat.unit}</span>
+      </div>
+      <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-body font-medium">
+        {stat.label}
+      </p>
+    </div>
+  );
+};
+
 const DarkFactorySection = () => {
   const [visible, setVisible] = useState(false);
   const [activeStat, setActiveStat] = useState<StatKey>(null);
@@ -224,32 +254,15 @@ const DarkFactorySection = () => {
         {/* Impact Stats */}
         <div className="py-1" onMouseLeave={() => setActiveStat(null)}>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
-            {impactStats.map((stat) => {
-              const Icon = stat.icon;
-              const val = useAnimatedNumber(stat.target, visible);
-              const s = accentStyles[stat.accent];
-              const isActive = activeStat === stat.key;
-              return (
-                <div
-                  key={stat.label}
-                  className={`glass-card p-5 space-y-2 cursor-pointer transition-all duration-200 ${isActive ? "ring-1 ring-primary/30 scale-[1.02]" : ""}`}
-                  onMouseEnter={() => setActiveStat(stat.key as StatKey)}
-                >
-                  <div className={`inline-flex p-2.5 rounded-lg ${s.bg}`}>
-                    <Icon className={`w-5 h-5 ${s.text}`} strokeWidth={2.25} />
-                  </div>
-                  <div>
-                    <span className={`font-display text-2xl font-bold ${s.text}`}>
-                      {stat.decimals ? val.toFixed(1) : Math.round(val)}
-                    </span>
-                    <span className={`text-sm font-display ${s.text}`}>{stat.unit}</span>
-                  </div>
-                  <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-body font-medium">
-                    {stat.label}
-                  </p>
-                </div>
-              );
-            })}
+            {impactStats.map((stat) => (
+              <ImpactStatCard
+                key={stat.label}
+                stat={stat}
+                visible={visible}
+                isActive={activeStat === stat.key}
+                onHover={() => setActiveStat(stat.key as StatKey)}
+              />
+            ))}
           </div>
 
           {/* Hover Detail Area */}
