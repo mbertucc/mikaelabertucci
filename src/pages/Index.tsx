@@ -23,9 +23,9 @@ const Index = () => {
     <div className="bg-background min-h-screen">
       <Navbar onOpenChat={() => handleOpenChat()} />
       <main>
+        <HeroSection onOpenChat={() => handleOpenChat()} />
         <AboutSection />
         <ImpactDashboardSection />
-        <HeroSection onOpenChat={() => handleOpenChat()} />
         <ExperienceSection />
         <DarkFactorySection />
         <SkillsMatrix />
