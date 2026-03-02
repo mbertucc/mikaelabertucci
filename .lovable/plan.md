@@ -1,21 +1,21 @@
 
-# Contrast Ratio Audit -- Dark Mode
+# Add Grain Texture to Dark Mode
 
-## Findings
+## Current State
+The light mode has a grain/noise texture overlay via `body::before` at `opacity: 0.02`. This same overlay applies in dark mode but is invisible because the SVG noise filter renders as dark noise on a dark background.
 
-After calculating contrast ratios for all `muted-foreground` usage in dark mode:
+## Fix
+Update the `body::before` grain overlay in `src/index.css` to adjust for dark mode:
 
-**Passing (no changes needed):**
-- `text-muted-foreground` (base, no opacity) achieves ~6.5:1 against background and ~5.3:1 against card surfaces. Well above WCAG AA (4.5:1). Used across ExperienceSection, AboutSection, SkillsMatrix, JDAnalyzer, DarkFactorySection, etc.
-- Placeholder text at `/50` opacity is exempt from WCAG requirements (not persistent content).
+- Add a `.dark body::before` rule that increases opacity to `0.03` (slightly more visible since dark backgrounds absorb more) and applies an `invert(1)` filter so the noise renders as light speckles on the dark surface.
 
-**Failing:**
-- **Footer disclaimer** (`text-muted-foreground/60` in Footer.tsx): "This portfolio is AI-queryable..." text at 60% opacity yields ~3.5:1 contrast against the background. Fails WCAG AA for normal text (requires 4.5:1).
+**File: `src/index.css`** -- append after the existing `body::before` block (after line 169):
 
-## Proposed Fix
+```css
+.dark body::before {
+  opacity: 0.03;
+  filter: invert(1);
+}
+```
 
-**File: `src/components/Footer.tsx` (line 33)**
-- Change `text-muted-foreground/60` to `text-muted-foreground/80`
-- This brings the effective contrast to ~4.8:1, passing WCAG AA while maintaining the subdued visual hierarchy intended for footer disclaimer text.
-
-This is a single-line change. No other files need modification -- all other `muted-foreground` usage passes at full opacity.
+This is a 3-line addition. The `invert(1)` flips the dark noise pattern to light, making it visible against the dark background. The slightly higher opacity (0.03 vs 0.02) compensates for the lower perceived contrast on dark surfaces while keeping it subtle and organic.
