@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { LogOut, Save, Plus, Trash2 } from "lucide-react";
+import { LogOut, Save, Plus, Trash2, Users } from "lucide-react";
 
 const Admin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"profile" | "experiences" | "skills" | "faq" | "ai">("profile");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Profile state
   const [profile, setProfile] = useState<any>(null);
@@ -28,6 +29,12 @@ const Admin = () => {
         return;
       }
       await loadAll();
+      // Check admin role
+      const { data: adminCheck } = await supabase.rpc("has_role", {
+        _user_id: session.user.id,
+        _role: "admin",
+      });
+      setIsAdmin(!!adminCheck);
       setLoading(false);
     };
     checkAuth();
@@ -142,9 +149,16 @@ const Admin = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b border-border px-6 py-4 flex items-center justify-between">
         <h1 className="font-display text-xl text-primary">Admin Panel</h1>
-        <button onClick={handleLogout} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
-          <LogOut className="w-4 h-4" /> Sign Out
-        </button>
+        <div className="flex items-center gap-4">
+          {isAdmin && (
+            <button onClick={() => navigate("/admin/users")} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
+              <Users className="w-4 h-4" /> Users
+            </button>
+          )}
+          <button onClick={handleLogout} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
+            <LogOut className="w-4 h-4" /> Sign Out
+          </button>
+        </div>
       </header>
 
       <div className="max-w-4xl mx-auto px-6 py-8">

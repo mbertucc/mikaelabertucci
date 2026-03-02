@@ -2,34 +2,54 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
-const AuthGuard = ({ children }: { children: React.ReactNode }) => {
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
+type ApprovalStatus = "loading" | "approved" | "pending" | "rejected" | "unauthenticated";
+
+const AuthGuard = ({ children, requireAdmin = false }: { children: React.ReactNode; requireAdmin?: boolean }) => {
+  const [status, setStatus] = useState<ApprovalStatus>("loading");
   const navigate = useNavigate();
 
   useEffect(() => {
+    const check = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        navigate("/admin/login", { replace: true });
+        return;
+      }
+
+      if (requireAdmin) {
+        const { data: isAdmin } = await supabase.rpc("has_role", {
+          _user_id: session.user.id,
+          _role: "admin",
+        });
+        if (!isAdmin) {
+          setStatus("rejected");
+          return;
+        }
+      }
+
+      // Check approval status
+      const { data: approval } = await supabase
+        .from("user_approvals")
+        .select("status")
+        .eq("user_id", session.user.id)
+        .single();
+
+      if (!approval) {
+        setStatus("pending");
+      } else {
+        setStatus(approval.status as ApprovalStatus);
+      }
+    };
+
+    check();
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        navigate("/admin/login", { replace: true });
-      } else {
-        setAuthenticated(true);
-      }
-      setLoading(false);
+      if (!session) navigate("/admin/login", { replace: true });
     });
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        navigate("/admin/login", { replace: true });
-      } else {
-        setAuthenticated(true);
-      }
-      setLoading(false);
-    });
-
     return () => subscription.unsubscribe();
-  }, [navigate]);
+  }, [navigate, requireAdmin]);
 
-  if (loading) {
+  if (status === "loading") {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-muted-foreground font-body">Loading…</div>
@@ -37,7 +57,45 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  return authenticated ? <>{children}</> : null;
+  if (status === "pending") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-6">
+        <div className="glass-card p-8 max-w-sm text-center space-y-4">
+          <h2 className="text-xl font-display text-foreground">Account Pending</h2>
+          <p className="text-sm text-muted-foreground font-body">
+            Your account is awaiting administrator approval. You'll be able to access this page once approved.
+          </p>
+          <button
+            onClick={() => supabase.auth.signOut()}
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors font-body"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (status === "rejected") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-6">
+        <div className="glass-card p-8 max-w-sm text-center space-y-4">
+          <h2 className="text-xl font-display text-destructive">Access Denied</h2>
+          <p className="text-sm text-muted-foreground font-body">
+            Your account request has been declined.
+          </p>
+          <button
+            onClick={() => supabase.auth.signOut()}
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors font-body"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return status === "approved" ? <>{children}</> : null;
 };
 
 export default AuthGuard;
