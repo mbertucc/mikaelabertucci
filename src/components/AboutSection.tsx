@@ -2,30 +2,10 @@ import { useState } from "react";
 import { Zap, Target, Users, Sparkles } from "lucide-react";
 import headshot from "@/assets/headshot.png";
 import { useProfile } from "@/hooks/usePortfolioData";
+import { useSiteMetrics } from "@/hooks/useSiteMetrics";
 import StatRing from "@/components/StatRing";
 
 type MetricKey = "velocity" | "precision" | "culture" | null;
-
-const metricDescriptions: Record<Exclude<MetricKey, null>, string[]> = {
-  velocity: [
-    "Multi-stage Product Owner Agent with a 'Chain of Thought' workflow.",
-    "Discovery stage scans 2500+ pages of transcripts, legislation & policy to extract requirements.",
-    "Story Architect maps findings into standardized Gherkin format.",
-    "Reviewer validates against Definition of Ready — stories arrive 90% complete.",
-  ],
-  precision: [
-    "Direct result of advanced context engineering with product-specific agent environments.",
-    "Edge-Case Agent hunts for 'what-if' scenarios that typically cause mid-sprint pivots.",
-    "Consistency Agent ensures no new requirement contradicts a previous story in the backlog.",
-    "Specialized context results in a 75% increase in accuracy — virtually eliminating clarification loops.",
-  ],
-  culture: [
-    "95% precision means developers code instead of chasing missing details.",
-    "20 hrs of automated PO overhead reinvested into unblocking the team.",
-    "Sprint planning is 50% faster — every item arrives truly Ready.",
-    "Result: a thrive culture led by vision, not bottlenecks.",
-  ],
-};
 
 const metricLabels: Record<Exclude<MetricKey, null>, string> = {
   velocity: "Velocity",
@@ -38,7 +18,29 @@ const defaultText =
 
 const AboutSection = () => {
   const { data: profile } = useProfile();
+  const { data: m } = useSiteMetrics();
   const [activeMetric, setActiveMetric] = useState<MetricKey>(null);
+
+  const metricDescriptions: Record<Exclude<MetricKey, null>, string[]> = {
+    velocity: [
+      "Multi-stage Product Owner Agent with a 'Chain of Thought' workflow.",
+      "Discovery stage scans 2500+ pages of transcripts, legislation & policy to extract requirements.",
+      "Story Architect maps findings into standardized Gherkin format.",
+      "Reviewer validates against Definition of Ready — stories arrive 90% complete.",
+    ],
+    precision: [
+      "Direct result of advanced context engineering with product-specific agent environments.",
+      "Edge-Case Agent hunts for 'what-if' scenarios that typically cause mid-sprint pivots.",
+      "Consistency Agent ensures no new requirement contradicts a previous story in the backlog.",
+      `Specialized context results in a ${m?.about_precision_accuracy ?? 75}% increase in accuracy — virtually eliminating clarification loops.`,
+    ],
+    culture: [
+      `${m?.about_precision_requirement ?? 95}% precision means developers code instead of chasing missing details.`,
+      `${m?.dark_factory_hours_saved_weekly ?? 20} hrs of automated PO overhead reinvested into unblocking the team.`,
+      `Sprint planning is ${m?.about_velocity_planning ?? 50}% faster — every item arrives truly Ready.`,
+      "Result: a thrive culture led by vision, not bottlenecks.",
+    ],
+  };
 
   const displayItems = activeMetric ? metricDescriptions[activeMetric] : null;
 
@@ -61,7 +63,7 @@ const AboutSection = () => {
             <div className="space-y-4 text-center md:text-left">
               <p className="text-base text-muted-foreground font-body leading-relaxed max-w-xl">
                 {profile?.positioning ||
-                  "As an Agentic Product Owner, I don't just manage a backlog; I orchestrate an AI-augmented ecosystem. By automating the tactical overhead—achieving 3x faster story drafts and 95% requirement precision—I reclaim the space to lead. This means I spend my time where it counts: setting vision, solving real problems, and building teams that don't just deliver—they thrive."}
+                  "As an Agentic Product Owner, I don't just manage a backlog; I orchestrate an AI-augmented ecosystem."}
               </p>
             </div>
           </div>
@@ -84,8 +86,8 @@ const AboutSection = () => {
                   <Zap className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "velocity" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
                   <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : "text-muted-foreground"}`}>Velocity</p>
                 </div>
-                <StatRing value={2} max={5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
-                <StatRing value={50} max={100} label="Faster Planning" unit="%" size={90} hideRing />
+                <StatRing value={m?.about_velocity_time_to_draft ?? 2} max={m?.about_velocity_time_to_draft_max ?? 5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
+                <StatRing value={m?.about_velocity_planning ?? 50} max={100} label="Faster Planning" unit="%" size={90} hideRing />
               </div>
 
               {/* Precision */}
@@ -97,8 +99,8 @@ const AboutSection = () => {
                   <Target className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "precision" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
                   <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "precision" ? "text-primary" : "text-muted-foreground"}`}>Precision</p>
                 </div>
-                <StatRing value={95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
-                <StatRing value={75} max={100} label="Increase in Accuracy" unit="%" size={90} hideRing />
+                <StatRing value={m?.about_precision_requirement ?? 95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
+                <StatRing value={m?.about_precision_accuracy ?? 75} max={100} label="Increase in Accuracy" unit="%" size={90} hideRing />
               </div>
 
               {/* Culture */}
@@ -110,8 +112,8 @@ const AboutSection = () => {
                   <Users className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "culture" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
                   <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "culture" ? "text-primary" : "text-muted-foreground"}`}>Culture</p>
                 </div>
-                <StatRing value={80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
-                <StatRing value={40} max={100} label="More Strategy Time" unit="%" size={90} hideRing />
+                <StatRing value={m?.about_culture_satisfaction ?? 80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
+                <StatRing value={m?.about_culture_strategy ?? 40} max={100} label="More Strategy Time" unit="%" size={90} hideRing />
               </div>
             </div>
 
@@ -149,9 +151,9 @@ const AboutSection = () => {
                     className="shrink-0 inline-flex items-center gap-1.5 text-xs font-body text-primary hover:text-primary/80 transition-colors duration-200 border border-primary/20 rounded-full px-3 py-1.5 hover:bg-primary/5 animate-fade-in"
                     onClick={() => {
                       const deepDivePrompts: Record<Exclude<MetricKey, null>, string> = {
-                        velocity: "Tell me about the multi-agent Chain of Thought workflow you use for 3x faster story drafting — specifically the Discovery Agent, Story Architect, and Reviewer Agent.",
-                        precision: "How do your Edge-Case Agent and Consistency Agent achieve 95% requirement precision and eliminate clarification loops?",
-                        culture: "Explain how automating PO overhead drives 80% higher team satisfaction and creates a 'thrive' culture.",
+                        velocity: `Tell me about the multi-agent Chain of Thought workflow you use for ${m?.about_velocity_time_to_draft ?? 2}x faster story drafting — specifically the Discovery Agent, Story Architect, and Reviewer Agent.`,
+                        precision: `How do your Edge-Case Agent and Consistency Agent achieve ${m?.about_precision_requirement ?? 95}% requirement precision and eliminate clarification loops?`,
+                        culture: `Explain how automating PO overhead drives ${m?.about_culture_satisfaction ?? 80}% higher team satisfaction and creates a 'thrive' culture.`,
                       };
                       const event = new CustomEvent("open-chat", {
                         detail: activeMetric ? deepDivePrompts[activeMetric] : "",

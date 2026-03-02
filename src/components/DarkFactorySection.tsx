@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { FileText, Cpu, Rocket, Clock, FileCheck, Layers, Brain } from "lucide-react";
+import { useSiteMetrics, SiteMetrics } from "@/hooks/useSiteMetrics";
 
-const steps = [
+const buildSteps = (m: SiteMetrics) => [
   {
     number: "01",
     label: "THE INPUT",
@@ -9,8 +10,8 @@ const steps = [
     accent: "amber-warm" as const,
     icon: FileText,
     content:
-      "200+ pages of the **Manufactured Home Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.",
-    stat: "200+",
+      `${m.dark_factory_pages}+ pages of the **Manufactured Home Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.`,
+    stat: `${m.dark_factory_pages}+`,
     statLabel: "Pages of Legislation",
   },
   {
@@ -20,8 +21,8 @@ const steps = [
     accent: "primary" as const,
     icon: Cpu,
     content:
-      "I build **custom AI agents** using a **context engineering** approach — replacing weeks of manual analysis of **legislation, policy documents, business rules, and requirements** with structured, traceable outputs in minutes — saving **20 hours per week**.",
-    stat: "20hrs",
+      `I build **custom AI agents** using a **context engineering** approach — replacing weeks of manual analysis of **legislation, policy documents, business rules, and requirements** with structured, traceable outputs in minutes — saving **${m.dark_factory_hours_saved_weekly} hours per week**.`,
+    stat: `${m.dark_factory_hours_saved_weekly}hrs`,
     statLabel: "Saved Per Week",
   },
   {
@@ -31,8 +32,8 @@ const steps = [
     accent: "teal" as const,
     icon: Rocket,
     content:
-      "A **complete, hand-off-ready User Story** with business rules, scenarios, edge cases, error handling, and Gherkin/Markdown specification that **Designers and Developers** can build from immediately — reducing requirement clarification loops by **90%**.",
-    stat: "90%",
+      `A **complete, hand-off-ready User Story** with business rules, scenarios, edge cases, error handling, and Gherkin/Markdown specification that **Designers and Developers** can build from immediately — reducing requirement clarification loops by **${m.dark_factory_clarification_reduction}%**.`,
+    stat: `${m.dark_factory_clarification_reduction}%`,
     statLabel: "Fewer Clarification Loops",
   },
 ];
@@ -78,16 +79,16 @@ const useAnimatedNumber = (target: number, isVisible: boolean, duration = 1200) 
   return value;
 };
 
-const impactStats = [
-  { target: 116.5, unit: "hrs", label: "Saved Per Feature Set", icon: Clock, accent: "primary" as const, decimals: true, key: "saved" },
-  { target: 35, unit: "%", label: "Quality Lift", icon: FileCheck, accent: "teal" as const, decimals: false, key: "quality" },
-  { target: 60, unit: "+", label: "Stories Drafted", icon: Layers, accent: "amber-warm" as const, decimals: false, key: "stories" },
-  { target: 50, unit: "%", label: "Less Cognitive Load", icon: Brain, accent: "primary" as const, decimals: false, key: "cognitive" },
+const buildImpactStats = (m: SiteMetrics) => [
+  { target: m.dark_factory_total_hours_saved, unit: "hrs", label: "Saved Per Feature Set", icon: Clock, accent: "primary" as const, decimals: true, key: "saved" },
+  { target: m.dark_factory_quality_lift, unit: "%", label: "Quality Lift", icon: FileCheck, accent: "teal" as const, decimals: false, key: "quality" },
+  { target: m.dark_factory_stories_drafted, unit: "+", label: "Stories Drafted", icon: Layers, accent: "amber-warm" as const, decimals: false, key: "stories" },
+  { target: m.dark_factory_cognitive_load, unit: "%", label: "Less Cognitive Load", icon: Brain, accent: "primary" as const, decimals: false, key: "cognitive" },
 ];
 
 type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
 
-const statDescriptions: Record<Exclude<StatKey, null>, string[]> = {
+const buildStatDescriptions = (m: SiteMetrics): Record<Exclude<StatKey, null>, string[]> => ({
   saved: [
     "Multilevel agent tailored to the Manufactured Home Registry.",
     "Automated the heavy lifting of discovery and drafting for this feature.",
@@ -106,19 +107,25 @@ const statDescriptions: Record<Exclude<StatKey, null>, string[]> = {
     "16 multilevel agents manage tactical overhead across different products.",
     "Frees me to focus entirely on high-level vision and team leadership.",
   ],
-};
+});
 
-const statHoverLabels: Record<Exclude<StatKey, null>, string> = {
-  saved: "116.5hrs Saved Per Feature",
-  quality: "35% Quality Lift",
-  stories: "60+ Stories Drafted",
-  cognitive: "50% Less Cognitive Load",
-};
+const buildStatHoverLabels = (m: SiteMetrics): Record<Exclude<StatKey, null>, string> => ({
+  saved: `${m.dark_factory_total_hours_saved}hrs Saved Per Feature`,
+  quality: `${m.dark_factory_quality_lift}% Quality Lift`,
+  stories: `${m.dark_factory_stories_drafted}+ Stories Drafted`,
+  cognitive: `${m.dark_factory_cognitive_load}% Less Cognitive Load`,
+});
 
 const DarkFactorySection = () => {
   const [visible, setVisible] = useState(false);
   const [activeStat, setActiveStat] = useState<StatKey>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const { data: m } = useSiteMetrics();
+
+  const steps = m ? buildSteps(m) : [];
+  const impactStats = m ? buildImpactStats(m) : [];
+  const statDescriptions = m ? buildStatDescriptions(m) : {} as Record<Exclude<StatKey, null>, string[]>;
+  const statHoverLabels = m ? buildStatHoverLabels(m) : {} as Record<Exclude<StatKey, null>, string>;
 
   useEffect(() => {
     if (!ref.current) return;
@@ -251,7 +258,7 @@ const DarkFactorySection = () => {
               key={activeStat || "default"}
               className="animate-fade-in"
             >
-              {activeStat ? (
+              {activeStat && statDescriptions[activeStat] ? (
                 <>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mb-2">
                     {statHoverLabels[activeStat]}
