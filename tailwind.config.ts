@@ -15,17 +15,17 @@ export default {
   	extend: {
   		fontFamily: {
 			display: [
-				'DM Serif Display',
-  				'Georgia',
-  				'serif'
+				'Montserrat',
+  				'system-ui',
+  				'sans-serif'
   			],
   			body: [
-  				'Source Sans 3',
+  				'Montserrat',
   				'system-ui',
   				'sans-serif'
   			],
   			sans: [
-  				'Source Sans 3',
+  				'Montserrat',
   				'ui-sans-serif',
   				'system-ui',
   				'-apple-system',
@@ -36,13 +36,10 @@ export default {
   				'sans-serif'
   			],
   			serif: [
-  				'DM Serif Display',
-  				'ui-serif',
-  				'Georgia',
-  				'Cambria',
-  				'Times New Roman',
-  				'Times',
-  				'serif'
+  				'Montserrat',
+  				'ui-sans-serif',
+  				'system-ui',
+  				'sans-serif'
   			],
   			mono: [
   				'JetBrains Mono',
