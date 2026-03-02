@@ -84,7 +84,7 @@ const AboutSection = () => {
                   <Zap className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "velocity" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
                   <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : "text-muted-foreground"}`}>Velocity</p>
                 </div>
-                <StatRing value={3} max={5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
+                <StatRing value={2} max={5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
                 <StatRing value={50} max={100} label="Faster Planning" unit="%" size={90} hideRing />
               </div>
 
