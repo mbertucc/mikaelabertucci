@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
+import ImpactDashboardSection from "@/components/ImpactDashboardSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import DarkFactorySection from "@/components/DarkFactorySection";
 import SkillsMatrix from "@/components/SkillsMatrix";
@@ -24,6 +25,7 @@ const Index = () => {
       <main>
         <HeroSection onOpenChat={() => handleOpenChat()} />
         <AboutSection />
+        <ImpactDashboardSection />
         <ExperienceSection />
         <DarkFactorySection />
         <SkillsMatrix />
