@@ -75,7 +75,7 @@ const AugmentationSection = () => {
         {/* Top-level stat cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           {[
-            { value: hoursSaved, unit: "hrs", label: "Saved Per Cycle", sublabel: "6-week sprint", icon: Clock, accent: "primary" },
+            { value: hoursSaved, unit: "hrs", label: "Saved Per Feature", sublabel: "6-week sprint", icon: Clock, accent: "primary" },
             { value: qualityDelta, unit: "%", label: "Quality Improvement", sublabel: "Documentation clarity", icon: FileCheck, accent: "teal" },
             { value: storiesWritten, unit: "+", label: "Stories Drafted", sublabel: "With AI co-creation", icon: Layers, accent: "amber-warm" },
             { value: cognitiveReduction, unit: "%", label: "Less Cognitive Load", sublabel: "Routine writing & formatting", icon: Brain, accent: "primary" },

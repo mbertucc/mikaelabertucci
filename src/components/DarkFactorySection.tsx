@@ -9,7 +9,7 @@ const steps = [
     icon: FileText,
     content:
       "200+ pages of the **Short-Term Rental Accommodations Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.",
-    stat: "200+",
+    stat: "2000+",
     statLabel: "Pages of Legislation",
   },
   {
@@ -21,7 +21,7 @@ const steps = [
     content:
       "I build **custom AI agents** using a **context engineering** approach — replacing weeks of manual analysis of **legislation, policy documents, business rules, and requirements** with structured, traceable outputs in minutes — saving **20 hours** per legislative package.",
     stat: "20hrs",
-    statLabel: "Saved Per Package",
+    statLabel: "Saved Per Week",
   },
   {
     number: "03",
