@@ -2,7 +2,6 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import HeroIntro from "@/components/HeroIntro";
 import AboutSection from "@/components/AboutSection";
-import HeroCTA from "@/components/HeroCTA";
 import ExperienceSection from "@/components/ExperienceSection";
 import DarkFactorySection from "@/components/DarkFactorySection";
 import SkillsMatrix from "@/components/SkillsMatrix";
@@ -25,7 +24,6 @@ const Index = () => {
       <main>
         <HeroIntro />
         <AboutSection />
-        <HeroCTA />
         <ExperienceSection />
         <DarkFactorySection />
         <SkillsMatrix />
