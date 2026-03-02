@@ -18,9 +18,6 @@ const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
         <div className="mb-16">
           <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">Career Timeline</p>
           <h2 className="text-4xl md:text-5xl font-display text-foreground mb-4">Experience</h2>
-          <p className="text-muted-foreground font-body text-lg max-w-2xl">
-            Tap "Ask AI" on any role to query the assistant about that specific experience.
-          </p>
         </div>
 
         <div className="space-y-6">
