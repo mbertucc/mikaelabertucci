@@ -6,7 +6,7 @@ interface ExperienceSectionProps {
   onQueryRole?: (question: string) => void;
 }
 
-const EARLIER_CAREER_CUTOFF = 7; // sort_order >= 7 are collapsed
+const EARLIER_CAREER_CUTOFF = 5; // sort_order >= 5 are collapsed
 
 const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
