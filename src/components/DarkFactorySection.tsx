@@ -69,7 +69,7 @@ const DarkFactorySection = () => (
           Technical Proof
         </p>
         <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">
-          The Dark Factory Workflow
+          The Agentic Product Owner Workflow
         </h2>
         <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
           From Law to Logic — using the{" "}
