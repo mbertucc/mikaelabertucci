@@ -8,8 +8,8 @@ const steps = [
     accent: "amber-warm" as const,
     icon: FileText,
     content:
-      "200+ pages of the **Short-Term Rental Accommodations Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.",
-    stat: "2000+",
+      "200+ pages of the **Manufactured Home Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.",
+    stat: "200+",
     statLabel: "Pages of Legislation",
   },
   {
