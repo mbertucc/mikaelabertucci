@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import Ventures from "./pages/Ventures";
+import UserManagement from "./pages/UserManagement";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/admin" element={<Admin />} />
             <Route path="/ventures" element={<Ventures />} />
             <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin/users" element={<UserManagement />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

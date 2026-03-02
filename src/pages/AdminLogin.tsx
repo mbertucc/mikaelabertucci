@@ -22,7 +22,7 @@ const AdminLogin = () => {
       if (error) {
         toast.error(error.message);
       } else {
-        toast.success("Check your email for a confirmation link!");
+        toast.success("Account created! An administrator will review your request.");
       }
     } else {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
