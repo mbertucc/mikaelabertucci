@@ -223,7 +223,7 @@ const DarkFactorySection = () => {
                     </span>
                     <span className={`text-sm font-display ${s.text}`}>{stat.unit}</span>
                   </div>
-                  <p className="text-[10px] uppercase tracking-[0.15em] text-foreground font-body font-medium">
+                  <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-body font-medium">
                     {stat.label}
                   </p>
                 </div>

@@ -125,7 +125,7 @@ const ImpactDashboard = () => {
                     {m.suffix}
                   </span>
                 </p>
-                <p className="text-sm font-body font-semibold text-foreground mt-2">
+                <p className="text-sm font-body font-semibold text-foreground/70 mt-2">
                   {m.label}
                 </p>
                 <p className="text-xs font-body text-muted-foreground mt-1 leading-relaxed">
