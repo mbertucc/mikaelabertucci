@@ -3,8 +3,6 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import DarkFactorySection from "@/components/DarkFactorySection";
-import AugmentationSection from "@/components/AugmentationSection";
-import ImpactDashboard from "@/components/ImpactDashboard";
 import SkillsMatrix from "@/components/SkillsMatrix";
 import JDAnalyzer from "@/components/JDAnalyzer";
 import ChatDrawer from "@/components/ChatDrawer";
@@ -26,8 +24,6 @@ const Index = () => {
         <HeroSection onOpenChat={() => handleOpenChat()} />
         <ExperienceSection onQueryRole={(q) => handleOpenChat(q)} />
         <DarkFactorySection />
-        <AugmentationSection />
-        <ImpactDashboard />
         <SkillsMatrix />
         <JDAnalyzer />
       </main>
