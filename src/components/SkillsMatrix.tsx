@@ -1,4 +1,5 @@
 import { useSkills } from "@/hooks/usePortfolioData";
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 
 const categoryConfig = {
   strong: {
@@ -36,44 +37,55 @@ const SkillsMatrix = () => {
   };
 
   return (
-    <section className="py-12 px-6 bg-card/30">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-10">
-          <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">Capability Radar</p>
-          <h2 className="text-4xl md:text-5xl font-display text-foreground mb-4">Skills Matrix</h2>
-          <p className="text-muted-foreground font-body text-lg">
-            An honest snapshot—because knowing what I <em className="italic">don't</em> know matters too.
-          </p>
-        </div>
+    <TooltipProvider delayDuration={200}>
+      <section className="py-12 px-6 bg-card/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="mb-10">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">Capability Radar</p>
+            <h2 className="text-4xl md:text-5xl font-display text-foreground mb-4">Skills Matrix</h2>
+            <p className="text-muted-foreground font-body text-lg">
+              An honest snapshot—because knowing what I <em className="italic">don't</em> know matters too.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {(["strong", "moderate", "gap"] as const).map((cat) => {
-            const config = categoryConfig[cat];
-            return (
-              <div key={cat} className={`glass-card p-6 border ${config.borderClass}`}>
-                <h3 className={`font-display text-lg mb-5 ${config.headerClass}`}>{config.title}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {grouped[cat].map((skill) => (
-                    <div key={skill.id} className="group relative">
-                      <span
-                        className={`inline-block px-3 py-1.5 rounded-full text-sm font-body border ${config.tagClass} transition-colors`}
-                      >
-                        {skill.name}
-                      </span>
-                      {skill.note && (
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-card border border-border text-[11px] text-muted-foreground font-body leading-relaxed whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg max-w-[240px] whitespace-normal">
-                          💡 {skill.note}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {(["strong", "moderate", "gap"] as const).map((cat) => {
+              const config = categoryConfig[cat];
+              return (
+                <div key={cat} className={`glass-card p-6 border ${config.borderClass}`}>
+                  <h3 className={`font-display text-lg mb-5 ${config.headerClass}`}>{config.title}</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {grouped[cat].map((skill) => (
+                      skill.note ? (
+                        <Tooltip key={skill.id}>
+                          <TooltipTrigger asChild>
+                            <span
+                              className={`inline-block px-3 py-1.5 rounded-full text-sm font-body border cursor-help ${config.tagClass} transition-colors`}
+                            >
+                              {skill.name}
+                            </span>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" className="max-w-[240px] text-[11px] leading-relaxed">
+                            💡 {skill.note}
+                          </TooltipContent>
+                        </Tooltip>
+                      ) : (
+                        <span
+                          key={skill.id}
+                          className={`inline-block px-3 py-1.5 rounded-full text-sm font-body border ${config.tagClass} transition-colors`}
+                        >
+                          {skill.name}
+                        </span>
+                      )
+                    ))}
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </TooltipProvider>
   );
 };
 
