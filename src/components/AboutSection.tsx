@@ -58,7 +58,7 @@ const AboutSection = () => {
           <div className="border-t border-border/30" />
 
           {/* Bottom: Impact Dashboard */}
-          <div>
+          <div onMouseLeave={() => setActiveMetric(null)}>
             <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body mb-6 text-left">
               AI-Augmented Impact Dashboard
             </p>
@@ -67,7 +67,6 @@ const AboutSection = () => {
               <div
                 className="text-center space-y-3 cursor-pointer group"
                 onMouseEnter={() => setActiveMetric("velocity")}
-                onMouseLeave={() => setActiveMetric(null)}
               >
                 <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : ""}`}>
                   <Zap className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "velocity" ? "text-primary scale-125" : "text-primary"}`} />
@@ -81,7 +80,6 @@ const AboutSection = () => {
               <div
                 className="text-center space-y-3 cursor-pointer group"
                 onMouseEnter={() => setActiveMetric("precision")}
-                onMouseLeave={() => setActiveMetric(null)}
               >
                 <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "precision" ? "text-primary" : ""}`}>
                   <Target className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "precision" ? "text-primary scale-125" : "text-primary"}`} />
@@ -95,7 +93,6 @@ const AboutSection = () => {
               <div
                 className="text-center space-y-3 col-span-2 md:col-span-1 cursor-pointer group"
                 onMouseEnter={() => setActiveMetric("culture")}
-                onMouseLeave={() => setActiveMetric(null)}
               >
                 <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "culture" ? "text-primary" : ""}`}>
                   <Users className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "culture" ? "text-primary scale-125" : "text-primary"}`} />
