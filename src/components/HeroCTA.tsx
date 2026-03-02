@@ -23,14 +23,6 @@ const HeroCTA = ({ onOpenChat }: HeroCTAProps) => {
           ))}
         </div>
 
-        {/* CTA */}
-        <button
-          onClick={onOpenChat}
-          className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-base rounded-xl glow-primary hover:brightness-110 transition-all"
-        >
-          <MessageSquare className="w-5 h-5" />
-          Ask AI About Me
-        </button>
       </div>
 
       {/* Scroll indicator */}
