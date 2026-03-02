@@ -14,9 +14,10 @@ const metricDescriptions: Record<Exclude<MetricKey, null>, string[]> = {
     "Reviewer validates against Definition of Ready — stories arrive 90% complete.",
   ],
   precision: [
-    "Edge-Case Agent hunts for 'what-if' scenarios that cause mid-sprint pivots.",
-    "Consistency Agent ensures no new requirement contradicts a previous story.",
-    "75% increase in accuracy — virtually eliminating clarification loops.",
+    "Direct result of advanced context engineering with product-specific agent environments.",
+    "Edge-Case Agent hunts for 'what-if' scenarios that typically cause mid-sprint pivots.",
+    "Consistency Agent ensures no new requirement contradicts a previous story in the backlog.",
+    "Specialized context results in a 75% increase in accuracy — virtually eliminating clarification loops.",
   ],
   culture: [
     "95% precision means developers code instead of chasing missing details.",
