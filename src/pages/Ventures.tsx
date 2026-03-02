@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Rocket, Lock, CreditCard, Hammer, Brain, Globe, BarChart3, Shield, Check, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Rocket, Lock, CreditCard, Hammer, Brain, Globe, BarChart3, Shield, Fingerprint, Check, X } from "lucide-react";
 import AuthGuard from "@/components/AuthGuard";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -114,6 +114,20 @@ const epics = [
       "GDPR-compliant data handling",
       "Password-protected resume sharing",
       "Rate limiting on public endpoints",
+    ],
+  },
+  {
+    num: 9,
+    title: "Digital Credentials",
+    icon: Fingerprint,
+    color: "text-amber-warm",
+    bg: "bg-amber-warm/10",
+    details: [
+      "Identity Verification — Government-issued digital IDs (mDL via ISO 18013-5, national eID, eIDAS 2.0)",
+      "Address Verification — Verifiable address credentials from utility providers or government registries",
+      "Educational Credentials — Digital diplomas & transcripts via W3C Verifiable Credentials (MIT Digital Credentials, Hyland, Open Badges v3)",
+      "Work Credentials — Employer-issued verifiable credentials (LinkedIn Verified, W3C VC-based employment attestations)",
+      "Built on W3C Verifiable Credentials & OpenID for Verifiable Credentials (OID4VC); compatible with Apple Wallet & Google Wallet",
     ],
   },
 ];
