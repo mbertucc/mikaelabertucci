@@ -33,7 +33,7 @@ interface MetricCard {
 
 const metrics: MetricCard[] = [
   {
-    icon: <Clock className="w-6 h-6" />,
+    icon: <Clock className="w-7 h-7" strokeWidth={2.25} />,
     value: 19.4,
     suffix: " hrs / week",
     label: "Time Reclaimed",
@@ -41,7 +41,7 @@ const metrics: MetricCard[] = [
     accentClass: "text-primary",
   },
   {
-    icon: <TrendingUp className="w-6 h-6" />,
+    icon: <TrendingUp className="w-7 h-7" strokeWidth={2.25} />,
     value: 233,
     suffix: "+ hrs",
     label: "Quarterly Strategic Capacity",
@@ -49,7 +49,7 @@ const metrics: MetricCard[] = [
     accentClass: "text-amber-warm",
   },
   {
-    icon: <FileCheck className="w-6 h-6" />,
+    icon: <FileCheck className="w-7 h-7" strokeWidth={2.25} />,
     value: 35,
     suffix: "%",
     label: "Quality Lift",
@@ -57,7 +57,7 @@ const metrics: MetricCard[] = [
     accentClass: "text-primary",
   },
   {
-    icon: <Brain className="w-6 h-6" />,
+    icon: <Brain className="w-7 h-7" strokeWidth={2.25} />,
     value: 50,
     suffix: "%",
     label: "Cognitive Shift",
@@ -114,7 +114,7 @@ const ImpactDashboard = () => {
               }`}
               style={{ transitionDelay: `${i * 120}ms` }}
             >
-              <div className={`${m.accentClass} p-2.5 rounded-lg bg-card border border-border/40`}>
+              <div className={`${m.accentClass} p-3 rounded-lg bg-card border border-border/40`}>
                 {m.icon}
               </div>
 
@@ -156,25 +156,25 @@ const ImpactDashboard = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {([
               {
-                icon: <Scale className="w-5 h-5" />,
+                icon: <Scale className="w-5 h-5" strokeWidth={2.25} />,
                 stat: "40 hrs → 2.5 hrs",
                 title: "Legislative Analysis",
                 desc: "Reduced manual compilation of requirement spreadsheets by 94%.",
               },
               {
-                icon: <Zap className="w-5 h-5" />,
+                icon: <Zap className="w-5 h-5" strokeWidth={2.25} />,
                 stat: "50% faster",
                 title: "Velocity",
                 desc: "Drafting speed for Epics and User Stories.",
               },
               {
-                icon: <Target className="w-5 h-5" />,
+                icon: <Target className="w-5 h-5" strokeWidth={2.25} />,
                 stat: "~35% improvement",
                 title: "Precision",
                 desc: "Documentation clarity and completeness.",
               },
               {
-                icon: <Calendar className="w-5 h-5" />,
+                icon: <Calendar className="w-5 h-5" strokeWidth={2.25} />,
                 stat: "2 days / week",
                 title: "Strategic Gain",
                 desc: "Reinvested into stakeholder alignment and long-term vision.",
