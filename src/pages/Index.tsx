@@ -22,7 +22,7 @@ const Index = () => {
       <Navbar onOpenChat={() => handleOpenChat()} />
       <main>
         <HeroSection onOpenChat={() => handleOpenChat()} />
-        <ExperienceSection onQueryRole={(q) => handleOpenChat(q)} />
+        <ExperienceSection />
         <DarkFactorySection />
         <SkillsMatrix />
         <JDAnalyzer />

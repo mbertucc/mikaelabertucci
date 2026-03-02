@@ -1,15 +1,11 @@
 import { useState } from "react";
-import { Sparkles, ChevronDown, MessageSquare, History } from "lucide-react";
+import { Sparkles, ChevronDown, History } from "lucide-react";
 import { useExperiences } from "@/hooks/usePortfolioData";
-
-interface ExperienceSectionProps {
-  onQueryRole?: (question: string) => void;
-}
 
 const EARLIER_CAREER_CUTOFF = 5; // sort_order >= 5 are collapsed
 const ALWAYS_SHOW_IDS = ["13d490f8-23d3-4091-9f0a-9774ccbfb350"]; // Foundations Coaching
 
-const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
+const ExperienceSection = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [showEarlierCareer, setShowEarlierCareer] = useState(false);
   const { data: experiences, isLoading } = useExperiences();
@@ -67,17 +63,6 @@ const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
           </div>
         )}
 
-        {onQueryRole && (
-          <div className="mt-auto pt-4 border-t border-border/30">
-            <button
-              onClick={() => onQueryRole(`Tell me about Mikaela's experience at ${role.company} as ${role.title_progression}. What did she accomplish and what was her approach?`)}
-              className="flex items-center gap-2 text-sm font-body font-medium text-primary-foreground bg-primary px-4 py-2.5 rounded-lg hover:brightness-110 transition-all glow-primary"
-            >
-              <MessageSquare className="w-4 h-4" />
-              Ask AI About This Role
-            </button>
-          </div>
-        )}
       </div>
     );
   };
