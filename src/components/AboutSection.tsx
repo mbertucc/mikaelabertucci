@@ -38,22 +38,28 @@ const AboutSection = () => {
             <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body mb-6 text-left">
               AI-Augmented Impact Dashboard
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
-              <div className="space-y-1 text-center">
-                <Zap className="w-8 h-8 text-primary mx-auto mb-2" />
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body mb-3">Velocity</p>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+              <div className="text-center space-y-3">
+                <div className="flex items-center justify-center gap-1.5 mb-1">
+                  <Zap className="w-4 h-4 text-primary" />
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body">Velocity</p>
+                </div>
                 <StatRing value={3} max={5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
                 <StatRing value={50} max={100} label="Faster Planning" unit="%" size={90} hideRing />
               </div>
-              <div className="space-y-1 text-center">
-                <Target className="w-8 h-8 text-primary mx-auto mb-2" />
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body mb-3">Precision</p>
+              <div className="text-center space-y-3">
+                <div className="flex items-center justify-center gap-1.5 mb-1">
+                  <Target className="w-4 h-4 text-primary" />
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body">Precision</p>
+                </div>
                 <StatRing value={95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
                 <StatRing value={75} max={100} label="Increase in Accuracy" unit="%" size={90} hideRing />
               </div>
-              <div className="space-y-1 text-center col-span-2 md:col-span-1">
-                <Users className="w-8 h-8 text-primary mx-auto mb-2" />
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body mb-3">Culture</p>
+              <div className="text-center space-y-3 col-span-2 md:col-span-1">
+                <div className="flex items-center justify-center gap-1.5 mb-1">
+                  <Users className="w-4 h-4 text-primary" />
+                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body">Culture</p>
+                </div>
                 <StatRing value={80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
                 <StatRing value={40} max={100} label="More Strategy Time" unit="%" size={90} hideRing />
               </div>
