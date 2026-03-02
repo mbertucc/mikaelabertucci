@@ -1,112 +1,84 @@
 
 
-# Ventures Page — Agentic Resume Portfolio Business Idea
+# Account Management & Admin Role System
 
 ## Overview
-Create a new `/ventures` route, protected by the existing authentication system, that presents a high-level user journey for an "Agentic Resume Portfolio" product. The page will be a pitch-deck style layout with epics displayed as a visual flow, each expandable to show key features. A "Ventures" link will be added to the navbar, prompting login if the user isn't authenticated.
+Create a user roles system so you (as the site owner) are the administrator, with the ability to approve/reject new signups and manage user accounts. New signups will be marked as "pending" until an admin approves them.
 
----
+## Architecture
 
-## Page Structure
+### 1. Database Changes (3 migrations)
 
-The page will display the product vision as a series of **epics** (horizontal cards at the top) with expandable detail sections below. The visual style will match the existing portfolio aesthetic (glass-card, font-display/font-body, teal/amber accents).
+**Migration 1 -- User roles table**
+- Create `app_role` enum: `admin`, `user`
+- Create `user_roles` table (user_id, role) with RLS
+- Create `has_role()` security definer function to avoid RLS recursion
 
-### Epic Flow (top of page)
-A horizontal scrollable row of epic cards, each numbered:
+**Migration 2 -- User approval system**
+- Create `user_approvals` table:
+  - `id` (uuid, PK)
+  - `user_id` (uuid, references auth.users, unique)
+  - `status` (text: 'pending', 'approved', 'rejected')
+  - `created_at`, `updated_at`
+- RLS: admins can read/update all rows; users can read their own row
+- Create trigger: auto-insert a "pending" row when a new auth user is created
+
+**Migration 3 -- Seed you as admin**
+- After you create your account, a migration will assign your user the `admin` role and set your approval status to `approved`
+
+### 2. New Page: Account Management (`/admin/users`)
+
+A new page accessible only to admins, showing:
+- Table of all users with columns: Email, Status (pending/approved/rejected), Role, Signed Up date
+- Action buttons: Approve, Reject for pending users
+- Badge indicators for status
+
+### 3. Auth Flow Changes
+
+**AuthGuard update**: After confirming a session exists, also check `user_approvals` status. If the user is "pending", show a "Your account is awaiting approval" message instead of the protected content. If "rejected", show an access denied message.
+
+**AdminLogin update**: After successful signup, show message "Account created! An administrator will review your request."
+
+**Admin page guard**: The `/admin` and `/admin/users` routes will additionally check for the `admin` role using the `has_role()` function.
+
+### 4. Navigation Update
+
+Add "Users" link in the Admin panel header (only visible to admins).
+
+## Flow
 
 ```text
-[1. Landing Page] -> [2. Auth & Login] -> [3. Subscriptions] -> [4. Resume Builder] -> [5. AI Tailoring] -> [6. Publish & Share] -> [7. Analytics & SEO] -> [8. Security]
+New user signs up
+       |
+       v
+ Auto-inserted into user_approvals (status: pending)
+       |
+       v
+ User sees "Awaiting approval" on login
+       |
+       v
+ Admin visits /admin/users, sees pending user
+       |
+       v
+ Admin clicks Approve --> status = approved
+       |
+       v
+ User can now access /ventures and other protected pages
 ```
 
-### Epic Details (below, expandable accordion or click-to-reveal)
+## Files to Create
+- `src/pages/UserManagement.tsx` -- admin-only user approval and management page
 
-**Epic 1 — Landing Page**
-- Hero with value proposition
-- Product demo/preview
-- Social proof & testimonials
-- CTA to sign up
+## Files to Modify
+- `src/components/AuthGuard.tsx` -- add approval status check
+- `src/pages/AdminLogin.tsx` -- update post-signup messaging
+- `src/pages/Admin.tsx` -- add "Users" navigation link
+- `src/App.tsx` -- add `/admin/users` route
 
-**Epic 2 — Authentication & Login**
-- Email/password signup and login
-- OAuth (Google, Apple)
-- Email verification flow
-- Password reset
-
-**Epic 3 — Subscriptions**
-- Free tier: 1 resume, basic templates, watermark
-- Pro tier ($9/mo): Unlimited resumes, all templates, custom domain, AI tailoring (limited)
-- Premium tier ($19/mo): Everything in Pro + unlimited AI, resume agent, priority support, analytics
-- Enterprise (custom): Team accounts, SSO, bulk export, API access
-- Stripe integration for billing
-
-**Epic 4 — Resume Builder (Dark Factory Powered)**
-- AI-powered layout and theme selector (guided wizard)
-- Upload artifacts: old resumes (PDF/DOCX), interview prep answers, metrics/achievements
-- Drag-and-drop section editor (non-technical friendly)
-- Real-time preview with multiple layout options
-- Template library (modern, classic, creative, minimal)
-
-**Epic 5 — AI Tailoring**
-- Paste a job description, AI tailors resume to match
-- Keyword optimization and gap analysis
-- Tone and language adjustment
-- AI resume agent: conversational chatbot visitors can interact with
-- Powered by the same agentic workflow from the Dark Factory case study
-
-**Epic 6 — Publish & Share**
-- One-click publish to custom URL (yourname.agenticresume.com)
-- Custom domain support
-- Link social media profiles (LinkedIn, GitHub, portfolio)
-- QR code generation
-- PDF export
-
-**Epic 7 — Analytics & SEO**
-- View count, unique visitors, time on page
-- Which sections get the most attention (heatmap-style)
-- SEO meta tags auto-generated by AI
-- Open Graph image generation
-- Sitemap and robots.txt auto-configured
-
-**Epic 8 — Security**
-- SOC 2 awareness / data encryption at rest
-- Row-level security on all user data
-- GDPR-compliant data handling
-- Password-protected resume sharing option
-- Rate limiting on public endpoints
-
----
-
-## Technical Implementation
-
-### 1. Auth Guard Component
-Create `src/components/AuthGuard.tsx` — a wrapper that checks for an active session via the existing authentication system. If not logged in, redirects to `/admin/login` (or a new `/login` route). Reuses the existing `supabase.auth` session check.
-
-### 2. Ventures Page
-Create `src/pages/Ventures.tsx`:
-- Wrapped in `AuthGuard`
-- Header section with product name, one-liner, and tagline
-- Epic cards rendered as a horizontal scroll row using the glass-card style
-- Expandable accordion (using existing Radix accordion component) for each epic's detail
-- Static content, no database needed — all hardcoded in the component
-- Subscription tier comparison table using the existing table UI component
-
-### 3. Navbar Update
-Update `src/components/Navbar.tsx`:
-- Add a "Ventures" link (visible, using a `Lock` icon from Lucide)
-- Links to `/ventures` — the auth guard handles the login prompt
-
-### 4. Route Registration
-Update `src/App.tsx`:
-- Import and add `<Route path="/ventures" element={<Ventures />} />`
-
-### Files to create:
-- `src/components/AuthGuard.tsx`
-- `src/pages/Ventures.tsx`
-
-### Files to modify:
-- `src/components/Navbar.tsx` (add Ventures link)
-- `src/App.tsx` (add route)
-
-### No database changes needed
-All content is static. Authentication uses the existing system.
+## Important: Becoming the Admin
+Since no users exist yet, the workflow will be:
+1. Enable auto-confirm (so you can sign up without email verification)
+2. You sign up with your email
+3. A migration assigns your user ID the `admin` role and sets approval to `approved`
+4. All future signups go through the pending/approval flow
 
