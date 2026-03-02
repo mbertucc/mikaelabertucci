@@ -1,4 +1,5 @@
-import { MessageSquare, Moon, Sun } from "lucide-react";
+import { MessageSquare, Moon, Sun, Lock } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "next-themes";
 
 interface NavbarProps {
@@ -7,6 +8,7 @@ interface NavbarProps {
 
 const Navbar = ({ onOpenChat }: NavbarProps) => {
   const { theme, setTheme } = useTheme();
+  const navigate = useNavigate();
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -33,6 +35,13 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
             className="text-sm font-body tracking-wide text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
           >
             Fit Check
+          </button>
+          <button
+            onClick={() => navigate("/ventures")}
+            className="flex items-center gap-1.5 text-sm font-body tracking-wide text-muted-foreground hover:text-foreground transition-colors hidden sm:flex"
+          >
+            <Lock className="w-3.5 h-3.5" />
+            Ventures
           </button>
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
