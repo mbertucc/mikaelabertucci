@@ -60,7 +60,7 @@ const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, c
           className={`${colorClass} transition-all duration-100`}
         />
       </svg>
-      <div className="text-center -mt-[calc(50%+0.5rem)] mb-4">
+      <div className="text-center mt-1">
         <span className="font-display text-2xl text-foreground font-bold">{animatedValue}{unit}</span>
       </div>
       <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body text-center leading-tight">{label}</p>
