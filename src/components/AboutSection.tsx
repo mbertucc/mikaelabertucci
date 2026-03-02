@@ -1,7 +1,12 @@
+import { MessageSquare } from "lucide-react";
 import headshot from "@/assets/headshot.png";
 import { useProfile } from "@/hooks/usePortfolioData";
 
-const AboutSection = () => {
+interface AboutSectionProps {
+  onOpenChat: () => void;
+}
+
+const AboutSection = ({ onOpenChat }: AboutSectionProps) => {
   const { data: profile } = useProfile();
 
   return (
@@ -20,12 +25,19 @@ const AboutSection = () => {
             </div>
           </div>
 
-          {/* Bio */}
-          <div className="space-y-4 text-center md:text-left">
+          {/* Bio + CTA */}
+          <div className="space-y-6 text-center md:text-left">
             <p className="text-base text-muted-foreground font-body leading-relaxed max-w-xl">
               {profile?.positioning ||
                 "I save 20 hours a week letting AI handle the grunt work. That means I spend my time where it counts — setting vision, solving real problems, and building teams that don't just deliver — they thrive."}
             </p>
+            <button
+              onClick={onOpenChat}
+              className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-body font-semibold text-base rounded-xl glow-primary hover:brightness-110 transition-all"
+            >
+              <MessageSquare className="w-5 h-5" />
+              Ask AI About Me
+            </button>
           </div>
         </div>
       </div>

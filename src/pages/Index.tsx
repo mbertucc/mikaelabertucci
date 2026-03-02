@@ -25,7 +25,7 @@ const Index = () => {
       <Navbar onOpenChat={() => handleOpenChat()} />
       <main>
         <HeroIntro />
-        <AboutSection />
+        <AboutSection onOpenChat={() => handleOpenChat()} />
         <ImpactDashboardSection />
         <HeroCTA onOpenChat={() => handleOpenChat()} />
         <ExperienceSection />
