@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, History } from "lucide-react";
+import { ChevronDown, History, MessageSquare } from "lucide-react";
 import { useExperiences } from "@/hooks/usePortfolioData";
 
 const EARLIER_CAREER_CUTOFF = 5;
@@ -20,19 +20,39 @@ const renderBulletText = (text: string) => {
   });
 };
 
-const SECTIONS = [
+const PRIMARY_SECTIONS = [
   { key: "ai_situation", label: "Challenge" },
+  { key: "achievements", label: "Outcome" },
+] as const;
+
+const DETAIL_SECTIONS = [
   { key: "ai_approach", label: "Approach" },
   { key: "ai_technical_work", label: "Technical Work" },
-  { key: "achievements", label: "Outcome" },
   { key: "ai_lessons_learned", label: "Lessons Learned" },
 ] as const;
 
 const ExperienceSection = () => {
   const [showEarlierCareer, setShowEarlierCareer] = useState(false);
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
   const { data: experiences, isLoading } = useExperiences();
 
   if (isLoading) return null;
+
+  const toggleCard = (id: string) => {
+    setExpandedCards((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const handleAskAI = (role: { title_progression: string; company: string }) => {
+    window.dispatchEvent(
+      new CustomEvent("open-chat", {
+        detail: `Tell me more about Mikaela's experience as ${role.title_progression} at ${role.company}. What was the impact and what skills were demonstrated?`,
+      })
+    );
+  };
 
   const recentRoles = (experiences || []).filter(
     (r) => r.sort_order < EARLIER_CAREER_CUTOFF || ALWAYS_SHOW_IDS.includes(r.id)
@@ -40,6 +60,42 @@ const ExperienceSection = () => {
   const earlierRoles = (experiences || []).filter(
     (r) => r.sort_order >= EARLIER_CAREER_CUTOFF && !ALWAYS_SHOW_IDS.includes(r.id)
   );
+
+  const renderSections = (sections: readonly { key: string; label: string }[], role: any) => (
+    <>
+      {sections.map(({ key, label }) => {
+        const value = role[key];
+        if (!value || (Array.isArray(value) && value.length === 0)) return null;
+
+        return (
+          <div key={key}>
+            <p className="text-[10px] uppercase tracking-[0.25em] text-primary/60 font-body mb-1.5">
+              {label}
+            </p>
+
+            {key === "achievements" ? (
+              <div className="space-y-2">
+                {(value as string[]).map((a, j) => (
+                  <div key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground font-body leading-relaxed">
+                    <span className="text-primary/50 mt-0.5 shrink-0 text-xs">▪</span>
+                    <span>{renderBulletText(a)}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className={`text-sm text-muted-foreground font-body leading-relaxed ${
+                key === "ai_situation" ? "italic" : ""
+              } ${key === "ai_lessons_learned" ? "text-foreground/80" : ""}`}>
+                {renderBulletText(value as string)}
+              </p>
+            )}
+          </div>
+        );
+      })}
+    </>
+  );
+
+  const isExpanded = (id: string) => expandedCards.has(id);
 
   const renderCard = (role: typeof recentRoles[number]) => (
     <article key={role.id} className="relative pl-6 md:pl-8 group">
@@ -54,45 +110,45 @@ const ExperienceSection = () => {
             <h3 className="text-lg md:text-xl font-display font-semibold text-foreground tracking-[0.03em]">
               {role.title_progression}
             </h3>
-            <span className="text-xs font-mono text-muted-foreground shrink-0 tracking-wide">
-              {role.date_range}
-            </span>
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                onClick={() => handleAskAI(role)}
+                className="inline-flex items-center gap-1.5 text-[11px] font-body font-medium text-primary/70 hover:text-primary transition-colors"
+                aria-label={`Ask AI about ${role.title_progression}`}
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                Ask AI
+              </button>
+              <span className="text-xs font-mono text-muted-foreground tracking-wide">
+                {role.date_range}
+              </span>
+            </div>
           </div>
           <p className="text-sm text-muted-foreground font-body">{role.company}</p>
         </header>
 
-        {/* All sections */}
+        {/* Primary sections (always visible) */}
         <div className="space-y-4 pt-1">
-          {SECTIONS.map(({ key, label }) => {
-            const value = role[key];
-            if (!value || (Array.isArray(value) && value.length === 0)) return null;
-
-            return (
-              <div key={key}>
-                <p className="text-[10px] uppercase tracking-[0.25em] text-primary/60 font-body mb-1.5">
-                  {label}
-                </p>
-
-                {key === "achievements" ? (
-                  <div className="space-y-2">
-                    {(value as string[]).map((a, j) => (
-                      <div key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground font-body leading-relaxed">
-                        <span className="text-primary/50 mt-0.5 shrink-0 text-xs">▪</span>
-                        <span>{renderBulletText(a)}</span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className={`text-sm text-muted-foreground font-body leading-relaxed ${
-                    key === "ai_situation" ? "italic" : ""
-                  } ${key === "ai_lessons_learned" ? "text-foreground/80" : ""}`}>
-                    {renderBulletText(value as string)}
-                  </p>
-                )}
-              </div>
-            );
-          })}
+          {renderSections(PRIMARY_SECTIONS, role)}
         </div>
+
+        {/* Detail sections (collapsible) */}
+        {DETAIL_SECTIONS.some(({ key }) => role[key]) && (
+          <>
+            {isExpanded(role.id) && (
+              <div className="space-y-4 animate-fade-in">
+                {renderSections(DETAIL_SECTIONS, role)}
+              </div>
+            )}
+            <button
+              onClick={() => toggleCard(role.id)}
+              className="flex items-center gap-1.5 text-xs font-body font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              {isExpanded(role.id) ? "Hide Details" : "Show Details"}
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded(role.id) ? "rotate-180" : ""}`} />
+            </button>
+          </>
+        )}
       </div>
     </article>
   );
