@@ -10,7 +10,7 @@ const HeroIntro = () => {
         <div className="inline-flex items-center gap-2 px-4 py-2 glass-card text-sm font-body">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
           <span className="text-muted-foreground">
-            {profile?.status_badge || "🟢 Open to Level 5 \"Dark Factory\" environments where Spec is the Product"}
+            {profile?.status_badge || "🟢 Open to \"Dark Factory\" environments where Spec is the Product"}
           </span>
         </div>
 
