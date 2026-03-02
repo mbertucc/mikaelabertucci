@@ -1,84 +1,31 @@
 
+# Add Digital Credentials Epic to Ventures Page
 
-# Account Management & Admin Role System
+## What Changes
 
-## Overview
-Create a user roles system so you (as the site owner) are the administrator, with the ability to approve/reject new signups and manage user accounts. New signups will be marked as "pending" until an admin approves them.
+Add **Epic 9 -- Digital Credentials** to the existing user journey on the Ventures page. This will be a concept-only addition that outlines how the Agentic Resume product would use verifiable digital credentials to let users prove their identity, address, education, and work history.
 
-## Architecture
+## Epic 9 Details
 
-### 1. Database Changes (3 migrations)
+The new epic card will use the **Shield** or **Fingerprint** icon and include bullet points covering the four credential categories:
 
-**Migration 1 -- User roles table**
-- Create `app_role` enum: `admin`, `user`
-- Create `user_roles` table (user_id, role) with RLS
-- Create `has_role()` security definer function to avoid RLS recursion
+- **Identity Verification** -- Government-issued digital IDs (mobile Driver's License / mDL via ISO 18013-5, national eID)
+- **Address Verification** -- Verifiable address credentials from utility providers or government registries
+- **Educational Credentials** -- Digital diplomas and transcripts (W3C Verifiable Credentials from institutions like MIT Digital Credentials, Hyland Credentials, and others issuing Open Badges v3)
+- **Work Credentials** -- Employment verification through employer-issued verifiable credentials (LinkedIn Verified, emerging W3C VC-based employment attestations)
+- **Standards** -- Built on W3C Verifiable Credentials and OpenID for Verifiable Credentials (OID4VC); compatible with digital wallets (Apple Wallet, Google Wallet)
 
-**Migration 2 -- User approval system**
-- Create `user_approvals` table:
-  - `id` (uuid, PK)
-  - `user_id` (uuid, references auth.users, unique)
-  - `status` (text: 'pending', 'approved', 'rejected')
-  - `created_at`, `updated_at`
-- RLS: admins can read/update all rows; users can read their own row
-- Create trigger: auto-insert a "pending" row when a new auth user is created
+## Available Standards and Ecosystems (for reference)
 
-**Migration 3 -- Seed you as admin**
-- After you create your account, a migration will assign your user the `admin` role and set your approval status to `approved`
+| Credential Type | Available Standards / Providers |
+|---|---|
+| Identity | mDL (ISO 18013-5), eIDAS 2.0 (EU), Microsoft Entra Verified ID |
+| Address | Government registries, utility-issued VCs (emerging) |
+| Education | Open Badges v3, CLR (Comprehensive Learner Record), MIT Digital Credentials, Hyland |
+| Work History | LinkedIn Verified, employer-issued W3C VCs, CLEAR, Truework (API-based, not yet VC) |
 
-### 2. New Page: Account Management (`/admin/users`)
+## Technical Changes
 
-A new page accessible only to admins, showing:
-- Table of all users with columns: Email, Status (pending/approved/rejected), Role, Signed Up date
-- Action buttons: Approve, Reject for pending users
-- Badge indicators for status
-
-### 3. Auth Flow Changes
-
-**AuthGuard update**: After confirming a session exists, also check `user_approvals` status. If the user is "pending", show a "Your account is awaiting approval" message instead of the protected content. If "rejected", show an access denied message.
-
-**AdminLogin update**: After successful signup, show message "Account created! An administrator will review your request."
-
-**Admin page guard**: The `/admin` and `/admin/users` routes will additionally check for the `admin` role using the `has_role()` function.
-
-### 4. Navigation Update
-
-Add "Users" link in the Admin panel header (only visible to admins).
-
-## Flow
-
-```text
-New user signs up
-       |
-       v
- Auto-inserted into user_approvals (status: pending)
-       |
-       v
- User sees "Awaiting approval" on login
-       |
-       v
- Admin visits /admin/users, sees pending user
-       |
-       v
- Admin clicks Approve --> status = approved
-       |
-       v
- User can now access /ventures and other protected pages
-```
-
-## Files to Create
-- `src/pages/UserManagement.tsx` -- admin-only user approval and management page
-
-## Files to Modify
-- `src/components/AuthGuard.tsx` -- add approval status check
-- `src/pages/AdminLogin.tsx` -- update post-signup messaging
-- `src/pages/Admin.tsx` -- add "Users" navigation link
-- `src/App.tsx` -- add `/admin/users` route
-
-## Important: Becoming the Admin
-Since no users exist yet, the workflow will be:
-1. Enable auto-confirm (so you can sign up without email verification)
-2. You sign up with your email
-3. A migration assigns your user ID the `admin` role and sets approval to `approved`
-4. All future signups go through the pending/approval flow
-
+**File: `src/pages/Ventures.tsx`**
+- Add a 9th entry to the `epics` array with title "Digital Credentials", a `Fingerprint` icon (from lucide-react), and the bullet points above
+- No new components, database changes, or dependencies required -- purely a UI content addition to the existing epic list and accordion
