@@ -27,7 +27,7 @@ const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
           {(experiences || []).map((role, i) => {
             const isExpanded = expandedIndex === i;
             return (
-              <div key={role.id} className="glass-card-hover p-6 md:p-8">
+              <div key={role.id} className="glass-card-hover p-6 md:p-8 flex flex-col">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-4">
                   <div>
                     <h3 className="text-xl font-display text-foreground">{role.company}</h3>
@@ -45,28 +45,17 @@ const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
                   ))}
                 </ul>
 
-                <div className="flex items-center gap-4 mt-4">
-                  <button
-                    onClick={() => setExpandedIndex(isExpanded ? null : i)}
-                    className="flex items-center gap-2 text-sm font-body text-primary/80 hover:text-primary transition-colors"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                    {isExpanded ? "Hide AI Context" : "Show AI Context"}
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
-                  </button>
-                  {onQueryRole && (
-                    <button
-                      onClick={() => onQueryRole(`Tell me about Mikaela's experience at ${role.company} as ${role.title_progression}. What did she accomplish and what was her approach?`)}
-                      className="flex items-center gap-2 text-sm font-body text-accent-foreground/80 hover:text-accent-foreground bg-accent/50 hover:bg-accent px-3 py-1.5 rounded-lg transition-colors"
-                    >
-                      <MessageSquare className="w-3.5 h-3.5" />
-                      Ask AI
-                    </button>
-                  )}
-                </div>
+                <button
+                  onClick={() => setExpandedIndex(isExpanded ? null : i)}
+                  className="flex items-center gap-2 text-sm font-body text-muted-foreground hover:text-foreground transition-colors mb-4"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  {isExpanded ? "Hide AI Context" : "Show AI Context"}
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+                </button>
 
                 {isExpanded && (
-                  <div className="mt-6 p-6 bg-background/60 rounded-lg border border-border/30 space-y-5 animate-fade-in">
+                  <div className="mb-4 p-6 bg-background/60 rounded-lg border border-border/30 space-y-5 animate-fade-in">
                     {([
                       ["SITUATION", role.ai_situation],
                       ["APPROACH", role.ai_approach],
@@ -80,6 +69,18 @@ const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
                         </p>
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {onQueryRole && (
+                  <div className="mt-auto pt-4 border-t border-border/30">
+                    <button
+                      onClick={() => onQueryRole(`Tell me about Mikaela's experience at ${role.company} as ${role.title_progression}. What did she accomplish and what was her approach?`)}
+                      className="flex items-center gap-2 text-sm font-body font-medium text-primary-foreground bg-primary px-4 py-2.5 rounded-lg hover:brightness-110 transition-all glow-primary"
+                    >
+                      <MessageSquare className="w-4 h-4" />
+                      Ask AI About This Role
+                    </button>
                   </div>
                 )}
               </div>
