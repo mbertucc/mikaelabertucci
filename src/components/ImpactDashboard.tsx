@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Clock, TrendingUp, FileCheck, Brain } from "lucide-react";
+import { Clock, TrendingUp, FileCheck, Brain, Scale, Zap, Target, Calendar } from "lucide-react";
 
 const useCountUp = (end: number, duration: number, start: boolean, decimals = 0) => {
   const [value, setValue] = useState(0);
@@ -134,6 +134,64 @@ const ImpactDashboard = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* The Proof – Callout Box */}
+        <div
+          className={`mt-16 glass-card border-l-4 border-l-primary p-8 md:p-10 transition-all duration-700 delay-500 ${
+            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+          }`}
+        >
+          <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-2">
+            The Proof
+          </p>
+          <h3 className="text-2xl md:text-3xl font-display text-foreground mb-3">
+            Quantified Impact: The 19.4-Hour Dividend
+          </h3>
+          <p className="text-sm text-muted-foreground font-body leading-relaxed mb-8 max-w-3xl">
+            This model was proven through the delivery of a complex Manufactured Home Feature Set. 
+            By using AI as a structured partner, I transformed the "grunt work" into strategic capacity:
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {([
+              {
+                icon: <Scale className="w-5 h-5" />,
+                stat: "40 hrs → 2.5 hrs",
+                title: "Legislative Analysis",
+                desc: "Reduced manual compilation of requirement spreadsheets by 94%.",
+              },
+              {
+                icon: <Zap className="w-5 h-5" />,
+                stat: "50% faster",
+                title: "Velocity",
+                desc: "Drafting speed for Epics and User Stories.",
+              },
+              {
+                icon: <Target className="w-5 h-5" />,
+                stat: "~35% improvement",
+                title: "Precision",
+                desc: "Documentation clarity and completeness.",
+              },
+              {
+                icon: <Calendar className="w-5 h-5" />,
+                stat: "2 days / week",
+                title: "Strategic Gain",
+                desc: "Reinvested into stakeholder alignment and long-term vision.",
+              },
+            ]).map((item) => (
+              <div key={item.title} className="flex items-start gap-4">
+                <div className="text-primary p-2 rounded-lg bg-accent/50 border border-border/30 shrink-0">
+                  {item.icon}
+                </div>
+                <div>
+                  <p className="text-lg font-display text-primary leading-tight">{item.stat}</p>
+                  <p className="text-sm font-body font-semibold text-foreground mt-0.5">{item.title}</p>
+                  <p className="text-xs font-body text-muted-foreground mt-0.5 leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
