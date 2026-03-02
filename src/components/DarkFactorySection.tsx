@@ -98,8 +98,9 @@ const statDescriptions: Record<Exclude<StatKey, null>, string[]> = {
     "Collaborative validation loop that consistently elevates documentation quality.",
   ],
   stories: [
-    "60+ user stories generated via agentic workflow.",
-    "Each pre-validated for technical feasibility and FOIPPA privacy standards.",
+    "AI drafts stories from legislative artifacts before any human writing begins.",
+    "Business Analyst validates for accuracy and corporate knowledge — not authoring from scratch.",
+    "Reduces initial product discovery cycle significantly, saving time and budget.",
   ],
   cognitive: [
     "16 multilevel agents manage tactical overhead across different products.",
