@@ -17,9 +17,8 @@ serve(async (req) => {
       });
     }
 
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
-
+    const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
+    if (!ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY is not configured");
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const supabase = createClient(supabaseUrl, supabaseKey);
@@ -32,7 +31,7 @@ serve(async (req) => {
     ]);
 
     const jdPromptRow = (instructionsRes.data || []).find((r: any) => r.key === "jd_analyzer_prompt");
-    let systemPrompt = jdPromptRow?.value || "Analyze this job description for fit.";
+    const basePrompt = jdPromptRow?.value || "Analyze this job description for fit.";
 
     const profile = (profileRes.data || [])[0];
     const profileContext = profile
@@ -44,43 +43,42 @@ serve(async (req) => {
     ).join("\n");
     const skillsContext = (skillsRes.data || []).map((s: any) => `${s.name} (${s.category})${s.note ? ` [Note: ${s.note}]` : ""}`).join(", ");
 
-    systemPrompt += `\n\nCANDIDATE PROFILE:\n${profileContext}\n\nMY EXPERIENCE:\n${expContext}\n\nMY SKILLS: ${skillsContext}`;
+    const systemPrompt = `You are a Level 5 Intent Architect. Compare the JD and Resume with 100% grounding in the provided text. Only extract explicit requirements. Identify gaps clearly. Do not infer skills that aren't there.\n\n${basePrompt}\n\nCANDIDATE PROFILE:\n${profileContext}\n\nMY EXPERIENCE:\n${expContext}\n\nMY SKILLS: ${skillsContext}`;
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const toolSchema = {
+      name: "analyze_fit",
+      description: "Return a structured fit analysis for the job description",
+      input_schema: {
+        type: "object",
+        properties: {
+          verdict: { type: "string", enum: ["strong-fit", "worth-conversation", "not-your-person"] },
+          verdictLabel: { type: "string", enum: ["Strong Fit", "Worth a Conversation", "Probably Not Your Person"] },
+          opening: { type: "string", description: "First-person honest assessment paragraph" },
+          gaps: { type: "array", items: { type: "string" }, description: "Specific gaps" },
+          transfers: { type: "array", items: { type: "string" }, description: "Transferable skills" },
+          recommendation: { type: "string", description: "First-person recommendation" },
+        },
+        required: ["verdict", "verdictLabel", "opening", "gaps", "transfers", "recommendation"],
+      },
+    };
+
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        "x-api-key": ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-3-flash-preview",
+        model: "claude-3-5-sonnet-20241022",
+        max_tokens: 4096,
+        temperature: 0.0,
+        system: systemPrompt,
         messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: `Analyze this job description and return ONLY valid JSON:\n\n${jobDescription}` },
+          { role: "user", content: `Analyze this job description and return a structured fit analysis:\n\n${jobDescription}` },
         ],
-        tools: [
-          {
-            type: "function",
-            function: {
-              name: "analyze_fit",
-              description: "Return a structured fit analysis for the job description",
-              parameters: {
-                type: "object",
-                properties: {
-                  verdict: { type: "string", enum: ["strong-fit", "worth-conversation", "not-your-person"] },
-                  verdictLabel: { type: "string", enum: ["Strong Fit", "Worth a Conversation", "Probably Not Your Person"] },
-                  opening: { type: "string", description: "First-person honest assessment paragraph" },
-                  gaps: { type: "array", items: { type: "string" }, description: "Specific gaps" },
-                  transfers: { type: "array", items: { type: "string" }, description: "Transferable skills" },
-                  recommendation: { type: "string", description: "First-person recommendation" },
-                },
-                required: ["verdict", "verdictLabel", "opening", "gaps", "transfers", "recommendation"],
-                additionalProperties: false,
-              },
-            },
-          },
-        ],
-        tool_choice: { type: "function", function: { name: "analyze_fit" } },
+        tools: [toolSchema],
+        tool_choice: { type: "tool", name: "analyze_fit" },
       }),
     });
 
@@ -90,21 +88,16 @@ serve(async (req) => {
           status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      if (response.status === 402) {
-        return new Response(JSON.stringify({ error: "AI credits depleted." }), {
-          status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" },
-        });
-      }
       const t = await response.text();
-      console.error("AI gateway error:", response.status, t);
-      throw new Error("AI gateway error");
+      console.error("Anthropic API error:", response.status, t);
+      throw new Error("Anthropic API error");
     }
 
     const data = await response.json();
-    const toolCall = data.choices?.[0]?.message?.tool_calls?.[0];
-    if (!toolCall) throw new Error("No tool call in response");
+    const toolBlock = data.content?.find((b: any) => b.type === "tool_use");
+    if (!toolBlock) throw new Error("No tool_use block in response");
 
-    const result = JSON.parse(toolCall.function.arguments);
+    const result = toolBlock.input;
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
