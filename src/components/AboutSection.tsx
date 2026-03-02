@@ -117,7 +117,7 @@ const AboutSection = () => {
 
             {/* Hover Detail Area */}
             <div className="mt-6 border-t border-border/20 pt-5">
-              <div className="min-h-[5.5rem] md:min-h-[4.5rem] flex items-start gap-3">
+              <div className="min-h-[5.5rem] md:min-h-[4.5rem] flex flex-col md:flex-row items-start gap-3">
                 <div className="flex-1 relative">
                   <div
                     key={activeMetric || "default"}
