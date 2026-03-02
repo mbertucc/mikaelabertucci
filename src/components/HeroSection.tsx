@@ -41,11 +41,6 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
             <StatRing value={2000} max={2500} label="Pages Analyzed" unit="+" size={90} icon={FileText} hideRing />
             <StatRing value={16} max={20} label="AI Agents Built" unit="" size={90} icon={Bot} hideRing />
           </div>
-          <div className="mt-6 pt-5 border-t border-border/30">
-            <p className="text-sm text-muted-foreground font-body leading-relaxed text-center max-w-xl mx-auto">
-              {profile?.positioning || "I save 20 hours a week letting AI handle the grunt work. That means I spend my time where it counts — setting vision, solving real problems, and building teams that don't just deliver — they thrive."}
-            </p>
-          </div>
         </div>
 
         {/* Company badges */}
