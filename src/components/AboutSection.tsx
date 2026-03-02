@@ -1,4 +1,4 @@
-import { Bot, Clock, RefreshCw } from "lucide-react";
+import { Zap, Target, Users } from "lucide-react";
 import headshot from "@/assets/headshot.png";
 import { useProfile } from "@/hooks/usePortfolioData";
 import StatRing from "@/components/StatRing";
@@ -38,10 +38,25 @@ const AboutSection = () => {
             <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body mb-6 text-left">
               AI-Augmented Impact Dashboard
             </p>
-            <div className="grid grid-cols-3 gap-6 md:gap-8">
-              <StatRing value={20} max={40} label="Hours Saved Weekly" unit="h" size={90} icon={Clock} hideRing />
-              <StatRing value={90} max={100} label="Fewer Clarification Loops" unit="%" size={90} icon={RefreshCw} hideRing />
-              <StatRing value={16} max={20} label="AI Agents Built" unit="" size={90} icon={Bot} hideRing />
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+              <div className="space-y-1 text-center">
+                <Zap className="w-8 h-8 text-primary mx-auto mb-2" />
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body mb-3">Velocity</p>
+                <StatRing value={3} max={5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
+                <StatRing value={50} max={100} label="Faster Planning" unit="%" size={90} hideRing />
+              </div>
+              <div className="space-y-1 text-center">
+                <Target className="w-8 h-8 text-primary mx-auto mb-2" />
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body mb-3">Precision</p>
+                <StatRing value={95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
+                <StatRing value={75} max={100} label="Increase in Accuracy" unit="%" size={90} hideRing />
+              </div>
+              <div className="space-y-1 text-center col-span-2 md:col-span-1">
+                <Users className="w-8 h-8 text-primary mx-auto mb-2" />
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body mb-3">Culture</p>
+                <StatRing value={80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
+                <StatRing value={40} max={100} label="More Strategy Time" unit="%" size={90} hideRing />
+              </div>
             </div>
           </div>
         </div>
