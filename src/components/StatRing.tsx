@@ -10,9 +10,10 @@ interface StatRingProps {
   strokeWidth?: number;
   colorClass?: string;
   icon?: LucideIcon;
+  hideRing?: boolean;
 }
 
-const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, colorClass = "stroke-primary", icon: Icon }: StatRingProps) => {
+const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, colorClass = "stroke-primary", icon: Icon, hideRing = false }: StatRingProps) => {
   const [animatedValue, setAnimatedValue] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<SVGSVGElement>(null);
@@ -47,23 +48,29 @@ const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, c
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <svg ref={ref} width={size} height={size} className="transform -rotate-90">
-        <circle
-          cx={size / 2} cy={size / 2} r={radius}
-          fill="none" strokeWidth={strokeWidth}
-          className="stroke-border/30"
-        />
-        <circle
-          cx={size / 2} cy={size / 2} r={radius}
-          fill="none" strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={circumference - progress}
-          strokeLinecap="round"
-          className={`${colorClass} transition-all duration-100`}
-        />
-      </svg>
+      {!hideRing ? (
+        <svg ref={ref} width={size} height={size} className="transform -rotate-90">
+          <circle
+            cx={size / 2} cy={size / 2} r={radius}
+            fill="none" strokeWidth={strokeWidth}
+            className="stroke-border/30"
+          />
+          <circle
+            cx={size / 2} cy={size / 2} r={radius}
+            fill="none" strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - progress}
+            strokeLinecap="round"
+            className={`${colorClass} transition-all duration-100`}
+          />
+        </svg>
+      ) : (
+        <div ref={ref as any} style={{ width: size, height: size }} className="flex items-center justify-center">
+          {Icon && <Icon className="w-10 h-10 text-primary" />}
+        </div>
+      )}
       <div className="text-center mt-1">
-        {Icon && <Icon className="w-4 h-4 text-muted-foreground mx-auto mb-0.5" />}
+        {!hideRing && Icon && <Icon className="w-4 h-4 text-muted-foreground mx-auto mb-0.5" />}
         <span className="font-display text-2xl text-foreground font-bold">{animatedValue}{unit}</span>
       </div>
       <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body text-center leading-tight">{label}</p>
