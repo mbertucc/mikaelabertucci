@@ -1,30 +1,26 @@
-import { Check, Circle, X, TrendingUp } from "lucide-react";
 import { useSkills } from "@/hooks/usePortfolioData";
 
 const categoryConfig = {
   strong: {
     title: "Strong",
-    icon: <Check className="w-4 h-4" />,
-    colorClass: "text-primary border-primary/30",
-    iconBg: "bg-primary/10",
-    barColor: "bg-primary",
-    level: 90,
+    borderClass: "border-primary/30",
+    headerClass: "text-primary",
+    tagClass: "bg-primary/10 text-primary border-primary/20",
+    noteClass: "text-primary/70",
   },
   moderate: {
-    title: "Moderate",
-    icon: <Circle className="w-4 h-4" />,
-    colorClass: "text-muted-foreground border-border",
-    iconBg: "bg-muted",
-    barColor: "bg-[hsl(var(--amber-warm))]",
-    level: 55,
+    title: "Working Knowledge",
+    borderClass: "border-border",
+    headerClass: "text-muted-foreground",
+    tagClass: "bg-muted text-foreground border-border",
+    noteClass: "text-muted-foreground",
   },
   gap: {
-    title: "Gaps",
-    icon: <X className="w-4 h-4" />,
-    colorClass: "text-accent-foreground border-accent/30",
-    iconBg: "bg-accent/10",
-    barColor: "bg-muted",
-    level: 20,
+    title: "Learning",
+    borderClass: "border-accent/30",
+    headerClass: "text-accent-foreground",
+    tagClass: "bg-accent/10 text-accent-foreground border-accent/20",
+    noteClass: "text-accent-foreground/70",
   },
 };
 
@@ -54,39 +50,24 @@ const SkillsMatrix = () => {
           {(["strong", "moderate", "gap"] as const).map((cat) => {
             const config = categoryConfig[cat];
             return (
-              <div key={cat} className={`glass-card p-6 border ${config.colorClass}`}>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className={`w-8 h-8 rounded-lg ${config.iconBg} flex items-center justify-center ${config.colorClass}`}>
-                    {config.icon}
-                  </div>
-                  <h3 className="font-display text-lg text-foreground">{config.title}</h3>
-                  <span className="ml-auto text-xs font-mono text-muted-foreground">{grouped[cat].length} skills</span>
+              <div key={cat} className={`glass-card p-6 border ${config.borderClass}`}>
+                <h3 className={`font-display text-lg mb-5 ${config.headerClass}`}>{config.title}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {grouped[cat].map((skill) => (
+                    <div key={skill.id} className="group relative">
+                      <span
+                        className={`inline-block px-3 py-1.5 rounded-full text-sm font-body border ${config.tagClass} transition-colors`}
+                      >
+                        {skill.name}
+                      </span>
+                      {skill.note && (
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-card border border-border text-[11px] text-muted-foreground font-body leading-relaxed whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg max-w-[240px] whitespace-normal">
+                          💡 {skill.note}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-                <ul className="space-y-4">
-                  {grouped[cat].map((skill, i) => {
-                    // Vary the bar width slightly per skill for visual interest
-                    const barValue = config.level + (i % 3) * 3 - 3;
-                    return (
-                      <li key={skill.id}>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-sm text-foreground font-body">{skill.name}</span>
-                          <span className="text-[10px] font-mono text-muted-foreground">{Math.min(barValue, 100)}%</span>
-                        </div>
-                        <div className="w-full h-1.5 rounded-full bg-border/30 overflow-hidden">
-                          <div
-                            className={`h-full rounded-full ${config.barColor} transition-all duration-700`}
-                            style={{ width: `${Math.min(barValue, 100)}%` }}
-                          />
-                        </div>
-                        {skill.note && (
-                          <p className="mt-1 text-[10px] text-primary/70 italic leading-relaxed font-body">
-                            💡 {skill.note}
-                          </p>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
               </div>
             );
           })}
