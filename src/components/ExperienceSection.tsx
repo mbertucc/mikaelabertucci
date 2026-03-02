@@ -5,7 +5,7 @@ import { useExperiences } from "@/hooks/usePortfolioData";
 const EARLIER_CAREER_CUTOFF = 5;
 const ALWAYS_SHOW_IDS = ["13d490f8-23d3-4091-9f0a-9774ccbfb350", "64a6c882-9026-4cf9-b638-f5b5b3f0d063"];
 
-/** Wraps numbers/metrics (e.g. "19.4 hours", "35%", "$1M") in monospace spans */
+/** Wraps numbers/metrics in monospace spans */
 const renderBulletText = (text: string) => {
   const parts = text.split(/(\$?\d[\d,.]*%?\s*(?:hours?|hrs?|days?|weeks?|months?|products?|ministries|clients|sprints?|stories|municipalities|years?)?)/gi);
   return parts.map((part, i) => {
@@ -19,6 +19,14 @@ const renderBulletText = (text: string) => {
     return part;
   });
 };
+
+const SECTIONS = [
+  { key: "ai_situation", label: "Situation" },
+  { key: "ai_approach", label: "Approach" },
+  { key: "ai_technical_work", label: "Technical Work" },
+  { key: "achievements", label: "Outcome" },
+  { key: "ai_lessons_learned", label: "Lessons Learned" },
+] as const;
 
 const ExperienceSection = () => {
   const [showEarlierCareer, setShowEarlierCareer] = useState(false);
@@ -34,10 +42,7 @@ const ExperienceSection = () => {
   );
 
   const renderCard = (role: typeof recentRoles[number]) => (
-    <article
-      key={role.id}
-      className="relative pl-6 md:pl-8 group"
-    >
+    <article key={role.id} className="relative pl-6 md:pl-8 group">
       {/* Agentic left accent line */}
       <div className="absolute left-0 top-0 bottom-0 w-px bg-border/40 group-hover:bg-primary/50 transition-colors duration-500" />
       <div className="absolute left-[-2.5px] top-6 w-[6px] h-[6px] rounded-full bg-primary/60 group-hover:bg-primary transition-colors duration-300" />
@@ -56,39 +61,38 @@ const ExperienceSection = () => {
           <p className="text-sm text-muted-foreground font-body">{role.company}</p>
         </header>
 
-        {/* The Challenge */}
-        {role.ai_situation && (
-          <div className="pt-1">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-primary/60 font-body mb-1.5">
-              The Challenge
-            </p>
-            <p className="text-sm text-muted-foreground font-body italic leading-relaxed">
-              {role.ai_situation}
-            </p>
-          </div>
-        )}
+        {/* All sections */}
+        <div className="space-y-4 pt-1">
+          {SECTIONS.map(({ key, label }) => {
+            const value = role[key];
+            if (!value || (Array.isArray(value) && value.length === 0)) return null;
 
-        {/* Strategic Impact */}
-        <div className="space-y-2.5">
-          {(role.achievements || []).map((a: string, j: number) => (
-            <div key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground font-body leading-relaxed">
-              <span className="text-primary/50 mt-0.5 shrink-0 text-xs">▪</span>
-              <span>{renderBulletText(a)}</span>
-            </div>
-          ))}
+            return (
+              <div key={key}>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-primary/60 font-body mb-1.5">
+                  {label}
+                </p>
+
+                {key === "achievements" ? (
+                  <div className="space-y-2">
+                    {(value as string[]).map((a, j) => (
+                      <div key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground font-body leading-relaxed">
+                        <span className="text-primary/50 mt-0.5 shrink-0 text-xs">▪</span>
+                        <span>{renderBulletText(a)}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className={`text-sm text-muted-foreground font-body leading-relaxed ${
+                    key === "ai_situation" ? "italic" : ""
+                  } ${key === "ai_lessons_learned" ? "text-foreground/80" : ""}`}>
+                    {renderBulletText(value as string)}
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </div>
-
-        {/* The Result */}
-        {role.ai_lessons_learned && (
-          <div className="pt-2 border-t border-border/20">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-primary/60 font-body mb-1.5">
-              The Result
-            </p>
-            <p className="text-sm text-foreground/80 font-body leading-relaxed">
-              {role.ai_lessons_learned}
-            </p>
-          </div>
-        )}
       </div>
     </article>
   );
