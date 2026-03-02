@@ -3,7 +3,7 @@ import { Sparkles, ChevronDown, History } from "lucide-react";
 import { useExperiences } from "@/hooks/usePortfolioData";
 
 const EARLIER_CAREER_CUTOFF = 5; // sort_order >= 5 are collapsed
-const ALWAYS_SHOW_IDS = ["13d490f8-23d3-4091-9f0a-9774ccbfb350"]; // Foundations Coaching
+const ALWAYS_SHOW_IDS = ["13d490f8-23d3-4091-9f0a-9774ccbfb350", "64a6c882-9026-4cf9-b638-f5b5b3f0d063"]; // Foundations Coaching, PIMS
 
 const ExperienceSection = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
