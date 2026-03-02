@@ -8,11 +8,11 @@ type MetricKey = "velocity" | "precision" | "culture" | null;
 
 const metricDescriptions: Record<Exclude<MetricKey, null>, string> = {
   velocity:
-    "16 AI agents automate story drafting end-to-end — from intake to acceptance criteria — achieving 3x faster time-to-draft and cutting planning cycles by 50%.",
+    "To achieve 3x faster time-to-draft, I utilize a multi-agent 'Chain of Thought' workflow. The Discovery Agent scans raw meeting transcripts, legislation, and policy manuals to extract core requirements. The Story Architect maps those into standardized Gherkin format. The Reviewer Agent validates against our Definition of Ready before I ever see it — meaning stories arrive 90% complete, so I focus on the 10% requiring human intuition.",
   precision:
-    "Requirement precision hits 95% because AI agents audit every story for edge cases, technical alignment, and cross-team dependencies before it reaches engineering.",
+    "Hitting 95% Requirement Precision is about pre-emptive problem solving. The Edge-Case Agent hunts for 'what-if' scenarios that cause mid-sprint pivots. The Consistency Agent ensures no new requirement contradicts a previous story. The result is a 75% increase in accuracy, virtually eliminating the clarification loops that traditionally slow down development.",
   culture:
-    "80% higher team satisfaction stems from crystal-clear requirements that eliminate rework. With 40% more time freed for vision-setting, teams focus on strategy instead of firefighting.",
+    "80% Higher Team Satisfaction is a direct result of clarity. Stories delivered with 95% precision mean developers code instead of chasing missing details. 20 hours of automated PO overhead gets reinvested into unblocking the team. Sprint planning is 50% faster because the 'Dark Factory' ensures every item is truly Ready — creating a thrive culture led by vision, not bottlenecks.",
 };
 
 const metricLabels: Record<Exclude<MetricKey, null>, string> = {
@@ -126,8 +126,13 @@ const AboutSection = () => {
                   <button
                     className="shrink-0 inline-flex items-center gap-1.5 text-xs font-body text-primary hover:text-primary/80 transition-colors duration-200 border border-primary/20 rounded-full px-3 py-1.5 hover:bg-primary/5 animate-fade-in"
                     onClick={() => {
+                      const deepDivePrompts: Record<Exclude<MetricKey, null>, string> = {
+                        velocity: "Tell me about the multi-agent Chain of Thought workflow you use for 3x faster story drafting — specifically the Discovery Agent, Story Architect, and Reviewer Agent.",
+                        precision: "How do your Edge-Case Agent and Consistency Agent achieve 95% requirement precision and eliminate clarification loops?",
+                        culture: "Explain how automating PO overhead drives 80% higher team satisfaction and creates a 'thrive' culture.",
+                      };
                       const event = new CustomEvent("open-chat", {
-                        detail: `I see you're interested in ${metricLabels[activeMetric]}. Can you walk me through the specific agent workflow you use to achieve these ${metricLabels[activeMetric].toLowerCase()} results?`,
+                        detail: activeMetric ? deepDivePrompts[activeMetric] : "",
                       });
                       window.dispatchEvent(event);
                     }}
