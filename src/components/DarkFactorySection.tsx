@@ -79,7 +79,7 @@ const useAnimatedNumber = (target: number, isVisible: boolean, duration = 1200) 
 };
 
 const impactStats = [
-  { target: 116.5, unit: "hrs", label: "Saved Per Feature", icon: Clock, accent: "primary" as const, decimals: true, key: "saved" },
+  { target: 116.5, unit: "hrs", label: "Saved Per Feature Set", icon: Clock, accent: "primary" as const, decimals: true, key: "saved" },
   { target: 35, unit: "%", label: "Quality Lift", icon: FileCheck, accent: "teal" as const, decimals: false, key: "quality" },
   { target: 60, unit: "+", label: "Stories Drafted", icon: Layers, accent: "amber-warm" as const, decimals: false, key: "stories" },
   { target: 50, unit: "%", label: "Less Cognitive Load", icon: Brain, accent: "primary" as const, decimals: false, key: "cognitive" },
