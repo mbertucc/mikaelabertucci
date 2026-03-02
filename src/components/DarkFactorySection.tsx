@@ -232,7 +232,7 @@ const DarkFactorySection = () => {
           </div>
 
           {/* Hover Detail Area */}
-          <div className="mt-6 min-h-[3rem]">
+          <div className="mt-6 h-[4.5rem] md:h-[3.5rem]">
             <p
               key={activeStat || "default"}
               className="text-sm text-muted-foreground font-body leading-relaxed animate-fade-in"

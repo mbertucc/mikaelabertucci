@@ -91,7 +91,7 @@ const CoreEfficiencyDashboard = () => {
             </div>
 
             {/* Hover Detail Area */}
-            <div className="mt-6 border-t border-border/20 pt-5 min-h-[3rem]">
+            <div className="mt-6 border-t border-border/20 pt-5 h-[4.5rem] md:h-[3.5rem]">
               <p
                 key={activeMetric || "default"}
                 className="text-sm text-muted-foreground font-body leading-relaxed animate-fade-in"
