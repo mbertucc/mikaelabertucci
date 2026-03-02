@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Brain, Clock, FileCheck, Layers, Users, Zap, ChevronDown } from "lucide-react";
+import { Brain, Clock, FileCheck, Layers, Users, Zap, ChevronDown, CheckCircle2, ArrowRight, Lightbulb } from "lucide-react";
 
 const useAnimatedNumber = (target: number, isVisible: boolean, duration = 1200) => {
   const [value, setValue] = useState(0);
@@ -22,7 +22,23 @@ const activities = [
   { activity: "Epic Drafting", count: "9 epics", previous: "~27 hrs", withAI: "~13.5 hrs", saved: "13.5 hrs", improvement: "Draft speed + clarity" },
   { activity: "Story Writing", count: "≈60 stories", previous: "~90 hrs", withAI: "~45 hrs", saved: "45 hrs", improvement: "Structure + completeness" },
   { activity: "Validation & Alignment", count: "—", previous: "~30 hrs", withAI: "~12 hrs", saved: "18 hrs", improvement: "Fewer rework loops" },
-  { activity: "Scenario Spreadsheet", count: "—", previous: "~40 hrs", withAI: "~0 hrs", saved: "40+ hrs", improvement: "Automated cross-referencing" },
+  { activity: "Scenario Spreadsheet", count: "—", previous: "~40 hrs", withAI: "~2.5 hrs", saved: "37.5 hrs", improvement: "Automated cross-referencing" },
+];
+
+const workflowStages = [
+  { stage: "System Setup", human: "Author templates, instructions & working agreements", ai: "Apply rules for structure & compliance", outcome: "Reusable foundation" },
+  { stage: "Scenario Definition", human: "Frame use cases, personas & policy context", ai: "Translate into MVP boundaries & backlog slices", outcome: "Accelerated context" },
+  { stage: "Co-Drafting", human: "Describe problems & desired results", ai: "Produce first-draft epics & stories from templates", outcome: "Quality drafts in minutes" },
+  { stage: "Strategic Refinement", human: "Interpret policy, run chain-of-thought checks", ai: "Surface gaps, contradictions & low-confidence areas", outcome: "Fewer downstream issues" },
+  { stage: "Validation & Sprint Prep", human: "Final calls on sequencing & readiness", ai: "Check completeness & forecast sprint load", outcome: "Clearer sprint plans" },
+];
+
+const strategicBenefits = [
+  "Surfaced gaps early — exposed unclear rules during backlog creation, prompting early collaboration with Policy",
+  "Higher-quality collaboration — BA received complete stories with clear personas and acceptance criteria",
+  "Reduced rework — UX/UI team received full context, eliminating repeated requirement-gathering sessions",
+  "Bigger picture awareness — end-to-end filing flow visible up front, enabling early planning for later epics",
+  "Fewer downstream issues — stories complete on first draft, reducing design mismatches and policy corrections",
 ];
 
 const humanRetained = [
@@ -35,6 +51,7 @@ const humanRetained = [
 const AugmentationSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [tableExpanded, setTableExpanded] = useState(false);
+  const [workflowExpanded, setWorkflowExpanded] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -68,15 +85,15 @@ const AugmentationSection = () => {
             <span className="text-[hsl(var(--amber-warm))] font-medium">
               Manufactured Home Registry Self Serve Feature
             </span>{" "}
-            as the proving ground.
+            as the proving ground. AI saves ~19.4 hours each week by drafting epics and stories, surfacing gaps, checking legislation, and reducing rework across PO, BA, and UX.
           </p>
         </div>
 
         {/* Top-level stat cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           {[
-            { value: hoursSaved, unit: "hrs", label: "Saved Per Feature", sublabel: "6-week sprint", icon: Clock, accent: "primary" },
-            { value: qualityDelta, unit: "%", label: "Quality Improvement", sublabel: "Documentation clarity", icon: FileCheck, accent: "teal" },
+            { value: hoursSaved, unit: "hrs", label: "Saved Per Feature", sublabel: "6-week sprint cycle", icon: Clock, accent: "primary" },
+            { value: qualityDelta, unit: "%", label: "Quality Improvement", sublabel: "Clearer documentation", icon: FileCheck, accent: "teal" },
             { value: storiesWritten, unit: "+", label: "Stories Drafted", sublabel: "With AI co-creation", icon: Layers, accent: "amber-warm" },
             { value: cognitiveReduction, unit: "%", label: "Less Cognitive Load", sublabel: "Routine writing & formatting", icon: Brain, accent: "primary" },
           ].map((stat) => {
@@ -114,6 +131,70 @@ const AugmentationSection = () => {
           })}
         </div>
 
+        {/* Human-in-the-Loop Workflow */}
+        <div className="glass-card overflow-hidden mb-12">
+          <button
+            onClick={() => setWorkflowExpanded(!workflowExpanded)}
+            className="w-full flex items-center justify-between p-5 text-left hover:bg-card/80 transition-colors"
+          >
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body mb-1">
+                Human-in-the-Loop Workflow
+              </p>
+              <p className="text-sm text-muted-foreground font-body">
+                How I partner with AI across 5 stages — staying in the driver seat
+              </p>
+            </div>
+            <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform duration-300 ${workflowExpanded ? "rotate-180" : ""}`} />
+          </button>
+
+          {workflowExpanded && (
+            <div className="border-t border-border/30 animate-fade-in">
+              {/* Desktop headers */}
+              <div className="hidden md:grid grid-cols-4 gap-4 px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body border-b border-border/20">
+                <span>Stage</span>
+                <span>My Role (Human)</span>
+                <span>AI Role (Partnering)</span>
+                <span>Outcome</span>
+              </div>
+
+              {workflowStages.map((row, i) => (
+                <div
+                  key={i}
+                  className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4 px-5 py-4 border-b border-border/10 last:border-b-0 hover:bg-card/60 transition-colors"
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-mono text-primary font-bold">0{i + 1}</span>
+                    <span className="text-sm text-foreground font-body font-medium">{row.stage}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground md:hidden">My Role: </span>
+                    <span className="text-xs text-muted-foreground font-body">{row.human}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground md:hidden">AI Role: </span>
+                    <span className="text-xs text-primary/80 font-body">{row.ai}</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-muted-foreground md:hidden">Outcome: </span>
+                    <span className="text-xs text-[hsl(var(--teal))] font-body font-medium">{row.outcome}</span>
+                  </div>
+                </div>
+              ))}
+
+              {/* Pipeline visual */}
+              <div className="hidden md:flex items-center justify-center py-4 gap-1 bg-card/30">
+                {workflowStages.map((s, i) => (
+                  <div key={i} className="flex items-center gap-1">
+                    <span className="text-[9px] font-mono text-muted-foreground px-2 py-1 rounded bg-background/60 border border-border/30">{s.stage}</span>
+                    {i < workflowStages.length - 1 && <ArrowRight className="w-3 h-3 text-primary/40" />}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Activity breakdown table */}
         <div className="glass-card overflow-hidden mb-12">
           <button
@@ -133,7 +214,6 @@ const AugmentationSection = () => {
 
           {tableExpanded && (
             <div className="border-t border-border/30 animate-fade-in">
-              {/* Table header */}
               <div className="hidden md:grid grid-cols-5 gap-4 px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body border-b border-border/20">
                 <span>Activity</span>
                 <span>Previous Effort</span>
@@ -142,7 +222,6 @@ const AugmentationSection = () => {
                 <span>Key Improvement</span>
               </div>
 
-              {/* Table rows */}
               {activities.map((row, i) => (
                 <div
                   key={i}
@@ -173,25 +252,59 @@ const AugmentationSection = () => {
                 </div>
               ))}
 
-              {/* Total row */}
               <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 px-5 py-4 bg-primary/5 border-t border-primary/20">
                 <span className="text-sm text-foreground font-body font-bold">Total Per Cycle</span>
                 <span className="text-sm text-muted-foreground font-mono">~187 hrs</span>
-                <span className="text-sm text-primary font-mono font-medium">~70.5 hrs</span>
-                <span className="text-sm text-[hsl(var(--teal))] font-mono font-bold">≈116.5 hrs</span>
-                <span className="text-xs text-muted-foreground font-body italic">~19.4 hrs/week gained</span>
+                <span className="text-sm text-primary font-mono font-medium">~73 hrs</span>
+                <span className="text-sm text-[hsl(var(--teal))] font-mono font-bold">≈114 hrs</span>
+                <span className="text-xs text-muted-foreground font-body italic">~19 hrs/week gained</span>
               </div>
             </div>
           )}
         </div>
 
+        {/* Strategic Benefits */}
+        <div className="glass-card p-6 md:p-8 mb-12">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body mb-6">
+            Strategic Benefits
+          </p>
+          <div className="space-y-3">
+            {strategicBenefits.map((benefit, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <CheckCircle2 className="w-4 h-4 text-[hsl(var(--teal))] shrink-0 mt-0.5" />
+                <p className="text-sm text-muted-foreground font-body leading-relaxed">{benefit}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Scenario Spreadsheet callout */}
+        <div className="glass-card p-6 md:p-8 mb-12 ring-1 ring-[hsl(var(--amber-warm)/0.2)]">
+          <div className="flex items-start gap-4">
+            <div className="p-2.5 rounded-lg bg-[hsl(var(--amber-warm)/0.08)] shrink-0">
+              <Lightbulb className="w-5 h-5 text-[hsl(var(--amber-warm))]" />
+            </div>
+            <div>
+              <p className="text-sm text-foreground font-body font-medium mb-2">
+                Scenario Spreadsheet — 40+ Hours Saved
+              </p>
+              <p className="text-sm text-muted-foreground font-body leading-relaxed">
+                Used AI to co-develop a comprehensive scenario spreadsheet covering all filing request variants, requirements, legislative references, and use cases. AI helped structure, cross-reference, and populate the table in 2.5 hours — saving approximately one full week of manual compilation. This spreadsheet was provided to a legal contractor, whose analysis was critical for changing established ways of working.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Human value retained */}
         <div className="glass-card p-6 md:p-8">
-          <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body mb-6">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body mb-4">
             Human Value Retained
           </p>
-          <p className="text-sm text-muted-foreground font-body mb-6 max-w-2xl">
-            AI operates within the framework I created — amplifying my decisions, not replacing them.
+          <p className="text-sm text-muted-foreground font-body mb-2 max-w-3xl">
+            I stay fully in the driver seat. I set the vision, define scope boundaries, interpret legislation, and make all trade-off and prioritization decisions. AI works inside the system I designed — accelerating my work but never replacing my judgment.
+          </p>
+          <p className="text-sm text-muted-foreground font-body mb-6 max-w-3xl">
+            I also use AI to pressure-test ideas, explore edge cases, and run structured chain-of-thought checks — "Where are we guessing?", "What should we verify?", "Which sources might be outdated?" This gives me clearer, more complete stories, which means my BA produces stronger requirements and my designers get full context up front.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {humanRetained.map((item) => {

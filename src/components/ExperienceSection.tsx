@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Sparkles, ChevronDown, TrendingUp, Clock, Target } from "lucide-react";
+import { Sparkles, ChevronDown, TrendingUp, Clock, Target, Bot } from "lucide-react";
 import { useExperiences } from "@/hooks/usePortfolioData";
 
 // Mini horizontal bar for visual interest
@@ -20,10 +20,10 @@ const ExperienceSection = () => {
 
   // Assign visual metrics per role index (fallback data for visual richness)
   const roleMetrics = [
-    { impact: 90, efficiency: 85, scope: 95, impactLabel: "Strategic Impact", effLabel: "Process Efficiency", scopeLabel: "Scope Breadth" },
-    { impact: 80, efficiency: 90, scope: 75, impactLabel: "Strategic Impact", effLabel: "Process Efficiency", scopeLabel: "Scope Breadth" },
-    { impact: 75, efficiency: 70, scope: 80, impactLabel: "Strategic Impact", effLabel: "Process Efficiency", scopeLabel: "Scope Breadth" },
-    { impact: 70, efficiency: 65, scope: 70, impactLabel: "Strategic Impact", effLabel: "Process Efficiency", scopeLabel: "Scope Breadth" },
+    { impact: 95, efficiency: 90, scope: 95, impactLabel: "AI Augmentation", effLabel: "Time Saved", scopeLabel: "Portfolio Breadth", impactIcon: Bot, effIcon: Clock, scopeIcon: Target },
+    { impact: 85, efficiency: 80, scope: 70, impactLabel: "AI Augmentation", effLabel: "Time Saved", scopeLabel: "Portfolio Breadth", impactIcon: Bot, effIcon: Clock, scopeIcon: Target },
+    { impact: 30, efficiency: 70, scope: 80, impactLabel: "AI Augmentation", effLabel: "Process Efficiency", scopeLabel: "Scope Breadth", impactIcon: Bot, effIcon: Clock, scopeIcon: Target },
+    { impact: 20, efficiency: 65, scope: 70, impactLabel: "AI Augmentation", effLabel: "Process Efficiency", scopeLabel: "Scope Breadth", impactIcon: Bot, effIcon: Clock, scopeIcon: Target },
   ];
 
   return (
@@ -71,7 +71,7 @@ const ExperienceSection = () => {
                       <div>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-[10px] text-muted-foreground font-body flex items-center gap-1">
-                            <TrendingUp className="w-3 h-3 text-primary" /> {metrics.impactLabel}
+                            <metrics.impactIcon className="w-3 h-3 text-primary" /> {metrics.impactLabel}
                           </span>
                           <span className="text-[10px] font-mono text-foreground">{metrics.impact}%</span>
                         </div>
@@ -80,7 +80,7 @@ const ExperienceSection = () => {
                       <div>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-[10px] text-muted-foreground font-body flex items-center gap-1">
-                            <Clock className="w-3 h-3 text-[hsl(var(--amber-warm))]" /> {metrics.effLabel}
+                            <metrics.effIcon className="w-3 h-3 text-[hsl(var(--amber-warm))]" /> {metrics.effLabel}
                           </span>
                           <span className="text-[10px] font-mono text-foreground">{metrics.efficiency}%</span>
                         </div>
@@ -89,7 +89,7 @@ const ExperienceSection = () => {
                       <div>
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-[10px] text-muted-foreground font-body flex items-center gap-1">
-                            <Target className="w-3 h-3 text-[hsl(var(--teal))]" /> {metrics.scopeLabel}
+                            <metrics.scopeIcon className="w-3 h-3 text-[hsl(var(--teal))]" /> {metrics.scopeLabel}
                           </span>
                           <span className="text-[10px] font-mono text-foreground">{metrics.scope}%</span>
                         </div>
