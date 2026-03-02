@@ -31,7 +31,7 @@ const AboutSection = () => {
   const displayText = activeMetric ? metricDescriptions[activeMetric] : defaultText;
 
   return (
-    <section id="about" className="py-16 px-6">
+    <section id="about" className="py-8 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="glass-card p-8 md:p-12 space-y-8">
           {/* Top: Headshot + Bio */}
