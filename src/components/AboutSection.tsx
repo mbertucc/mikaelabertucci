@@ -9,7 +9,7 @@ type MetricKey = "velocity" | "precision" | "culture" | null;
 const metricDescriptions: Record<Exclude<MetricKey, null>, string[]> = {
   velocity: [
     "Multi-stage Product Owner Agent with a 'Chain of Thought' workflow.",
-    "Discovery stage scans transcripts, legislation & policy to extract requirements.",
+    "Discovery stage scans 2500+ pages of transcripts, legislation & policy to extract requirements.",
     "Story Architect maps findings into standardized Gherkin format.",
     "Reviewer validates against Definition of Ready — stories arrive 90% complete.",
   ],
