@@ -11,20 +11,26 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   const [chatOpen, setChatOpen] = useState(false);
+  const [chatInitialMessage, setChatInitialMessage] = useState<string | undefined>();
+
+  const handleOpenChat = (initialMessage?: string) => {
+    setChatInitialMessage(initialMessage);
+    setChatOpen(true);
+  };
 
   return (
     <div className="bg-background min-h-screen">
-      <Navbar onOpenChat={() => setChatOpen(true)} />
+      <Navbar onOpenChat={() => handleOpenChat()} />
       <main>
-        <HeroSection onOpenChat={() => setChatOpen(true)} />
-        <ExperienceSection />
+        <HeroSection onOpenChat={() => handleOpenChat()} />
+        <ExperienceSection onQueryRole={(q) => handleOpenChat(q)} />
         <DarkFactorySection />
         <AugmentationSection />
         <SkillsMatrix />
         <JDAnalyzer />
       </main>
       <Footer />
-      <ChatDrawer isOpen={chatOpen} onClose={() => setChatOpen(false)} />
+      <ChatDrawer isOpen={chatOpen} onClose={() => { setChatOpen(false); setChatInitialMessage(undefined); }} initialMessage={chatInitialMessage} />
     </div>
   );
 };
