@@ -9,8 +9,8 @@ const steps = [
     accent: "amber-warm" as const,
     icon: FileText,
     content:
-      "200+ pages of the **Manufactured Home Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.",
-    stat: "200+",
+      "2000+ pages of the **Manufactured Home Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.",
+    stat: "2000+",
     statLabel: "Pages of Legislation",
   },
   {
@@ -20,7 +20,7 @@ const steps = [
     accent: "primary" as const,
     icon: Cpu,
     content:
-      "I build **custom AI agents** using a **context engineering** approach — replacing weeks of manual analysis of **legislation, policy documents, business rules, and requirements** with structured, traceable outputs in minutes — saving **20 hours** per legislative package.",
+      "I build **custom AI agents** using a **context engineering** approach — replacing weeks of manual analysis of **legislation, policy documents, business rules, and requirements** with structured, traceable outputs in minutes — saving **20 hours per week**.",
     stat: "20hrs",
     statLabel: "Saved Per Week",
   },
