@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import HeroIntro from "@/components/HeroIntro";
 import AboutSection from "@/components/AboutSection";
@@ -13,10 +13,19 @@ const Index = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [chatInitialMessage, setChatInitialMessage] = useState<string | undefined>();
 
-  const handleOpenChat = (initialMessage?: string) => {
+  const handleOpenChat = useCallback((initialMessage?: string) => {
     setChatInitialMessage(initialMessage);
     setChatOpen(true);
-  };
+  }, []);
+
+  useEffect(() => {
+    const onOpenChat = (e: Event) => {
+      const detail = (e as CustomEvent).detail as string;
+      handleOpenChat(detail);
+    };
+    window.addEventListener("open-chat", onOpenChat);
+    return () => window.removeEventListener("open-chat", onOpenChat);
+  }, [handleOpenChat]);
 
   return (
     <div className="bg-background min-h-screen">

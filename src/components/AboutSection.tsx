@@ -1,10 +1,34 @@
-import { Zap, Target, Users } from "lucide-react";
+import { useState } from "react";
+import { Zap, Target, Users, Sparkles } from "lucide-react";
 import headshot from "@/assets/headshot.png";
 import { useProfile } from "@/hooks/usePortfolioData";
 import StatRing from "@/components/StatRing";
 
+type MetricKey = "velocity" | "precision" | "culture" | null;
+
+const metricDescriptions: Record<Exclude<MetricKey, null>, string> = {
+  velocity:
+    "16 AI agents automate story drafting end-to-end — from intake to acceptance criteria — achieving 3x faster time-to-draft and cutting planning cycles by 50%.",
+  precision:
+    "Requirement precision hits 95% because AI agents audit every story for edge cases, technical alignment, and cross-team dependencies before it reaches engineering.",
+  culture:
+    "80% higher team satisfaction stems from crystal-clear requirements that eliminate rework. With 40% more time freed for vision-setting, teams focus on strategy instead of firefighting.",
+};
+
+const metricLabels: Record<Exclude<MetricKey, null>, string> = {
+  velocity: "Velocity",
+  precision: "Precision",
+  culture: "Culture",
+};
+
+const defaultText =
+  "Hover over a metric to see how an Agentic Product Owner drives these results.";
+
 const AboutSection = () => {
   const { data: profile } = useProfile();
+  const [activeMetric, setActiveMetric] = useState<MetricKey>(null);
+
+  const displayText = activeMetric ? metricDescriptions[activeMetric] : defaultText;
 
   return (
     <section id="about" className="py-8 px-6">
@@ -39,29 +63,79 @@ const AboutSection = () => {
               AI-Augmented Impact Dashboard
             </p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-              <div className="text-center space-y-3">
-                <div className="flex items-center justify-center gap-1.5 mb-1">
-                  <Zap className="w-4 h-4 text-primary" />
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body">Velocity</p>
+              {/* Velocity */}
+              <div
+                className="text-center space-y-3 cursor-pointer group"
+                onMouseEnter={() => setActiveMetric("velocity")}
+                onMouseLeave={() => setActiveMetric(null)}
+              >
+                <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : ""}`}>
+                  <Zap className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "velocity" ? "text-primary scale-125" : "text-primary"}`} />
+                  <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : "text-muted-foreground"}`}>Velocity</p>
                 </div>
                 <StatRing value={3} max={5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
                 <StatRing value={50} max={100} label="Faster Planning" unit="%" size={90} hideRing />
               </div>
-              <div className="text-center space-y-3">
-                <div className="flex items-center justify-center gap-1.5 mb-1">
-                  <Target className="w-4 h-4 text-primary" />
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body">Precision</p>
+
+              {/* Precision */}
+              <div
+                className="text-center space-y-3 cursor-pointer group"
+                onMouseEnter={() => setActiveMetric("precision")}
+                onMouseLeave={() => setActiveMetric(null)}
+              >
+                <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "precision" ? "text-primary" : ""}`}>
+                  <Target className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "precision" ? "text-primary scale-125" : "text-primary"}`} />
+                  <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "precision" ? "text-primary" : "text-muted-foreground"}`}>Precision</p>
                 </div>
                 <StatRing value={95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
                 <StatRing value={75} max={100} label="Increase in Accuracy" unit="%" size={90} hideRing />
               </div>
-              <div className="text-center space-y-3 col-span-2 md:col-span-1">
-                <div className="flex items-center justify-center gap-1.5 mb-1">
-                  <Users className="w-4 h-4 text-primary" />
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body">Culture</p>
+
+              {/* Culture */}
+              <div
+                className="text-center space-y-3 col-span-2 md:col-span-1 cursor-pointer group"
+                onMouseEnter={() => setActiveMetric("culture")}
+                onMouseLeave={() => setActiveMetric(null)}
+              >
+                <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "culture" ? "text-primary" : ""}`}>
+                  <Users className={`w-4 h-4 transition-transform duration-200 ${activeMetric === "culture" ? "text-primary scale-125" : "text-primary"}`} />
+                  <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "culture" ? "text-primary" : "text-muted-foreground"}`}>Culture</p>
                 </div>
                 <StatRing value={80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
                 <StatRing value={40} max={100} label="More Strategy Time" unit="%" size={90} hideRing />
+              </div>
+            </div>
+
+            {/* Hover Detail Area */}
+            <div className="mt-6 border-t border-border/20 pt-5">
+              <div className="min-h-[3.5rem] flex items-start gap-3">
+                <div className="flex-1 relative">
+                  <p
+                    key={activeMetric || "default"}
+                    className="text-sm text-muted-foreground font-body leading-relaxed animate-fade-in"
+                  >
+                    {activeMetric && (
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mr-2">
+                        {metricLabels[activeMetric]} ›
+                      </span>
+                    )}
+                    {displayText}
+                  </p>
+                </div>
+                {activeMetric && (
+                  <button
+                    className="shrink-0 inline-flex items-center gap-1.5 text-xs font-body text-primary hover:text-primary/80 transition-colors duration-200 border border-primary/20 rounded-full px-3 py-1.5 hover:bg-primary/5 animate-fade-in"
+                    onClick={() => {
+                      const event = new CustomEvent("open-chat", {
+                        detail: `I see you're interested in ${metricLabels[activeMetric]}. Can you walk me through the specific agent workflow you use to achieve these ${metricLabels[activeMetric].toLowerCase()} results?`,
+                      });
+                      window.dispatchEvent(event);
+                    }}
+                  >
+                    <Sparkles className="w-3.5 h-3.5" />
+                    Deep Dive with AI
+                  </button>
+                )}
               </div>
             </div>
           </div>
