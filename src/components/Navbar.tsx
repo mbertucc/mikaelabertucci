@@ -1,10 +1,13 @@
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 interface NavbarProps {
   onOpenChat: () => void;
 }
 
 const Navbar = ({ onOpenChat }: NavbarProps) => {
+  const { theme, setTheme } = useTheme();
+
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
@@ -18,7 +21,7 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
         >
           MB
         </button>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4 md:gap-8">
           <button
             onClick={() => scrollTo("experience")}
             className="text-sm font-body tracking-wide text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
@@ -30,6 +33,13 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
             className="text-sm font-body tracking-wide text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
           >
             Fit Check
+          </button>
+          <button
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card transition-colors"
+            aria-label="Toggle dark mode"
+          >
+            {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
           <button
             onClick={onOpenChat}
