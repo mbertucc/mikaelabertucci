@@ -1,11 +1,7 @@
-import { MessageSquare, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useProfile } from "@/hooks/usePortfolioData";
 
-interface HeroCTAProps {
-  onOpenChat: () => void;
-}
-
-const HeroCTA = ({ onOpenChat }: HeroCTAProps) => {
+const HeroCTA = () => {
   const { data: profile } = useProfile();
 
   return (
@@ -22,7 +18,6 @@ const HeroCTA = ({ onOpenChat }: HeroCTAProps) => {
             </span>
           ))}
         </div>
-
       </div>
 
       {/* Scroll indicator */}

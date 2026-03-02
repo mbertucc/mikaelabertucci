@@ -27,7 +27,7 @@ const Index = () => {
         <HeroIntro />
         <AboutSection onOpenChat={() => handleOpenChat()} />
         <ImpactDashboardSection />
-        <HeroCTA onOpenChat={() => handleOpenChat()} />
+        <HeroCTA />
         <ExperienceSection />
         <DarkFactorySection />
         <SkillsMatrix />
