@@ -12,7 +12,7 @@ const metricDescriptions: Record<Exclude<MetricKey, null>, string> = {
   precision:
     "Hitting 95% Requirement Precision is about pre-emptive problem solving. The Edge-Case Agent hunts for 'what-if' scenarios that cause mid-sprint pivots. The Consistency Agent ensures no new requirement contradicts a previous story. The result is a 75% increase in accuracy, virtually eliminating the clarification loops that traditionally slow down development.",
   culture:
-    "80% Higher Team Satisfaction is a direct result of clarity. Stories delivered with 95% precision mean developers code instead of chasing missing details. 20 hours of automated PO overhead gets reinvested into unblocking the team. Sprint planning is 50% faster because the 'Dark Factory' ensures every item is truly Ready — creating a thrive culture led by vision, not bottlenecks.",
+    "80% Higher Team Satisfaction is a direct result of clarity. Stories delivered with 95% precision mean developers code instead of chasing missing details. 20 hours of automated PO overhead gets reinvested into unblocking the team. Sprint planning is 50% faster because the Context Engineering ensures every item is truly Ready — creating a thrive culture led by vision, not bottlenecks.",
 };
 
 const metricLabels: Record<Exclude<MetricKey, null>, string> = {
