@@ -23,6 +23,18 @@ const HeroIntro = () => {
         <p className="text-2xl md:text-3xl font-display italic text-primary">
           {profile?.title || "Agentic Product Owner | Context Engineer"}
         </p>
+
+        {/* Company badges */}
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          {(profile?.company_badges || ["Real Estate Applications", "Registry Applications"]).map((company: string) => (
+            <span
+              key={company}
+              className="px-4 py-1.5 text-xs font-body font-medium tracking-wide text-secondary-foreground bg-secondary rounded-full border border-border/50"
+            >
+              {company}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );
