@@ -22,9 +22,6 @@ const AboutSection = () => {
 
           {/* Bio */}
           <div className="space-y-4 text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-display text-foreground">
-              {profile?.full_name || "Mikaela Bertucci"}
-            </h2>
             <p className="text-base text-muted-foreground font-body leading-relaxed max-w-xl">
               {profile?.positioning ||
                 "I save 20 hours a week letting AI handle the grunt work. That means I spend my time where it counts — setting vision, solving real problems, and building teams that don't just deliver — they thrive."}
