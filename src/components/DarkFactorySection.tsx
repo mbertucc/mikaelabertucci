@@ -89,7 +89,7 @@ type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
 
 const statDescriptions: Record<Exclude<StatKey, null>, string> = {
   saved: "By deploying a multilevel agent tailored to the Manufactured Home Registry, I automated the heavy lifting of discovery and drafting for this feature.",
-  quality: "The agent partners with me to uncover deep edge cases and business requirements that often go unnoticed. Once surfaced, I confirm accuracy with the business, ensuring 35% higher quality through collaborative validation.",
+  quality: "The 35% quality lift comes from a partnership: the multilevel agent systematically uncovers deep edge cases and business requirements that often go unnoticed, then I confirm each finding with the business to ensure final accuracy — a collaborative validation loop that consistently elevates documentation quality.",
   stories: "My agentic workflow generated 60+ user stories, each pre-validated for technical feasibility and FOIPPA privacy standards.",
   cognitive: "With 16 multilevel agents managing the tactical overhead across different products, I can focus entirely on high-level vision and team leadership.",
 };
