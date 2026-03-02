@@ -79,14 +79,31 @@ const useAnimatedNumber = (target: number, isVisible: boolean, duration = 1200) 
 };
 
 const impactStats = [
-  { target: 116.5, unit: "hrs", label: "Saved Per Feature", icon: Clock, accent: "primary" as const, decimals: true },
-  { target: 35, unit: "%", label: "Quality Lift", icon: FileCheck, accent: "teal" as const, decimals: false },
-  { target: 60, unit: "+", label: "Stories Drafted", icon: Layers, accent: "amber-warm" as const, decimals: false },
-  { target: 50, unit: "%", label: "Less Cognitive Load", icon: Brain, accent: "primary" as const, decimals: false },
+  { target: 116.5, unit: "hrs", label: "Saved Per Feature", icon: Clock, accent: "primary" as const, decimals: true, key: "saved" },
+  { target: 35, unit: "%", label: "Quality Lift", icon: FileCheck, accent: "teal" as const, decimals: false, key: "quality" },
+  { target: 60, unit: "+", label: "Stories Drafted", icon: Layers, accent: "amber-warm" as const, decimals: false, key: "stories" },
+  { target: 50, unit: "%", label: "Less Cognitive Load", icon: Brain, accent: "primary" as const, decimals: false, key: "cognitive" },
 ];
+
+type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
+
+const statDescriptions: Record<Exclude<StatKey, null>, string> = {
+  saved: "The total aggregate of time saved across discovery, drafting, and refinement for a single major feature.",
+  quality: "A metric indicating fewer bugs or logic gaps found in the final delivered feature compared to historical benchmarks.",
+  stories: "The volume of work the agentic system handled during this specific 6-week window.",
+  cognitive: "This quantifies the reduction in mental 'switching costs' and administrative fatigue, allowing you to maintain high-level focus without getting bogged down in minutiae.",
+};
+
+const statHoverLabels: Record<Exclude<StatKey, null>, string> = {
+  saved: "116.5hrs Saved Per Feature",
+  quality: "35% Quality Lift",
+  stories: "60+ Stories Drafted",
+  cognitive: "50% Less Cognitive Load",
+};
 
 const DarkFactorySection = () => {
   const [visible, setVisible] = useState(false);
+  const [activeStat, setActiveStat] = useState<StatKey>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -184,28 +201,54 @@ const DarkFactorySection = () => {
         </div>
 
         {/* Impact Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
-          {impactStats.map((stat) => {
-            const Icon = stat.icon;
-            const val = useAnimatedNumber(stat.target, visible);
-            const s = accentStyles[stat.accent];
-            return (
-              <div key={stat.label} className="glass-card p-5 space-y-2">
-                <div className={`inline-flex p-2 rounded-lg ${s.bg}`}>
-                  <Icon className={`w-4 h-4 ${s.text}`} />
+        <div className="py-1" onMouseLeave={() => setActiveStat(null)}>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
+            {impactStats.map((stat) => {
+              const Icon = stat.icon;
+              const val = useAnimatedNumber(stat.target, visible);
+              const s = accentStyles[stat.accent];
+              const isActive = activeStat === stat.key;
+              return (
+                <div
+                  key={stat.label}
+                  className={`glass-card p-5 space-y-2 cursor-pointer transition-all duration-200 ${isActive ? "ring-1 ring-primary/30 scale-[1.02]" : ""}`}
+                  onMouseEnter={() => setActiveStat(stat.key as StatKey)}
+                >
+                  <div className={`inline-flex p-2 rounded-lg ${s.bg}`}>
+                    <Icon className={`w-4 h-4 ${s.text}`} />
+                  </div>
+                  <div>
+                    <span className={`font-display text-2xl font-bold ${s.text}`}>
+                      {stat.decimals ? val.toFixed(1) : Math.round(val)}
+                    </span>
+                    <span className={`text-sm font-display ${s.text}`}>{stat.unit}</span>
+                  </div>
+                  <p className="text-[10px] uppercase tracking-[0.15em] text-foreground font-body font-medium">
+                    {stat.label}
+                  </p>
                 </div>
-                <div>
-                  <span className={`font-display text-2xl font-bold ${s.text}`}>
-                    {stat.decimals ? val.toFixed(1) : Math.round(val)}
+              );
+            })}
+          </div>
+
+          {/* Hover Detail Area */}
+          <div className="mt-6 min-h-[3rem]">
+            <p
+              key={activeStat || "default"}
+              className="text-sm text-muted-foreground font-body leading-relaxed animate-fade-in"
+            >
+              {activeStat ? (
+                <>
+                  <span className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mr-2">
+                    {statHoverLabels[activeStat]} ›
                   </span>
-                  <span className={`text-sm font-display ${s.text}`}>{stat.unit}</span>
-                </div>
-                <p className="text-[10px] uppercase tracking-[0.15em] text-foreground font-body font-medium">
-                  {stat.label}
-                </p>
-              </div>
-            );
-          })}
+                  {statDescriptions[activeStat]}
+                </>
+              ) : (
+                "Hover over a metric to learn what it measures and why it matters."
+              )}
+            </p>
+          </div>
         </div>
 
         <p className="text-center text-xs text-muted-foreground font-body mt-6">
