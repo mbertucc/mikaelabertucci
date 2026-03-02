@@ -7,6 +7,7 @@ interface ExperienceSectionProps {
 }
 
 const EARLIER_CAREER_CUTOFF = 5; // sort_order >= 5 are collapsed
+const ALWAYS_SHOW_IDS = ["13d490f8-23d3-4091-9f0a-9774ccbfb350"]; // Foundations Coaching
 
 const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -15,8 +16,8 @@ const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
 
   if (isLoading) return null;
 
-  const recentRoles = (experiences || []).filter((r) => r.sort_order < EARLIER_CAREER_CUTOFF);
-  const earlierRoles = (experiences || []).filter((r) => r.sort_order >= EARLIER_CAREER_CUTOFF);
+  const recentRoles = (experiences || []).filter((r) => r.sort_order < EARLIER_CAREER_CUTOFF || ALWAYS_SHOW_IDS.includes(r.id));
+  const earlierRoles = (experiences || []).filter((r) => r.sort_order >= EARLIER_CAREER_CUTOFF && !ALWAYS_SHOW_IDS.includes(r.id));
 
   const renderCard = (role: typeof recentRoles[number], i: number) => {
     const isExpanded = expandedIndex === i;
