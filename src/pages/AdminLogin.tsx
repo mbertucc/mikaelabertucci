@@ -7,16 +7,30 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      toast.error(error.message);
+    if (isSignUp) {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { emailRedirectTo: window.location.origin },
+      });
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success("Check your email for a confirmation link!");
+      }
     } else {
-      navigate("/admin");
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        toast.error(error.message);
+      } else {
+        navigate("/admin");
+      }
     }
     setLoading(false);
   };
@@ -24,8 +38,10 @@ const AdminLogin = () => {
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="glass-card p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-display text-foreground mb-6 text-center">Admin Login</h1>
-        <form onSubmit={handleLogin} className="space-y-4">
+        <h1 className="text-2xl font-display text-foreground mb-6 text-center">
+          {isSignUp ? "Create Account" : "Admin Login"}
+        </h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
             value={email}
@@ -47,9 +63,15 @@ const AdminLogin = () => {
             disabled={loading}
             className="w-full py-3 bg-primary text-primary-foreground font-body font-semibold text-sm rounded-lg hover:brightness-110 transition-all disabled:opacity-40"
           >
-            {loading ? "Signing in…" : "Sign In"}
+            {loading ? (isSignUp ? "Creating…" : "Signing in…") : (isSignUp ? "Create Account" : "Sign In")}
           </button>
         </form>
+        <button
+          onClick={() => setIsSignUp(!isSignUp)}
+          className="mt-4 w-full text-center text-xs text-muted-foreground hover:text-foreground transition-colors font-body"
+        >
+          {isSignUp ? "Already have an account? Sign in" : "Need an account? Sign up"}
+        </button>
       </div>
     </div>
   );
