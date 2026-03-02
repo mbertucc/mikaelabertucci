@@ -5,7 +5,7 @@ const AboutSection = () => {
   const { data: profile } = useProfile();
 
   return (
-    <section id="about" className="py-24 px-6">
+    <section id="about" className="py-8 px-6">
       <div className="max-w-5xl mx-auto">
         <div className="glass-card p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 md:gap-14">
           {/* Headshot */}

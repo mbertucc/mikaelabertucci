@@ -3,7 +3,7 @@ import StatRing from "@/components/StatRing";
 
 const ImpactDashboardSection = () => {
   return (
-    <section className="py-12 px-6">
+    <section className="py-6 px-6">
       <div className="max-w-3xl mx-auto">
         <div className="glass-card p-6 md:p-8">
           <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-body mb-6 text-left">
