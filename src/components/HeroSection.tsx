@@ -1,4 +1,4 @@
-import { MessageSquare, ChevronDown, FileText, Bot, Clock } from "lucide-react";
+import { MessageSquare, ChevronDown, FileText, Bot, Clock, RefreshCw } from "lucide-react";
 import { useProfile } from "@/hooks/usePortfolioData";
 import StatRing from "@/components/StatRing";
 
@@ -37,7 +37,7 @@ const HeroSection = ({ onOpenChat }: HeroSectionProps) => {
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             <StatRing value={20} max={40} label="Hours Saved Weekly" unit="h" size={90} icon={Clock} hideRing />
-            <StatRing value={90} max={100} label="Fewer Clarification Loops" unit="%" colorClass="stroke-[hsl(var(--teal))]" size={90} />
+            <StatRing value={90} max={100} label="Fewer Clarification Loops" unit="%" size={90} icon={RefreshCw} hideRing />
             <StatRing value={2000} max={2500} label="Pages Analyzed" unit="+" size={90} colorClass="stroke-[hsl(var(--accent))]" icon={FileText} />
             <StatRing value={16} max={20} label="AI Agents Built" unit="" size={90} colorClass="stroke-[hsl(var(--primary))]" icon={Bot} />
           </div>
