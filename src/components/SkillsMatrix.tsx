@@ -36,7 +36,7 @@ const SkillsMatrix = () => {
   };
 
   return (
-    <section className="py-14 px-6 bg-card/30">
+    <section className="py-20 px-6 bg-card/30">
       <div className="max-w-5xl mx-auto">
         <div className="mb-16">
           <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">Capability Radar</p>

@@ -69,7 +69,7 @@ const JDAnalyzer = () => {
   };
 
   return (
-    <section id="fit-check" className="py-14 px-6">
+    <section id="fit-check" className="py-20 px-6">
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <h2 className="text-4xl md:text-5xl font-display text-foreground mb-4">Honest Fit Assessment</h2>
