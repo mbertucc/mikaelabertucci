@@ -167,3 +167,8 @@ body::before {
   background-repeat: repeat;
   background-size: 256px 256px;
 }
+
+.dark body::before {
+  opacity: 0.03;
+  filter: invert(1);
+}
