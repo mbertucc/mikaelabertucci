@@ -16,7 +16,7 @@ interface StatRingProps {
 const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, colorClass = "stroke-primary", icon: Icon, hideRing = false }: StatRingProps) => {
   const [animatedValue, setAnimatedValue] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<SVGSVGElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -47,9 +47,9 @@ const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, c
   }, [isVisible, value]);
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div ref={ref} className="flex flex-col items-center gap-2">
       {!hideRing ? (
-        <svg ref={ref} width={size} height={size} className="transform -rotate-90">
+        <svg width={size} height={size} className="transform -rotate-90">
           <circle
             cx={size / 2} cy={size / 2} r={radius}
             fill="none" strokeWidth={strokeWidth}
@@ -64,11 +64,11 @@ const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, c
             className={`${colorClass} transition-all duration-100`}
           />
         </svg>
-      ) : (
-        <div ref={ref as any} style={{ width: size, height: size }} className="flex items-center justify-center">
-          {Icon && <Icon className="w-10 h-10 text-primary" />}
+      ) : Icon ? (
+        <div style={{ width: size, height: size }} className="flex items-center justify-center">
+          <Icon className="w-10 h-10 text-primary" />
         </div>
-      )}
+      ) : null}
       <div className="text-center mt-1">
         {!hideRing && Icon && <Icon className="w-4 h-4 text-muted-foreground mx-auto mb-0.5" />}
         <span className="font-display text-2xl text-foreground font-bold">{animatedValue}{unit}</span>
