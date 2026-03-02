@@ -1,6 +1,6 @@
 import {
   Dumbbell, CircleDot, Bike, Car, Flame,
-  Dog, TreePine, Heart, Sparkles, Music, Sprout,
+  Dog, TreePine, Heart, Sparkles, Music, Sprout, Link,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -21,6 +21,7 @@ const interests: Interest[] = [
   { label: "AI in Daily Life", icon: Sparkles },
   { label: "70s · 80s · 90s", icon: Music },
   { label: "Plant Mom", icon: Sprout },
+  { label: "Blockchain & Crypto", icon: Link },
 ];
 
 const BeyondWorkSection = () => (
