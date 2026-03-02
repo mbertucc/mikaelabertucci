@@ -18,9 +18,10 @@ const suggestedQuestions = [
 interface ChatDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  initialMessage?: string;
 }
 
-const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
+const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
@@ -29,7 +30,14 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [pendingInitial, setPendingInitial] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (isOpen && initialMessage) {
+      setPendingInitial(initialMessage);
+    }
+  }, [isOpen, initialMessage]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -109,6 +117,14 @@ const ChatDrawer = ({ isOpen, onClose }: ChatDrawerProps) => {
       setIsLoading(false);
     }
   };
+
+  // Trigger initial message after handleSend is available
+  useEffect(() => {
+    if (pendingInitial && !isLoading) {
+      handleSend(pendingInitial);
+      setPendingInitial(null);
+    }
+  }, [pendingInitial]);
 
   if (!isOpen) return null;
 

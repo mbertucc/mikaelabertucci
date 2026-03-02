@@ -1,8 +1,12 @@
 import { useState } from "react";
-import { Sparkles, ChevronDown } from "lucide-react";
+import { Sparkles, ChevronDown, MessageSquare } from "lucide-react";
 import { useExperiences } from "@/hooks/usePortfolioData";
 
-const ExperienceSection = () => {
+interface ExperienceSectionProps {
+  onQueryRole?: (question: string) => void;
+}
+
+const ExperienceSection = ({ onQueryRole }: ExperienceSectionProps) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const { data: experiences, isLoading } = useExperiences();
 
@@ -15,7 +19,7 @@ const ExperienceSection = () => {
           <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">Career Timeline</p>
           <h2 className="text-4xl md:text-5xl font-display text-foreground mb-4">Experience</h2>
           <p className="text-muted-foreground font-body text-lg max-w-2xl">
-            Each role includes queryable AI context—the real story behind the bullet points.
+            Tap "Ask AI" on any role to query the assistant about that specific experience.
           </p>
         </div>
 
@@ -41,14 +45,25 @@ const ExperienceSection = () => {
                   ))}
                 </ul>
 
-                <button
-                  onClick={() => setExpandedIndex(isExpanded ? null : i)}
-                  className="flex items-center gap-2 text-sm font-body text-primary/80 hover:text-primary transition-colors mt-4"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  {isExpanded ? "Hide AI Context" : "Show AI Context"}
-                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
-                </button>
+                <div className="flex items-center gap-4 mt-4">
+                  <button
+                    onClick={() => setExpandedIndex(isExpanded ? null : i)}
+                    className="flex items-center gap-2 text-sm font-body text-primary/80 hover:text-primary transition-colors"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    {isExpanded ? "Hide AI Context" : "Show AI Context"}
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} />
+                  </button>
+                  {onQueryRole && (
+                    <button
+                      onClick={() => onQueryRole(`Tell me about Mikaela's experience at ${role.company} as ${role.title_progression}. What did she accomplish and what was her approach?`)}
+                      className="flex items-center gap-2 text-sm font-body text-accent-foreground/80 hover:text-accent-foreground bg-accent/50 hover:bg-accent px-3 py-1.5 rounded-lg transition-colors"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      Ask AI
+                    </button>
+                  )}
+                </div>
 
                 {isExpanded && (
                   <div className="mt-6 p-6 bg-background/60 rounded-lg border border-border/30 space-y-5 animate-fade-in">
