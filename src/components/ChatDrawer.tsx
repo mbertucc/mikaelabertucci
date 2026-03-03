@@ -156,7 +156,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
                 className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm font-body leading-relaxed ${
                   msg.role === "user"
                     ? "bg-primary text-primary-foreground rounded-br-md"
-                    : "bg-secondary text-secondary-foreground rounded-bl-md"
+                    : "bg-muted/20 text-foreground rounded-bl-md"
                 }`}
               >
                 {msg.role === "assistant" ? (
@@ -169,7 +169,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
           ))}
           {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
             <div className="flex justify-start">
-              <div className="bg-secondary px-4 py-3 rounded-2xl rounded-bl-md">
+              <div className="bg-muted/20 px-4 py-3 rounded-2xl rounded-bl-md">
                 <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
               </div>
             </div>
@@ -184,7 +184,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
               <button
                 key={q}
                 onClick={() => handleSend(q)}
-                className="px-3 py-1.5 text-xs font-body text-secondary-foreground bg-secondary rounded-full border border-border/50 hover:text-primary-foreground hover:bg-primary hover:border-primary/30 transition-colors"
+                className="px-3 py-1.5 text-xs font-body text-foreground bg-secondary rounded-full border border-border/50 hover:text-primary-foreground hover:bg-primary hover:border-primary/30 transition-colors"
               >
                 {q}
               </button>
@@ -200,7 +200,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               placeholder="Ask me anything..."
-              className="flex-1 px-4 py-3 bg-secondary rounded-xl text-sm font-body text-secondary-foreground placeholder:text-secondary-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50"
+              className="flex-1 px-4 py-3 bg-secondary rounded-xl text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
             />
             <button
               onClick={() => handleSend()}
