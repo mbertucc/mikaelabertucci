@@ -38,6 +38,98 @@ export type Database = {
         }
         Relationships: []
       }
+      analytics_page_views: {
+        Row: {
+          created_at: string
+          id: string
+          page_path: string
+          referrer: string | null
+          session_id: string
+          user_agent: string | null
+          visitor_hash: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          page_path: string
+          referrer?: string | null
+          session_id: string
+          user_agent?: string | null
+          visitor_hash: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          page_path?: string
+          referrer?: string | null
+          session_id?: string
+          user_agent?: string | null
+          visitor_hash?: string
+        }
+        Relationships: []
+      }
+      analytics_sessions: {
+        Row: {
+          id: string
+          is_bot: boolean
+          last_activity: string
+          page_views_count: number
+          session_id: string
+          started_at: string
+          visitor_hash: string
+        }
+        Insert: {
+          id?: string
+          is_bot?: boolean
+          last_activity?: string
+          page_views_count?: number
+          session_id: string
+          started_at?: string
+          visitor_hash: string
+        }
+        Update: {
+          id?: string
+          is_bot?: boolean
+          last_activity?: string
+          page_views_count?: number
+          session_id?: string
+          started_at?: string
+          visitor_hash?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analytics_sessions_visitor_hash_fkey"
+            columns: ["visitor_hash"]
+            isOneToOne: false
+            referencedRelation: "analytics_visitors"
+            referencedColumns: ["visitor_hash"]
+          },
+        ]
+      }
+      analytics_visitors: {
+        Row: {
+          first_seen: string
+          id: string
+          last_seen: string
+          visit_count: number
+          visitor_hash: string
+        }
+        Insert: {
+          first_seen?: string
+          id?: string
+          last_seen?: string
+          visit_count?: number
+          visitor_hash: string
+        }
+        Update: {
+          first_seen?: string
+          id?: string
+          last_seen?: string
+          visit_count?: number
+          visitor_hash?: string
+        }
+        Relationships: []
+      }
       experiences: {
         Row: {
           achievements: string[]
