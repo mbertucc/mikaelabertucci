@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { LogOut, Save, Plus, Trash2, Users } from "lucide-react";
+import { LogOut, Save, Plus, Trash2, Users, BarChart3 } from "lucide-react";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -151,9 +151,14 @@ const Admin = () => {
         <h1 className="font-display text-xl text-primary">Admin Panel</h1>
         <div className="flex items-center gap-4">
           {isAdmin && (
-            <button onClick={() => navigate("/admin/users")} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
-              <Users className="w-4 h-4" /> Users
-            </button>
+            <>
+              <button onClick={() => navigate("/admin/analytics")} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
+                <BarChart3 className="w-4 h-4" /> Analytics
+              </button>
+              <button onClick={() => navigate("/admin/users")} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
+                <Users className="w-4 h-4" /> Users
+              </button>
+            </>
           )}
           <button onClick={handleLogout} className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors font-body">
             <LogOut className="w-4 h-4" /> Sign Out
