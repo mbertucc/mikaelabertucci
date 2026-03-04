@@ -325,6 +325,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_session_page_views: {
+        Args: { p_session_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "user"
