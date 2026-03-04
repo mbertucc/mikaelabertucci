@@ -9,7 +9,9 @@ import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
 import VenturesHub from "./pages/VenturesHub";
 import UserManagement from "./pages/UserManagement";
+import SiteAnalytics from "./pages/SiteAnalytics";
 import NotFound from "./pages/NotFound";
+import { AnalyticsWrapper } from "./components/AnalyticsWrapper";
 
 const queryClient = new QueryClient();
 
@@ -20,12 +22,14 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <AnalyticsWrapper />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/ventures" element={<VenturesHub />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/users" element={<UserManagement />} />
+            <Route path="/admin/analytics" element={<SiteAnalytics />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
