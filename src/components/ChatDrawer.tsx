@@ -184,7 +184,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
               <button
                 key={q}
                 onClick={() => handleSend(q)}
-                className="px-3 py-1.5 text-xs font-body text-foreground bg-secondary rounded-full border border-border/50 hover:text-primary-foreground hover:bg-primary hover:border-primary/30 transition-colors"
+                className="px-3 py-1.5 text-xs font-body text-foreground bg-card border border-border hover:text-primary-foreground hover:bg-primary hover:border-primary/30 transition-colors rounded-full"
               >
                 {q}
               </button>
@@ -200,7 +200,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               placeholder="Ask me anything..."
-              className="flex-1 px-4 py-3 bg-secondary rounded-xl text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
+              className="flex-1 px-4 py-3 bg-card border border-border rounded-xl text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
             />
             <button
               onClick={() => handleSend()}
