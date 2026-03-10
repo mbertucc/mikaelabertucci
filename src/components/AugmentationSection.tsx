@@ -34,11 +34,11 @@ const workflowStages = [
 ];
 
 const strategicBenefits = [
-  "Surfaced gaps early — exposed unclear rules during backlog creation, prompting early collaboration with Policy",
-  "Higher-quality collaboration — BA received complete stories with clear personas and acceptance criteria",
-  "Reduced rework — UX/UI team received full context, eliminating repeated requirement-gathering sessions",
-  "Bigger picture awareness — end-to-end filing flow visible up front, enabling early planning for later epics",
-  "Fewer downstream issues — stories complete on first draft, reducing design mismatches and policy corrections",
+  "Surfaced gaps early — exposed unclear rules during backlog creation. Policy collaboration happened before it became a blocker.",
+  "Higher-quality collaboration — BA received complete stories with clear personas and acceptance criteria. No guessing.",
+  "Reduced rework — UX/UI team got full context up front. Eliminated repeated requirement-gathering sessions.",
+  "Bigger picture visible — end-to-end filing flow mapped before sprint 1. Early planning for later epics.",
+  "Fewer downstream issues — stories complete on first draft. Design mismatches and policy corrections dropped.",
 ];
 
 const humanRetained = [
