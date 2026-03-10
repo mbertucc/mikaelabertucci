@@ -289,7 +289,7 @@ const AugmentationSection = () => {
                 Scenario Spreadsheet — 40+ Hours Saved
               </p>
               <p className="text-sm text-muted-foreground font-body leading-relaxed">
-                Used AI to co-develop a comprehensive scenario spreadsheet covering all filing request variants, requirements, legislative references, and use cases. AI helped structure, cross-reference, and populate the table in 2.5 hours — saving approximately one full week of manual compilation. This spreadsheet was provided to a legal contractor, whose analysis was critical for changing established ways of working.
+                I used AI to co-develop a comprehensive scenario spreadsheet — all filing request variants, requirements, legislative references, and use cases. This took 2.5 hours. That's approximately one full week of manual compilation, done in an afternoon. The spreadsheet went to a legal contractor whose analysis was critical for changing established ways of working.
               </p>
             </div>
           </div>
