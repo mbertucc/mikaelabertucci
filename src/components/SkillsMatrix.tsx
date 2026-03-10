@@ -1,34 +1,33 @@
 import { useSkills } from "@/hooks/usePortfolioData";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import { useRef, useState, useEffect } from "react";
 
 const categoryConfig = {
   strong: {
     title: "Strong",
-    borderClass: "border-primary/30",
-    headerClass: "text-primary",
+    pillClass: "bg-primary/15 text-primary border-primary/25",
     tagClass: "bg-primary/10 text-primary border-primary/20",
-    noteClass: "text-primary/70",
   },
   moderate: {
     title: "Working Knowledge",
-    borderClass: "border-border",
-    headerClass: "text-muted-foreground",
+    pillClass: "bg-muted text-muted-foreground border-border",
     tagClass: "bg-muted text-foreground border-border",
-    noteClass: "text-muted-foreground",
   },
   gap: {
     title: "Learning",
-    borderClass: "border-accent/30",
-    headerClass: "text-accent-foreground",
+    pillClass: "bg-accent/15 text-accent-foreground border-accent/25",
     tagClass: "bg-accent/10 text-accent-foreground border-accent/20",
-    noteClass: "text-accent-foreground/70",
   },
 };
 
+const categories = ["strong", "moderate", "gap"] as const;
+
 const SkillsMatrix = () => {
   const { data: skills, isLoading } = useSkills();
-
-  if (isLoading) return null;
+  const [activeCat, setActiveCat] = useState<typeof categories[number]>("strong");
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
 
   const grouped = {
     strong: (skills || []).filter((s) => s.category === "strong"),
@@ -36,53 +35,122 @@ const SkillsMatrix = () => {
     gap: (skills || []).filter((s) => s.category === "gap"),
   };
 
+  const activeSkills = grouped[activeCat];
+
+  const checkScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 2);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 2);
+  };
+
+  useEffect(() => {
+    checkScroll();
+    if (scrollRef.current) scrollRef.current.scrollLeft = 0;
+  }, [activeCat, skills]);
+
+  const scroll = (dir: "left" | "right") => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir === "left" ? -200 : 200, behavior: "smooth" });
+  };
+
+  if (isLoading) return null;
+
   return (
     <TooltipProvider delayDuration={200}>
-      <section className="py-12 px-6 bg-card/30">
+      <section className="py-10 px-6 bg-card/30">
         <div className="max-w-5xl mx-auto">
-          <div className="mb-10">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">Capability Radar</p>
-            <h2 className="text-4xl md:text-5xl font-display text-foreground mb-4">Skills Matrix</h2>
-            <p className="text-muted-foreground font-body text-lg">
-              An honest snapshot—because knowing what I <em className="italic">don't</em> know matters too.
-            </p>
+          {/* Header row */}
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-2">Capability Radar</p>
+              <h2 className="text-3xl md:text-4xl font-display text-foreground">Skills Matrix</h2>
+            </div>
+            {/* Category pills */}
+            <div className="flex gap-2">
+              {categories.map((cat) => {
+                const config = categoryConfig[cat];
+                const isActive = activeCat === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCat(cat)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-body font-medium border transition-all ${
+                      isActive
+                        ? `${config.pillClass} shadow-sm`
+                        : "bg-transparent text-muted-foreground border-border/50 hover:border-border"
+                    }`}
+                  >
+                    {config.title}
+                    <span className="ml-1.5 opacity-60">{grouped[cat].length}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(["strong", "moderate", "gap"] as const).map((cat) => {
-              const config = categoryConfig[cat];
-              return (
-                <div key={cat} className={`glass-card p-6 border ${config.borderClass}`}>
-                  <h3 className={`font-display text-lg mb-5 ${config.headerClass}`}>{config.title}</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {grouped[cat].map((skill) => (
-                      skill.note ? (
-                        <Tooltip key={skill.id}>
-                          <TooltipTrigger asChild>
-                            <span
-                              className={`inline-block px-3 py-1.5 rounded-full text-sm font-body border cursor-help ${config.tagClass} transition-colors`}
-                            >
-                              {skill.name}
-                            </span>
-                          </TooltipTrigger>
-                          <TooltipContent side="top" className="max-w-[240px] text-[11px] leading-relaxed">
-                            💡 {skill.note}
-                          </TooltipContent>
-                        </Tooltip>
-                      ) : (
-                        <span
-                          key={skill.id}
-                          className={`inline-block px-3 py-1.5 rounded-full text-sm font-body border ${config.tagClass} transition-colors`}
-                        >
-                          {skill.name}
-                        </span>
-                      )
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+          {/* Scrollable strip */}
+          <div className="relative">
+            {/* Left fade */}
+            {canScrollLeft && (
+              <button
+                onClick={() => scroll("left")}
+                className="absolute left-0 top-0 bottom-0 z-10 w-10 flex items-center justify-center bg-gradient-to-r from-card/90 to-transparent"
+                aria-label="Scroll left"
+              >
+                <span className="text-muted-foreground text-lg">‹</span>
+              </button>
+            )}
+
+            <div
+              ref={scrollRef}
+              onScroll={checkScroll}
+              className="flex gap-2.5 overflow-x-auto scrollbar-hide py-2 px-1"
+              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            >
+              {activeSkills.map((skill) => {
+                const config = categoryConfig[activeCat];
+                const tag = (
+                  <span
+                    className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 rounded-full text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
+                      skill.note ? "cursor-help" : ""
+                    }`}
+                  >
+                    {skill.name}
+                  </span>
+                );
+
+                if (skill.note) {
+                  return (
+                    <Tooltip key={skill.id}>
+                      <TooltipTrigger asChild>{tag}</TooltipTrigger>
+                      <TooltipContent side="top" className="max-w-[240px] text-[11px] leading-relaxed">
+                        💡 {skill.note}
+                      </TooltipContent>
+                    </Tooltip>
+                  );
+                }
+
+                return <span key={skill.id}>{tag}</span>;
+              })}
+            </div>
+
+            {/* Right fade */}
+            {canScrollRight && (
+              <button
+                onClick={() => scroll("right")}
+                className="absolute right-0 top-0 bottom-0 z-10 w-10 flex items-center justify-center bg-gradient-to-l from-card/90 to-transparent"
+                aria-label="Scroll right"
+              >
+                <span className="text-muted-foreground text-lg">›</span>
+              </button>
+            )}
           </div>
+
+          <p className="text-muted-foreground/60 font-body text-xs mt-3 italic">
+            Hover skills for honest notes — because knowing what I <em>don't</em> know matters too.
+          </p>
         </div>
       </section>
     </TooltipProvider>
