@@ -4,9 +4,11 @@ import {
   ArrowLeft, ArrowRight, Rocket, Lock, CreditCard, Hammer, Brain, Globe,
   BarChart3, Shield, Fingerprint, Check, X, Users, Bot, Search, LayoutDashboard,
   MessageSquare, Target, ClipboardList, BadgeCheck, IdCard, MapPin, Briefcase,
-  GraduationCap, Star, Wallet, ShieldCheck, Network
+  GraduationCap, Star, Wallet, ShieldCheck, Network, Download
 } from "lucide-react";
 import AuthGuard from "@/components/AuthGuard";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
