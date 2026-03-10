@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.jd-analyzer]
 verify_jwt = false
+
+[functions.site-metrics]
+verify_jwt = false
