@@ -21,6 +21,7 @@ const UserManagement = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<UserApproval[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     checkAdminAndLoad();
