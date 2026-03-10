@@ -1,0 +1,1 @@
+REVOKE SELECT (email) ON public.profile FROM anon;

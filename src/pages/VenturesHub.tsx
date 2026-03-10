@@ -135,7 +135,7 @@ const resumeFeatureLabels: Record<string, string> = {
 const generateContextExport = async () => {
   try {
     const [profileRes, instructionsRes, experiencesRes, skillsRes, faqRes] = await Promise.all([
-      supabase.from("profile").select("*").limit(1),
+      supabase.from("profile").select("id, full_name, title, status_badge, positioning, company_badges, github_url, linkedin_url, created_at, updated_at").limit(1),
       supabase.from("ai_instructions").select("*"),
       supabase.from("experiences").select("*").order("sort_order"),
       supabase.from("skills").select("*").order("sort_order"),
@@ -159,7 +159,6 @@ const generateContextExport = async () => {
     if (profile) {
       md += `- **Name:** ${profile.full_name}\n`;
       md += `- **Title:** ${profile.title}\n`;
-      md += `- **Email:** ${profile.email || ""}\n`;
       md += `- **Status:** ${profile.status_badge}\n`;
       md += `- **Company Badges:** ${(profile.company_badges || []).join(", ")}\n`;
       md += `- **Positioning:** ${profile.positioning}\n`;
