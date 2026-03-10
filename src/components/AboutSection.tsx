@@ -23,22 +23,22 @@ const AboutSection = () => {
 
   const metricDescriptions: Record<Exclude<MetricKey, null>, string[]> = {
     velocity: [
-      "Multi-stage Product Owner Agent with a 'Chain of Thought' workflow.",
-      "Discovery stage scans 2500+ pages of transcripts, legislation & policy to extract requirements.",
-      "Story Architect maps findings into standardized Gherkin format.",
-      "Reviewer validates against Definition of Ready — stories arrive 90% complete.",
+      "I run a multi-stage PO Agent with a Chain of Thought workflow.",
+      "Discovery stage scans 2500+ pages of legislation & policy. Extracts requirements automatically.",
+      "Story Architect maps findings into Gherkin format. Reviewer validates against Definition of Ready.",
+      "Stories arrive 90% complete. That's not a target — that's what's happening.",
     ],
     precision: [
-      "Direct result of advanced context engineering with product-specific agent environments.",
-      "Edge-Case Agent hunts for 'what-if' scenarios that typically cause mid-sprint pivots.",
-      "Consistency Agent ensures no new requirement contradicts a previous story in the backlog.",
-      `Specialized context results in a ${m?.about_precision_accuracy ?? 75}% increase in accuracy — virtually eliminating clarification loops.`,
+      "This comes from context engineering with product-specific agent environments.",
+      "Edge-Case Agent hunts for 'what-if' scenarios that cause mid-sprint pivots.",
+      "Consistency Agent catches contradictions before they reach the backlog.",
+      `Result: ${m?.about_precision_accuracy ?? 75}% increase in accuracy. Clarification loops virtually eliminated.`,
     ],
     culture: [
       `${m?.about_precision_requirement ?? 95}% precision means developers code instead of chasing missing details.`,
       `${m?.dark_factory_hours_saved_weekly ?? 20} hrs of automated PO overhead reinvested into unblocking the team.`,
       `Sprint planning is ${m?.about_velocity_planning ?? 50}% faster — every item arrives truly Ready.`,
-      "Result: a thrive culture led by vision, not bottlenecks.",
+      "The result: teams that thrive because they ship, not because they're managed.",
     ],
   };
 

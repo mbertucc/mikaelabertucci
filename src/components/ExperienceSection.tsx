@@ -158,13 +158,13 @@ const ExperienceSection = () => {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">
-            Strategic Portfolio
+            Where I've Been
           </p>
           <h2 className="text-4xl md:text-5xl font-display text-foreground mb-2">
             Experience
           </h2>
           <p className="text-sm text-muted-foreground font-body max-w-xl">
-            Roles defined by measurable impact, human-agent collaboration, and organizational transformation.
+            Every role here delivered measurable results. No filler. No padding.
           </p>
         </div>
 

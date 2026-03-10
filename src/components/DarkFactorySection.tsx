@@ -32,7 +32,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "teal" as const,
     icon: Rocket,
     content:
-      `A **complete, hand-off-ready User Story** with business rules, scenarios, edge cases, error handling, and Gherkin/Markdown specification that **Designers and Developers** can build from immediately — reducing requirement clarification loops by **${m.dark_factory_clarification_reduction}%**.`,
+      `A **complete, hand-off-ready User Story**. Business rules, scenarios, edge cases, error handling, Gherkin/Markdown spec. **Designers and Developers** build from it immediately. Clarification loops reduced by **${m.dark_factory_clarification_reduction}%**.`,
     stat: `${m.dark_factory_clarification_reduction}%`,
     statLabel: "Fewer Clarification Loops",
   },
