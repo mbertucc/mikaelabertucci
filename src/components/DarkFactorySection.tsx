@@ -21,7 +21,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "primary" as const,
     icon: Cpu,
     content:
-      `I build **custom AI agents** using a **context engineering** approach — replacing weeks of manual analysis of **legislation, policy documents, business rules, and requirements** with structured, traceable outputs in minutes — saving **${m.dark_factory_hours_saved_weekly} hours per week**.`,
+      `I build **custom AI agents** using context engineering. Weeks of manual analysis of **legislation, policy, and business rules** — done in minutes. Structured, traceable outputs. **${m.dark_factory_hours_saved_weekly} hours saved per week**. That's what I'm doing today.`,
     stat: `${m.dark_factory_hours_saved_weekly}hrs`,
     statLabel: "Saved Per Week",
   },
