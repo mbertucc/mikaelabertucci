@@ -57,14 +57,11 @@ export const useSiteMetrics = () =>
   useQuery({
     queryKey: ["site_metrics"],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("ai_instructions")
-        .select("value")
-        .eq("key", "site_metrics")
-        .single();
+      const { data, error } = await supabase.functions.invoke("site-metrics");
       if (error) throw error;
       try {
-        return { ...defaults, ...JSON.parse(data.value) } as SiteMetrics;
+        const raw = typeof data.metrics === "string" ? JSON.parse(data.metrics) : data.metrics;
+        return { ...defaults, ...raw } as SiteMetrics;
       } catch {
         return defaults;
       }

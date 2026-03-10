@@ -41,12 +41,3 @@ export const useFaq = () =>
     },
   });
 
-export const useAiInstructions = () =>
-  useQuery({
-    queryKey: ["ai_instructions"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("ai_instructions").select("*");
-      if (error) throw error;
-      return data;
-    },
-  });
