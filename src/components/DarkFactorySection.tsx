@@ -10,7 +10,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "amber-warm" as const,
     icon: FileText,
     content:
-      `${m.dark_factory_pages}+ pages of the **Manufactured Home Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.`,
+      `**${m.dark_factory_pages}+ pages** of the Manufactured Home Act, Regulations, and Policy. Dense legal language. Registration requirements, platform obligations, compliance triggers, municipal enforcement rules. All of it.`,
     stat: `${m.dark_factory_pages}+`,
     statLabel: "Pages of Legislation",
   },
