@@ -24,11 +24,7 @@ const Footer = () => {
               <Linkedin className="w-5 h-5" />
             </a>
           )}
-          {profile?.email && (
-            <a href={`mailto:${profile.email}`} className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email">
-              <Mail className="w-5 h-5" />
-            </a>
-          )}
+          
         </div>
 
         <div className="flex flex-col items-center md:items-end gap-2">
