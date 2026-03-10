@@ -253,7 +253,7 @@ const Admin = () => {
             {skills.map((skill, idx) => (
               <div key={skill.id} className="flex gap-3 items-center">
                 <input value={skill.name} onChange={(e) => { const u = [...skills]; u[idx] = { ...skill, name: e.target.value }; setSkills(u); }} className={`${inputCls} flex-1`} />
-                <select value={skill.category} onChange={(e) => { const u = [...skills]; u[idx] = { ...skill, category: e.target.value }; setSkills(u); }} className="px-3 py-2 bg-secondary rounded-lg text-sm font-body text-foreground focus:outline-none">
+                <select value={skill.category} onChange={(e) => { const u = [...skills]; u[idx] = { ...skill, category: e.target.value }; setSkills(u); }} className="px-3 py-2 bg-background border border-border rounded-lg text-sm font-body text-foreground focus:outline-none">
                   <option value="strong">Strong</option>
                   <option value="moderate">Moderate</option>
                   <option value="gap">Gap</option>
