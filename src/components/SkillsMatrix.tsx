@@ -1,6 +1,7 @@
 import { useSkills } from "@/hooks/usePortfolioData";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const categoryConfig = {
   strong: {
