@@ -87,7 +87,7 @@ const JDAnalyzer = () => {
           </button>
           <button
             onClick={() => { setJdText(weakFitJD); setResult(null); }}
-            className="px-4 py-2 text-sm font-body rounded-lg bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20 transition-colors"
+            className="px-4 py-2 text-sm font-body rounded-lg bg-accent text-accent-foreground border border-accent/30 hover:bg-accent/80 transition-colors"
           >
             Weak Fit Example
           </button>
