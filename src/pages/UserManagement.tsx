@@ -109,7 +109,7 @@ const UserManagement = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>User ID</TableHead>
+              <TableHead>Email</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Signed Up</TableHead>
               <TableHead className="text-right">Actions</TableHead>
