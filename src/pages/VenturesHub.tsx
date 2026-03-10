@@ -159,7 +159,6 @@ const generateContextExport = async () => {
     if (profile) {
       md += `- **Name:** ${profile.full_name}\n`;
       md += `- **Title:** ${profile.title}\n`;
-      md += `- **Email:** ${profile.email || ""}\n`;
       md += `- **Status:** ${profile.status_badge}\n`;
       md += `- **Company Badges:** ${(profile.company_badges || []).join(", ")}\n`;
       md += `- **Positioning:** ${profile.positioning}\n`;
