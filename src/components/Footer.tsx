@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Lock } from "lucide-react";
+import { Github, Linkedin, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useProfile } from "@/hooks/usePortfolioData";
 
