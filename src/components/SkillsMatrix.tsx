@@ -1,6 +1,7 @@
 import { useSkills } from "@/hooks/usePortfolioData";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const categoryConfig = {
   strong: {
@@ -103,38 +104,48 @@ const SkillsMatrix = () => {
               </button>
             )}
 
-            <div
-              ref={scrollRef}
-              onScroll={checkScroll}
-              className="flex gap-2.5 overflow-x-auto scrollbar-hide py-2 px-1"
-              style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-            >
-              {activeSkills.map((skill) => {
-                const config = categoryConfig[activeCat];
-                const tag = (
-                  <span
-                    className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 rounded-full text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
-                      skill.note ? "cursor-help" : ""
-                    }`}
-                  >
-                    {skill.name}
-                  </span>
-                );
-
-                if (skill.note) {
-                  return (
-                    <Tooltip key={skill.id}>
-                      <TooltipTrigger asChild>{tag}</TooltipTrigger>
-                      <TooltipContent side="top" className="max-w-[240px] text-[11px] leading-relaxed">
-                        💡 {skill.note}
-                      </TooltipContent>
-                    </Tooltip>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeCat}
+                ref={scrollRef}
+                onScroll={checkScroll}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="flex gap-2.5 overflow-x-auto scrollbar-hide py-2 px-1"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
+                {activeSkills.map((skill, i) => {
+                  const config = categoryConfig[activeCat];
+                  const tag = (
+                    <motion.span
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.2, delay: i * 0.03 }}
+                      className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 rounded-full text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
+                        skill.note ? "cursor-help" : ""
+                      }`}
+                    >
+                      {skill.name}
+                    </motion.span>
                   );
-                }
 
-                return <span key={skill.id}>{tag}</span>;
-              })}
-            </div>
+                  if (skill.note) {
+                    return (
+                      <Tooltip key={skill.id}>
+                        <TooltipTrigger asChild>{tag}</TooltipTrigger>
+                        <TooltipContent side="top" className="max-w-[240px] text-[11px] leading-relaxed">
+                          💡 {skill.note}
+                        </TooltipContent>
+                      </Tooltip>
+                    );
+                  }
+
+                  return <span key={skill.id}>{tag}</span>;
+                })}
+              </motion.div>
+            </AnimatePresence>
 
             {/* Right fade */}
             {canScrollRight && (
