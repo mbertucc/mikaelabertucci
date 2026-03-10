@@ -90,22 +90,22 @@ type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
 
 const buildStatDescriptions = (m: SiteMetrics): Record<Exclude<StatKey, null>, string[]> => ({
   saved: [
-    "Multilevel agent tailored to the Manufactured Home Registry.",
-    "Automated the heavy lifting of discovery and drafting for this feature.",
+    "Multilevel agent built specifically for the Manufactured Home Registry.",
+    "Automated discovery and drafting for this feature set. Not theory — this happened.",
   ],
   quality: [
-    "Agent systematically uncovers deep edge cases & business requirements.",
+    "Agent systematically uncovers edge cases & business requirements others miss.",
     "Each finding confirmed with the business for final accuracy.",
-    "Collaborative validation loop that consistently elevates documentation quality.",
+    "Collaborative validation loop. Documentation quality goes up every cycle.",
   ],
   stories: [
     "AI drafts stories from legislative artifacts before any human writing begins.",
-    "Business Analyst validates for accuracy and corporate knowledge — not authoring from scratch.",
-    "Reduces initial product discovery cycle significantly, saving time and budget.",
+    "BA validates for accuracy and corporate knowledge — not authoring from scratch.",
+    "Cuts the initial product discovery cycle significantly. Time and budget saved.",
   ],
   cognitive: [
     "16 multilevel agents manage tactical overhead across different products.",
-    "Frees me to focus entirely on high-level vision and team leadership.",
+    "I focus entirely on high-level vision and team leadership. The routine work is handled.",
   ],
 });
 

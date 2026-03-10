@@ -301,10 +301,10 @@ const AugmentationSection = () => {
             Human Value Retained
           </p>
           <p className="text-sm text-muted-foreground font-body mb-2 max-w-3xl">
-            I stay fully in the driver seat. I set the vision, define scope boundaries, interpret legislation, and make all trade-off and prioritization decisions. AI works inside the system I designed — accelerating my work but never replacing my judgment.
+            Let me be direct: I stay fully in the driver seat. I set the vision. I define scope boundaries. I interpret legislation. I make every trade-off and prioritization decision. AI works inside the system I designed — it amplifies my decisions, it doesn't replace them.
           </p>
           <p className="text-sm text-muted-foreground font-body mb-6 max-w-3xl">
-            I also use AI to pressure-test ideas, explore edge cases, and run structured chain-of-thought checks — "Where are we guessing?", "What should we verify?", "Which sources might be outdated?" This gives me clearer, more complete stories, which means my BA produces stronger requirements and my designers get full context up front.
+            I also use AI to pressure-test ideas, explore edge cases, and run structured chain-of-thought checks — "Where are we guessing?", "What should we verify?", "Which sources might be outdated?" The result: clearer stories, stronger BA requirements, and designers who get full context up front.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {humanRetained.map((item) => {
