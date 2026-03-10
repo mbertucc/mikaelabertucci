@@ -77,7 +77,7 @@ const AdminLogin = () => {
         <button
           onClick={async () => {
             const { error } = await lovable.auth.signInWithOAuth("google", {
-              redirect_uri: window.location.origin,
+              redirect_uri: window.location.origin + "/admin",
             });
             if (error) toast.error(error.message);
           }}
