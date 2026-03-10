@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { X, Send, MessageSquare, Loader2, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import ReactMarkdown from "react-markdown";
@@ -8,12 +8,78 @@ interface Message {
   content: string;
 }
 
-const suggestedQuestions = [
-  "What's your biggest weakness?",
-  "Tell me about a project that failed",
-  "Why should we hire you over someone with a tech background?",
-  "What would your last manager say about you?",
-];
+// Organized by topic so we can rotate contextually
+const questionSets = {
+  initial: [
+    "What's your biggest weakness?",
+    "Tell me about a project that failed",
+    "Why should we hire you over someone with a tech background?",
+    "What would your last manager say about you?",
+  ],
+  aiFramework: [
+    "How do you use AI in your daily work?",
+    "What does your AI framework actually save you?",
+    "Shall I share more details about my AI framework?",
+  ],
+  projects: [
+    "Tell me about the Short-Term Rental Registry",
+    "What was your hardest project?",
+    "How do you handle complex projects?",
+  ],
+  leadership: [
+    "What's your approach to team leadership?",
+    "How do you build high-performing teams?",
+    "Tell me about a team transformation you led",
+  ],
+  role: [
+    "What makes you different from other Product Owners?",
+    "How do you manage 4 registries at once?",
+    "What's your product strategy approach?",
+  ],
+  results: [
+    "What concrete results have you delivered?",
+    "Can you share specific metrics?",
+    "What would you do in your first 90 days?",
+  ],
+};
+
+// Pick suggestions based on what hasn't been asked yet
+function getNextSuggestions(askedQuestions: Set<string>, messageCount: number): string[] {
+  const allSets = Object.values(questionSets);
+
+  // First load: show initial set
+  if (messageCount <= 1) {
+    return questionSets.initial;
+  }
+
+  // Collect all unanswered questions across all sets
+  const unanswered: string[] = [];
+  for (const set of allSets) {
+    for (const q of set) {
+      if (!askedQuestions.has(q)) {
+        unanswered.push(q);
+      }
+    }
+  }
+
+  if (unanswered.length === 0) return [];
+
+  // Pick up to 3 from different categories to keep variety
+  const picked: string[] = [];
+  const usedSets = new Set<number>();
+
+  for (let i = 0; i < allSets.length && picked.length < 3; i++) {
+    const setIdx = (messageCount + i) % allSets.length;
+    if (usedSets.has(setIdx)) continue;
+    const available = allSets[setIdx].filter((q) => !askedQuestions.has(q));
+    if (available.length > 0) {
+      picked.push(available[0]);
+      usedSets.add(setIdx);
+    }
+  }
+
+  return picked;
+}
 
 interface ChatDrawerProps {
   isOpen: boolean;
@@ -21,16 +87,18 @@ interface ChatDrawerProps {
   initialMessage?: string;
 }
 
+const INITIAL_GREETING: Message = {
+  role: "assistant",
+  content:
+    "Hi! I'm Mikaela, a Product Owner who specializes in AI-augmented delivery. I currently manage **4 concurrent BC Registry portfolios** and save **~19.4 hours weekly** through AI automation.\n\nWhat would you like to know about my work?",
+};
+
 const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content: "Hey! I'm Mikaela's AI representative. Ask me anything about her experience, skills, or working style. I'll give you honest answers — including the uncomfortable ones.",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([INITIAL_GREETING]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [pendingInitial, setPendingInitial] = useState<string | null>(null);
+  const [askedQuestions, setAskedQuestions] = useState<Set<string>>(new Set());
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,94 +111,111 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSend = async (text?: string) => {
-    const msg = text || input.trim();
-    if (!msg || isLoading) return;
+  const handleSend = useCallback(
+    async (text?: string) => {
+      const msg = text || input.trim();
+      if (!msg || isLoading) return;
 
-    const userMsg: Message = { role: "user", content: msg };
-    const newMessages = [...messages, userMsg];
-    setMessages(newMessages);
-    setInput("");
-    setIsLoading(true);
+      // Track asked questions for suggestion rotation
+      setAskedQuestions((prev) => new Set(prev).add(msg));
 
-    try {
-      const resp = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
-          },
-          body: JSON.stringify({ messages: newMessages }),
+      const userMsg: Message = { role: "user", content: msg };
+      const newMessages = [...messages, userMsg];
+      setMessages(newMessages);
+      setInput("");
+      setIsLoading(true);
+
+      try {
+        const resp = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            },
+            body: JSON.stringify({ messages: newMessages }),
+          }
+        );
+
+        if (!resp.ok || !resp.body) {
+          throw new Error("Stream failed");
         }
-      );
 
-      if (!resp.ok || !resp.body) {
-        throw new Error("Stream failed");
-      }
+        const reader = resp.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let assistantContent = "";
 
-      const reader = resp.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
-      let assistantContent = "";
+        setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
-      // Add empty assistant message
-      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
-
-        let newlineIdx: number;
-        while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
-          let line = buffer.slice(0, newlineIdx);
-          buffer = buffer.slice(newlineIdx + 1);
-          if (line.endsWith("\r")) line = line.slice(0, -1);
-          if (!line.startsWith("data: ")) continue;
-          const jsonStr = line.slice(6).trim();
-          if (jsonStr === "[DONE]") break;
-          try {
-            const parsed = JSON.parse(jsonStr);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) {
-              assistantContent += content;
-              const final = assistantContent;
-              setMessages((prev) =>
-                prev.map((m, i) => (i === prev.length - 1 ? { ...m, content: final } : m))
-              );
+          let newlineIdx: number;
+          while ((newlineIdx = buffer.indexOf("\n")) !== -1) {
+            let line = buffer.slice(0, newlineIdx);
+            buffer = buffer.slice(newlineIdx + 1);
+            if (line.endsWith("\r")) line = line.slice(0, -1);
+            if (!line.startsWith("data: ")) continue;
+            const jsonStr = line.slice(6).trim();
+            if (jsonStr === "[DONE]") break;
+            try {
+              const parsed = JSON.parse(jsonStr);
+              const content = parsed.choices?.[0]?.delta?.content;
+              if (content) {
+                assistantContent += content;
+                const final = assistantContent;
+                setMessages((prev) =>
+                  prev.map((m, i) =>
+                    i === prev.length - 1 ? { ...m, content: final } : m
+                  )
+                );
+              }
+            } catch {
+              buffer = line + "\n" + buffer;
+              break;
             }
-          } catch {
-            buffer = line + "\n" + buffer;
-            break;
           }
         }
+      } catch (e) {
+        console.error("Chat error:", e);
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "assistant",
+            content: "Sorry, I had trouble responding. Please try again.",
+          },
+        ]);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (e) {
-      console.error("Chat error:", e);
-      setMessages((prev) => [
-        ...prev,
-        { role: "assistant", content: "Sorry, I had trouble responding. Please try again." },
-      ]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [messages, input, isLoading]
+  );
 
-  // Trigger initial message after handleSend is available
   useEffect(() => {
     if (pendingInitial && !isLoading) {
       handleSend(pendingInitial);
       setPendingInitial(null);
     }
-  }, [pendingInitial]);
+  }, [pendingInitial, handleSend, isLoading]);
+
+  const suggestions = useMemo(
+    () => getNextSuggestions(askedQuestions, messages.length),
+    [askedQuestions, messages.length]
+  );
 
   if (!isOpen) return null;
 
   return (
     <>
-      <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="fixed inset-0 z-50 bg-background/60 backdrop-blur-sm"
+        onClick={onClose}
+      />
       <div className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-md bg-card border-l border-border flex flex-col animate-slide-in-right">
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-border">
@@ -139,11 +224,18 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
               <MessageSquare className="w-4 h-4 text-primary" />
             </div>
             <div>
-              <p className="text-sm font-body font-semibold text-foreground">Ask AI About Mikaela</p>
-              <p className="text-xs text-muted-foreground font-body">Brutally honest answers</p>
+              <p className="text-sm font-body font-semibold text-foreground">
+                Ask AI About Mikaela
+              </p>
+              <p className="text-xs text-muted-foreground font-body">
+                Brutally honest answers
+              </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-card">
+          <button
+            onClick={onClose}
+            className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-card"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -151,7 +243,12 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {messages.map((msg, i) => (
-            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+            <div
+              key={i}
+              className={`flex ${
+                msg.role === "user" ? "justify-end" : "justify-start"
+              }`}
+            >
               <div
                 className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm font-body leading-relaxed ${
                   msg.role === "user"
@@ -177,10 +274,10 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Suggested Questions */}
-        {messages.length <= 2 && (
+        {/* Suggested Questions — always visible when not loading */}
+        {!isLoading && suggestions.length > 0 && (
           <div className="px-4 pb-3 flex flex-wrap gap-2">
-            {suggestedQuestions.map((q) => (
+            {suggestions.map((q) => (
               <button
                 key={q}
                 onClick={() => handleSend(q)}
@@ -272,15 +369,23 @@ function AssistantMessage({ content }: { content: string }) {
                 </h3>
               ),
               strong: ({ children }) => (
-                <strong className="font-semibold text-foreground">{children}</strong>
+                <strong className="font-semibold text-foreground">
+                  {children}
+                </strong>
               ),
               ul: ({ children }) => (
-                <ul className="list-disc list-outside ml-4 space-y-1">{children}</ul>
+                <ul className="list-disc list-outside ml-4 space-y-1">
+                  {children}
+                </ul>
               ),
               ol: ({ children }) => (
-                <ol className="list-decimal list-outside ml-4 space-y-1">{children}</ol>
+                <ol className="list-decimal list-outside ml-4 space-y-1">
+                  {children}
+                </ol>
               ),
-              li: ({ children }) => <li className="text-sm leading-relaxed">{children}</li>,
+              li: ({ children }) => (
+                <li className="text-sm leading-relaxed">{children}</li>
+              ),
               code: ({ children, className }) => {
                 const isBlock = className?.includes("language-");
                 return isBlock ? (
@@ -293,7 +398,9 @@ function AssistantMessage({ content }: { content: string }) {
                   </code>
                 );
               },
-              p: ({ children }) => <p className="leading-relaxed mb-2 last:mb-0">{children}</p>,
+              p: ({ children }) => (
+                <p className="leading-relaxed mb-2 last:mb-0">{children}</p>
+              ),
             }}
           >
             {seg.text}
