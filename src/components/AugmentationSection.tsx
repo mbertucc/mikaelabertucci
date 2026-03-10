@@ -34,11 +34,11 @@ const workflowStages = [
 ];
 
 const strategicBenefits = [
-  "Surfaced gaps early — exposed unclear rules during backlog creation, prompting early collaboration with Policy",
-  "Higher-quality collaboration — BA received complete stories with clear personas and acceptance criteria",
-  "Reduced rework — UX/UI team received full context, eliminating repeated requirement-gathering sessions",
-  "Bigger picture awareness — end-to-end filing flow visible up front, enabling early planning for later epics",
-  "Fewer downstream issues — stories complete on first draft, reducing design mismatches and policy corrections",
+  "Surfaced gaps early — exposed unclear rules during backlog creation. Policy collaboration happened before it became a blocker.",
+  "Higher-quality collaboration — BA received complete stories with clear personas and acceptance criteria. No guessing.",
+  "Reduced rework — UX/UI team got full context up front. Eliminated repeated requirement-gathering sessions.",
+  "Bigger picture visible — end-to-end filing flow mapped before sprint 1. Early planning for later epics.",
+  "Fewer downstream issues — stories complete on first draft. Design mismatches and policy corrections dropped.",
 ];
 
 const humanRetained = [
@@ -75,17 +75,17 @@ const AugmentationSection = () => {
         {/* Header */}
         <div className="mb-16">
           <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">
-            Case Study
+            The Numbers
           </p>
           <h2 className="text-4xl md:text-5xl font-display text-foreground mb-4">
             AI Augmentation in Practice
           </h2>
           <p className="text-muted-foreground font-body text-lg max-w-3xl">
-            A real-world demonstration of the human-in-the-loop model — using the{" "}
+            Here's what human-in-the-loop actually looks like — using the{" "}
             <span className="text-[hsl(var(--amber-warm))] font-medium">
               Manufactured Home Registry Self Serve Feature
             </span>{" "}
-            as the proving ground. AI saves ~19.4 hours each week by drafting epics and stories, surfacing gaps, checking legislation, and reducing rework across PO, BA, and UX.
+            as the proving ground. AI saves ~19.4 hours each week. That's epics drafted, gaps surfaced, legislation checked, and rework eliminated across PO, BA, and UX.
           </p>
         </div>
 
@@ -289,7 +289,7 @@ const AugmentationSection = () => {
                 Scenario Spreadsheet — 40+ Hours Saved
               </p>
               <p className="text-sm text-muted-foreground font-body leading-relaxed">
-                Used AI to co-develop a comprehensive scenario spreadsheet covering all filing request variants, requirements, legislative references, and use cases. AI helped structure, cross-reference, and populate the table in 2.5 hours — saving approximately one full week of manual compilation. This spreadsheet was provided to a legal contractor, whose analysis was critical for changing established ways of working.
+                I used AI to co-develop a comprehensive scenario spreadsheet — all filing request variants, requirements, legislative references, and use cases. This took 2.5 hours. That's approximately one full week of manual compilation, done in an afternoon. The spreadsheet went to a legal contractor whose analysis was critical for changing established ways of working.
               </p>
             </div>
           </div>
@@ -301,10 +301,10 @@ const AugmentationSection = () => {
             Human Value Retained
           </p>
           <p className="text-sm text-muted-foreground font-body mb-2 max-w-3xl">
-            I stay fully in the driver seat. I set the vision, define scope boundaries, interpret legislation, and make all trade-off and prioritization decisions. AI works inside the system I designed — accelerating my work but never replacing my judgment.
+            Let me be direct: I stay fully in the driver seat. I set the vision. I define scope boundaries. I interpret legislation. I make every trade-off and prioritization decision. AI works inside the system I designed — it amplifies my decisions, it doesn't replace them.
           </p>
           <p className="text-sm text-muted-foreground font-body mb-6 max-w-3xl">
-            I also use AI to pressure-test ideas, explore edge cases, and run structured chain-of-thought checks — "Where are we guessing?", "What should we verify?", "Which sources might be outdated?" This gives me clearer, more complete stories, which means my BA produces stronger requirements and my designers get full context up front.
+            I also use AI to pressure-test ideas, explore edge cases, and run structured chain-of-thought checks — "Where are we guessing?", "What should we verify?", "Which sources might be outdated?" The result: clearer stories, stronger BA requirements, and designers who get full context up front.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {humanRetained.map((item) => {

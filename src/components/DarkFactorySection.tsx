@@ -10,7 +10,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "amber-warm" as const,
     icon: FileText,
     content:
-      `${m.dark_factory_pages}+ pages of the **Manufactured Home Act**, Regulations, and Policy — dense legal language spanning registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.`,
+      `**${m.dark_factory_pages}+ pages** of the Manufactured Home Act, Regulations, and Policy. Dense legal language. Registration requirements, platform obligations, compliance triggers, municipal enforcement rules. All of it.`,
     stat: `${m.dark_factory_pages}+`,
     statLabel: "Pages of Legislation",
   },
@@ -21,7 +21,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "primary" as const,
     icon: Cpu,
     content:
-      `I build **custom AI agents** using a **context engineering** approach — replacing weeks of manual analysis of **legislation, policy documents, business rules, and requirements** with structured, traceable outputs in minutes — saving **${m.dark_factory_hours_saved_weekly} hours per week**.`,
+      `I build **custom AI agents** using context engineering. Weeks of manual analysis of **legislation, policy, and business rules** — done in minutes. Structured, traceable outputs. **${m.dark_factory_hours_saved_weekly} hours saved per week**. That's what I'm doing today.`,
     stat: `${m.dark_factory_hours_saved_weekly}hrs`,
     statLabel: "Saved Per Week",
   },
@@ -32,7 +32,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "teal" as const,
     icon: Rocket,
     content:
-      `A **complete, hand-off-ready User Story** with business rules, scenarios, edge cases, error handling, and Gherkin/Markdown specification that **Designers and Developers** can build from immediately — reducing requirement clarification loops by **${m.dark_factory_clarification_reduction}%**.`,
+      `A **complete, hand-off-ready User Story**. Business rules, scenarios, edge cases, error handling, Gherkin/Markdown spec. **Designers and Developers** build from it immediately. Clarification loops reduced by **${m.dark_factory_clarification_reduction}%**.`,
     stat: `${m.dark_factory_clarification_reduction}%`,
     statLabel: "Fewer Clarification Loops",
   },
@@ -90,22 +90,22 @@ type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
 
 const buildStatDescriptions = (m: SiteMetrics): Record<Exclude<StatKey, null>, string[]> => ({
   saved: [
-    "Multilevel agent tailored to the Manufactured Home Registry.",
-    "Automated the heavy lifting of discovery and drafting for this feature.",
+    "Multilevel agent built specifically for the Manufactured Home Registry.",
+    "Automated discovery and drafting for this feature set. Not theory — this happened.",
   ],
   quality: [
-    "Agent systematically uncovers deep edge cases & business requirements.",
+    "Agent systematically uncovers edge cases & business requirements others miss.",
     "Each finding confirmed with the business for final accuracy.",
-    "Collaborative validation loop that consistently elevates documentation quality.",
+    "Collaborative validation loop. Documentation quality goes up every cycle.",
   ],
   stories: [
     "AI drafts stories from legislative artifacts before any human writing begins.",
-    "Business Analyst validates for accuracy and corporate knowledge — not authoring from scratch.",
-    "Reduces initial product discovery cycle significantly, saving time and budget.",
+    "BA validates for accuracy and corporate knowledge — not authoring from scratch.",
+    "Cuts the initial product discovery cycle significantly. Time and budget saved.",
   ],
   cognitive: [
     "16 multilevel agents manage tactical overhead across different products.",
-    "Frees me to focus entirely on high-level vision and team leadership.",
+    "I focus entirely on high-level vision and team leadership. The routine work is handled.",
   ],
 });
 
@@ -173,13 +173,13 @@ const DarkFactorySection = () => {
         {/* Header */}
         <div className="text-center mb-10 space-y-3">
           <p className="text-xs font-body uppercase tracking-[0.3em] text-primary">
-            Technical Proof
+            How I Actually Work
           </p>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">
             The Agentic Product Owner Workflow
           </h2>
           <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
-            Case Study:{" "}
+            Real example:{" "}
             <span className="text-[hsl(var(--amber-warm))] font-medium">
               Manufactured Home Registry Transfer
             </span>
@@ -295,7 +295,7 @@ const DarkFactorySection = () => {
         </div>
 
         <p className="text-center text-xs text-muted-foreground font-body mt-6">
-          Proven through a 6-week sprint cycle on the Manufactured Home Registry Self Serve feature.
+          These numbers come from a real 6-week sprint cycle on the Manufactured Home Registry Self Serve feature. Not projections — actuals.
         </p>
       </div>
     </section>
