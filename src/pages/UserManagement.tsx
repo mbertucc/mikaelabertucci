@@ -125,8 +125,8 @@ const UserManagement = () => {
             ) : (
               users.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell className="font-mono text-xs max-w-[200px] truncate">
-                    {user.user_id}
+                  <TableCell className="text-sm font-body">
+                    {user.email || user.user_id}
                   </TableCell>
                   <TableCell>{statusBadge(user.status)}</TableCell>
                   <TableCell className="text-sm text-muted-foreground font-body">
