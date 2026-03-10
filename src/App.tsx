@@ -12,6 +12,7 @@ import UserManagement from "./pages/UserManagement";
 import SiteAnalytics from "./pages/SiteAnalytics";
 import NotFound from "./pages/NotFound";
 import { AnalyticsWrapper } from "./components/AnalyticsWrapper";
+import AuthGuard from "./components/AuthGuard";
 
 const queryClient = new QueryClient();
 
@@ -25,11 +26,11 @@ const App = () => (
           <AnalyticsWrapper />
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={<AuthGuard requireAdmin={true}><Admin /></AuthGuard>} />
             <Route path="/ventures" element={<VenturesHub />} />
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin/users" element={<UserManagement />} />
-            <Route path="/admin/analytics" element={<SiteAnalytics />} />
+            <Route path="/admin/users" element={<AuthGuard requireAdmin={true}><UserManagement /></AuthGuard>} />
+            <Route path="/admin/analytics" element={<AuthGuard requireAdmin={true}><SiteAnalytics /></AuthGuard>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
