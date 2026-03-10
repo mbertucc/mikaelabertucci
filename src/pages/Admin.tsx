@@ -140,7 +140,7 @@ const Admin = () => {
     { key: "ai", label: "AI Instructions" },
   ] as const;
 
-  const inputCls = "w-full px-3 py-2 bg-secondary rounded-lg text-sm font-body text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50";
+  const inputCls = "w-full px-3 py-2 bg-background border border-border rounded-lg text-sm font-body text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-1 focus:ring-primary/50";
   const textareaCls = `${inputCls} min-h-[80px] resize-y`;
   const btnSave = "flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground text-xs font-body font-medium rounded-md hover:brightness-110 transition-all";
   const btnDanger = "flex items-center gap-1 px-3 py-1.5 bg-destructive/10 text-destructive text-xs font-body rounded-md hover:bg-destructive/20 transition-colors";
