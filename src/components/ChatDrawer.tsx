@@ -33,7 +33,7 @@ const questionSets = {
   ],
   role: [
     "What makes you different from other Product Owners?",
-    "How do you manage 4 registries at once?",
+    "How do you manage 3 registries at once?",
     "What's your product strategy approach?",
   ],
   results: [
