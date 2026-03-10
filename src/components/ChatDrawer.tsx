@@ -22,7 +22,7 @@ const questionSets = {
     "Shall I share more details about my AI framework?",
   ],
   projects: [
-    "Tell me about the Short-Term Rental Registry",
+    "Tell me about the STRR project",
     "What was your hardest project?",
     "How do you handle complex projects?",
   ],
