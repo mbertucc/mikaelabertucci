@@ -464,6 +464,21 @@ const VenturesHubContent = () => {
             </div>
           </section>
         )}
+        {/* Context Export */}
+        <section className="mt-20 border-t border-border/30 pt-12">
+          <div className="glass-card p-8 text-center space-y-4">
+            <h2 className="font-display text-sm uppercase tracking-[0.2em] text-muted-foreground">Context Export</h2>
+            <p className="font-body text-sm text-muted-foreground max-w-xl mx-auto">
+              Download a complete markdown export of all site context — profile, AI prompts, experiences, skills, and FAQ — for external review.
+            </p>
+            <button
+              onClick={generateContextExport}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-body text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              <Download className="w-4 h-4" /> Download Full Context Export
+            </button>
+          </div>
+        </section>
       </main>
     </div>
   );
