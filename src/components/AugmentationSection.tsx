@@ -75,17 +75,17 @@ const AugmentationSection = () => {
         {/* Header */}
         <div className="mb-16">
           <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">
-            Case Study
+            The Numbers
           </p>
           <h2 className="text-4xl md:text-5xl font-display text-foreground mb-4">
             AI Augmentation in Practice
           </h2>
           <p className="text-muted-foreground font-body text-lg max-w-3xl">
-            A real-world demonstration of the human-in-the-loop model — using the{" "}
+            Here's what human-in-the-loop actually looks like — using the{" "}
             <span className="text-[hsl(var(--amber-warm))] font-medium">
               Manufactured Home Registry Self Serve Feature
             </span>{" "}
-            as the proving ground. AI saves ~19.4 hours each week by drafting epics and stories, surfacing gaps, checking legislation, and reducing rework across PO, BA, and UX.
+            as the proving ground. AI saves ~19.4 hours each week. That's epics drafted, gaps surfaced, legislation checked, and rework eliminated across PO, BA, and UX.
           </p>
         </div>
 
