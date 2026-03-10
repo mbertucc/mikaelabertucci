@@ -14,6 +14,7 @@ interface UserApproval {
   status: string;
   created_at: string;
   email?: string;
+  roles?: string[];
 }
 
 const UserManagement = () => {
