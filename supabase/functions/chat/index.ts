@@ -118,7 +118,7 @@ serve(async (req) => {
       },
       body: JSON.stringify({
         model: "anthropic/claude-sonnet-4",
-        max_tokens: 4096,
+        max_tokens: 1500,
         messages: openRouterMessages,
         stream: true,
       }),
