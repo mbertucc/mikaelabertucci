@@ -122,6 +122,7 @@ const UserManagement = () => {
           <TableHeader>
             <TableRow>
               <TableHead>Email</TableHead>
+              <TableHead>Roles</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Signed Up</TableHead>
               <TableHead className="text-right">Actions</TableHead>
