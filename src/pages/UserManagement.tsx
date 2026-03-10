@@ -157,32 +157,34 @@ const UserManagement = () => {
                   <TableCell className="text-sm text-muted-foreground font-body">
                     {new Date(user.created_at).toLocaleDateString()}
                   </TableCell>
-                  <TableCell className="text-right">
-                    {user.status === "pending" && (
-                      <div className="flex gap-2 justify-end">
+                  {isAdmin && (
+                    <TableCell className="text-right">
+                      {user.status === "pending" && (
+                        <div className="flex gap-2 justify-end">
+                          <button
+                            onClick={() => updateStatus(user.id, "approved")}
+                            className="flex items-center gap-1 px-3 py-1.5 bg-green-500/20 text-green-400 text-xs font-body rounded-md hover:bg-green-500/30 transition-colors"
+                          >
+                            <Check className="w-3 h-3" /> Approve
+                          </button>
+                          <button
+                            onClick={() => updateStatus(user.id, "rejected")}
+                            className="flex items-center gap-1 px-3 py-1.5 bg-destructive/10 text-destructive text-xs font-body rounded-md hover:bg-destructive/20 transition-colors"
+                          >
+                            <X className="w-3 h-3" /> Reject
+                          </button>
+                        </div>
+                      )}
+                      {user.status !== "pending" && (
                         <button
-                          onClick={() => updateStatus(user.id, "approved")}
-                          className="flex items-center gap-1 px-3 py-1.5 bg-green-500/20 text-green-400 text-xs font-body rounded-md hover:bg-green-500/30 transition-colors"
+                          onClick={() => updateStatus(user.id, "pending")}
+                          className="px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-body rounded-md hover:text-foreground transition-colors"
                         >
-                          <Check className="w-3 h-3" /> Approve
+                          Reset to Pending
                         </button>
-                        <button
-                          onClick={() => updateStatus(user.id, "rejected")}
-                          className="flex items-center gap-1 px-3 py-1.5 bg-destructive/10 text-destructive text-xs font-body rounded-md hover:bg-destructive/20 transition-colors"
-                        >
-                          <X className="w-3 h-3" /> Reject
-                        </button>
-                      </div>
-                    )}
-                    {user.status !== "pending" && (
-                      <button
-                        onClick={() => updateStatus(user.id, "pending")}
-                        className="px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-body rounded-md hover:text-foreground transition-colors"
-                      >
-                        Reset to Pending
-                      </button>
-                    )}
-                  </TableCell>
+                      )}
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             )}
