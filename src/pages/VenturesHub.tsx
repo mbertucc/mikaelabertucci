@@ -130,6 +130,99 @@ const resumeFeatureLabels: Record<string, string> = {
   support: "Support", api: "API Access",
 };
 
+// ─── Context Export ────────────────────────────────────────────────────
+
+const generateContextExport = async () => {
+  try {
+    const [profileRes, instructionsRes, experiencesRes, skillsRes, faqRes] = await Promise.all([
+      supabase.from("profile").select("*").limit(1),
+      supabase.from("ai_instructions").select("*"),
+      supabase.from("experiences").select("*").order("sort_order"),
+      supabase.from("skills").select("*").order("sort_order"),
+      supabase.from("faq").select("*").order("sort_order"),
+    ]);
+
+    const profile = (profileRes.data || [])[0];
+    const instructions = instructionsRes.data || [];
+    const experiences = experiencesRes.data || [];
+    const skills = skillsRes.data || [];
+    const faqs = faqRes.data || [];
+
+    const systemPrompt = instructions.find((i: any) => i.key === "system_prompt")?.value || "";
+    const jdPrompt = instructions.find((i: any) => i.key === "jd_analyzer_prompt")?.value || "";
+    const siteMetrics = instructions.find((i: any) => i.key === "site_metrics")?.value || "";
+
+    let md = `# ${profile?.full_name || "Portfolio"} — Full Site Context Export\nGenerated: ${new Date().toISOString().split("T")[0]}\n\n---\n\n`;
+
+    // Profile
+    md += `## PROFILE\n\n`;
+    if (profile) {
+      md += `- **Name:** ${profile.full_name}\n`;
+      md += `- **Title:** ${profile.title}\n`;
+      md += `- **Email:** ${profile.email || ""}\n`;
+      md += `- **Status:** ${profile.status_badge}\n`;
+      md += `- **Company Badges:** ${(profile.company_badges || []).join(", ")}\n`;
+      md += `- **Positioning:** ${profile.positioning}\n`;
+    }
+
+    // System Prompt
+    md += `\n---\n\n## AI INSTRUCTIONS — SYSTEM PROMPT\n\n${systemPrompt}\n`;
+
+    // JD Analyzer
+    md += `\n---\n\n## AI INSTRUCTIONS — JD ANALYZER PROMPT\n\n${jdPrompt}\n`;
+
+    // Site Metrics
+    md += `\n---\n\n## AI INSTRUCTIONS — SITE METRICS\n\n\`\`\`json\n${siteMetrics}\n\`\`\`\n`;
+
+    // Experiences
+    md += `\n---\n\n## EXPERIENCES\n\n`;
+    experiences.forEach((exp: any, i: number) => {
+      md += `### ${i + 1}. ${exp.company}\n`;
+      md += `**Role:** ${exp.title_progression}\n`;
+      md += `**Date Range:** ${exp.date_range}\n`;
+      md += `**Achievements:**\n${(exp.achievements || []).map((a: string) => `- ${a}`).join("\n")}\n\n`;
+      if (exp.ai_situation) md += `**AI Situation:** ${exp.ai_situation}\n\n`;
+      if (exp.ai_approach) md += `**AI Approach:** ${exp.ai_approach}\n\n`;
+      if (exp.ai_technical_work) md += `**AI Technical Work:** ${exp.ai_technical_work}\n\n`;
+      if (exp.ai_lessons_learned) md += `**AI Lessons Learned:** ${exp.ai_lessons_learned}\n\n`;
+    });
+
+    // Skills
+    md += `---\n\n## SKILLS\n\n`;
+    const grouped: Record<string, any[]> = {};
+    skills.forEach((s: any) => {
+      if (!grouped[s.category]) grouped[s.category] = [];
+      grouped[s.category].push(s);
+    });
+    Object.entries(grouped).forEach(([cat, items]) => {
+      md += `### ${cat.charAt(0).toUpperCase() + cat.slice(1)}\n`;
+      items.forEach((s: any) => {
+        md += `- ${s.name}${s.note ? ` — ${s.note}` : ""}\n`;
+      });
+      md += "\n";
+    });
+
+    // FAQ
+    md += `---\n\n## FAQ\n\n`;
+    faqs.forEach((f: any, i: number) => {
+      md += `### ${i + 1}. ${f.question}\n${f.answer}\n\n`;
+    });
+
+    // Download
+    const blob = new Blob([md], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "full-context-export.md";
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Context export downloaded!");
+  } catch (err) {
+    console.error("Export error:", err);
+    toast.error("Failed to generate export");
+  }
+};
+
 // ─── Sub-Components ───────────────────────────────────────────────────
 
 const FeatureValue = ({ value }: { value: string | boolean }) => {
