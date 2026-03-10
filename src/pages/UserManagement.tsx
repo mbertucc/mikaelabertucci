@@ -48,17 +48,28 @@ const UserManagement = () => {
 
     if (error) { toast.error("Failed to load users"); return; }
 
-    // Fetch emails via secure admin function
     const userIds = (data || []).map((u: any) => u.user_id);
+    let emailMap = new Map<string, string>();
+    let rolesMap = new Map<string, string[]>();
+
     if (userIds.length > 0) {
-      const { data: emailData } = await supabase.rpc("get_user_emails", {
-        user_ids: userIds,
-      } as any);
-      const emailMap = new Map((emailData || []).map((e: any) => [e.user_id, e.email]));
-      setUsers((data || []).map((u: any) => ({ ...u, email: emailMap.get(u.user_id) || "Unknown" })));
-    } else {
-      setUsers(data || []);
+      const [{ data: emailData }, { data: rolesData }] = await Promise.all([
+        supabase.rpc("get_user_emails", { user_ids: userIds } as any),
+        supabase.from("user_roles").select("user_id, role").in("user_id", userIds),
+      ]);
+      emailMap = new Map((emailData || []).map((e: any) => [e.user_id, e.email]));
+      (rolesData || []).forEach((r: any) => {
+        const existing = rolesMap.get(r.user_id) || [];
+        existing.push(r.role);
+        rolesMap.set(r.user_id, existing);
+      });
     }
+
+    setUsers((data || []).map((u: any) => ({
+      ...u,
+      email: emailMap.get(u.user_id) || "Unknown",
+      roles: rolesMap.get(u.user_id) || [],
+    })));
   };
 
   const updateStatus = async (id: string, status: string) => {
