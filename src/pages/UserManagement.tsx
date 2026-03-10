@@ -126,7 +126,7 @@ const UserManagement = () => {
               <TableHead>Roles</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Signed Up</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              {isAdmin && <TableHead className="text-right">Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
