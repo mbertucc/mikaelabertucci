@@ -135,13 +135,22 @@ const UserManagement = () => {
                   No users yet
                 </TableCell>
               </TableRow>
-                </TableCell>
-              </TableRow>
             ) : (
               users.map((user) => (
                 <TableRow key={user.id}>
                   <TableCell className="text-sm font-body">
                     {user.email || user.user_id}
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-1 flex-wrap">
+                      {(user.roles || []).length > 0
+                        ? user.roles!.map((role) => (
+                            <Badge key={role} variant="outline" className="text-xs capitalize">
+                              {role}
+                            </Badge>
+                          ))
+                        : <span className="text-xs text-muted-foreground">—</span>}
+                    </div>
                   </TableCell>
                   <TableCell>{statusBadge(user.status)}</TableCell>
                   <TableCell className="text-sm text-muted-foreground font-body">
