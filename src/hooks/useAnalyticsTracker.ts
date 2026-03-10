@@ -84,58 +84,31 @@ export function useAnalyticsTracker() {
 
     const track = async () => {
       try {
-        // Upsert visitor
+        // Upsert visitor (only on new session)
         if (isNew) {
-          const { data: existing } = await supabase
-            .from("analytics_visitors")
-            .select("visitor_hash")
-            .eq("visitor_hash", visitorId)
-            .maybeSingle();
-
-          if (existing) {
-            await supabase
-              .from("analytics_visitors")
-              .update({
-                last_seen: new Date().toISOString(),
-                visit_count: (existing as any).visit_count ? (existing as any).visit_count + 1 : 1,
-              })
-              .eq("visitor_hash", visitorId);
-          } else {
-            await supabase.from("analytics_visitors").insert({
-              visitor_hash: visitorId,
-              first_seen: new Date().toISOString(),
-              last_seen: new Date().toISOString(),
-              visit_count: 1,
-            });
-          }
-
-          // Create session
-          await supabase.from("analytics_sessions").insert({
-            session_id: sessionId,
-            visitor_hash: visitorId,
-            started_at: new Date().toISOString(),
-            last_activity: new Date().toISOString(),
-            page_views_count: 1,
-            is_bot: false,
+          await supabase.rpc("upsert_analytics_visitor" as any, {
+            p_visitor_hash: visitorId,
           });
-        } else {
-          // Update session activity
-          await supabase
-            .from("analytics_sessions")
-            .update({ last_activity: new Date().toISOString() })
-            .eq("session_id", sessionId);
+        }
 
-          // Increment page views count via raw update
+        // Upsert session (creates on new, updates last_activity on existing)
+        await supabase.rpc("upsert_analytics_session" as any, {
+          p_session_id: sessionId,
+          p_visitor_hash: visitorId,
+        });
+
+        // Increment page views for existing sessions
+        if (!isNew) {
           await supabase.rpc("increment_session_page_views" as any, { p_session_id: sessionId });
         }
 
         // Record page view
-        await supabase.from("analytics_page_views").insert({
-          visitor_hash: visitorId,
-          session_id: sessionId,
-          page_path: location.pathname,
-          referrer: document.referrer || null,
-          user_agent: navigator.userAgent,
+        await supabase.rpc("record_analytics_page_view" as any, {
+          p_visitor_hash: visitorId,
+          p_session_id: sessionId,
+          p_page_path: location.pathname,
+          p_referrer: document.referrer || null,
+          p_user_agent: navigator.userAgent,
         });
       } catch (err) {
         // Silently fail — analytics should never break the app
