@@ -5,7 +5,7 @@ export const useProfile = () =>
   useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("profile").select("*").limit(1).single();
+      const { data, error } = await supabase.from("profile").select("id, full_name, title, status_badge, positioning, company_badges, github_url, linkedin_url, created_at, updated_at").limit(1).single();
       if (error) throw error;
       return data;
     },
