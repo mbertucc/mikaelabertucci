@@ -13,8 +13,8 @@ const metricLabels: Record<Exclude<MetricKey, null>, string> = {
   culture: "Culture",
 };
 
-const defaultText =
-  "Hover over a metric to see how an Agentic Product Owner drives these results.";
+  const defaultText =
+    "Hover over a metric to see the numbers behind how I work.";
 
 const AboutSection = () => {
   const { data: profile } = useProfile();
