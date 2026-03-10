@@ -1,53 +1,61 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import type { Session } from "@supabase/supabase-js";
 
-type ApprovalStatus = "loading" | "approved" | "pending" | "rejected" | "unauthenticated";
+type GuardStatus = "loading" | "approved" | "pending" | "rejected" | "unauthenticated";
 
 const AuthGuard = ({ children, requireAdmin = false }: { children: React.ReactNode; requireAdmin?: boolean }) => {
-  const [status, setStatus] = useState<ApprovalStatus>("loading");
+  const [status, setStatus] = useState<GuardStatus>("loading");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const check = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) {
-        navigate("/admin/login", { replace: true });
+  const verifyAccess = useCallback(async (session: Session | null) => {
+    if (!session) {
+      navigate("/admin/login", { replace: true });
+      return;
+    }
+
+    if (requireAdmin) {
+      const { data: isAdmin } = await supabase.rpc("has_role", {
+        _user_id: session.user.id,
+        _role: "admin",
+      });
+      if (!isAdmin) {
+        setStatus("rejected");
         return;
       }
+    }
 
-      if (requireAdmin) {
-        const { data: isAdmin } = await supabase.rpc("has_role", {
-          _user_id: session.user.id,
-          _role: "admin",
-        });
-        if (!isAdmin) {
-          setStatus("rejected");
-          return;
-        }
-      }
+    const { data: approval } = await supabase
+      .from("user_approvals")
+      .select("status")
+      .eq("user_id", session.user.id)
+      .single();
 
-      // Check approval status
-      const { data: approval } = await supabase
-        .from("user_approvals")
-        .select("status")
-        .eq("user_id", session.user.id)
-        .single();
-
-      if (!approval) {
-        setStatus("pending");
-      } else {
-        setStatus(approval.status as ApprovalStatus);
-      }
-    };
-
-    check();
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) navigate("/admin/login", { replace: true });
-    });
-    return () => subscription.unsubscribe();
+    if (!approval) {
+      setStatus("pending");
+    } else {
+      setStatus(approval.status as GuardStatus);
+    }
   }, [navigate, requireAdmin]);
+
+  useEffect(() => {
+    // Set up auth listener FIRST so we catch OAuth token exchange
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+        verifyAccess(session);
+      } else if (event === "SIGNED_OUT") {
+        navigate("/admin/login", { replace: true });
+      }
+    });
+
+    // Then check existing session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      verifyAccess(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [navigate, requireAdmin, verifyAccess]);
 
   if (status === "loading") {
     return (
