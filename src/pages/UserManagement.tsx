@@ -47,10 +47,17 @@ const UserManagement = () => {
 
     if (error) { toast.error("Failed to load users"); return; }
 
-    // Get emails from the current session's admin view
-    // We'll use edge function or just show user_id for now
-    // For simplicity, we'll query auth users via a simple approach
-    setUsers(data || []);
+    // Fetch emails via secure admin function
+    const userIds = (data || []).map((u: any) => u.user_id);
+    if (userIds.length > 0) {
+      const { data: emailData } = await supabase.rpc("get_user_emails", {
+        user_ids: userIds,
+      } as any);
+      const emailMap = new Map((emailData || []).map((e: any) => [e.user_id, e.email]));
+      setUsers((data || []).map((u: any) => ({ ...u, email: emailMap.get(u.user_id) || "Unknown" })));
+    } else {
+      setUsers(data || []);
+    }
   };
 
   const updateStatus = async (id: string, status: string) => {
