@@ -6,11 +6,74 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+// ─── In-memory rate limiter ───────────────────────────────────────────
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const RATE_LIMIT_MAX = 30; // max requests per IP per window
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return false;
+  entry.count++;
+  return true;
+}
+
+// ─── Input validation constants ───────────────────────────────────────
+const MAX_MESSAGES = 20;
+const MAX_TOTAL_CHARS = 20000;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  // Rate limiting by IP
+  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("cf-connecting-ip") || "unknown";
+  if (!checkRateLimit(clientIp)) {
+    return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again later." }), {
+      status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
   try {
     const { messages } = await req.json();
+
+    // ─── Input validation ───────────────────────────────────────
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(JSON.stringify({ error: "Messages array is required" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (messages.length > MAX_MESSAGES) {
+      return new Response(JSON.stringify({ error: `Too many messages (max ${MAX_MESSAGES})` }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    const totalChars = messages.reduce((sum: number, m: any) => sum + String(m.content ?? "").length, 0);
+    if (totalChars > MAX_TOTAL_CHARS) {
+      return new Response(JSON.stringify({ error: "Payload too large" }), {
+        status: 413, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    // Validate role values
+    const validRoles = new Set(["user", "assistant"]);
+    for (const m of messages) {
+      if (!validRoles.has(m.role)) {
+        return new Response(JSON.stringify({ error: `Invalid message role: ${m.role}` }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      if (typeof m.content !== "string") {
+        return new Response(JSON.stringify({ error: "Message content must be a string" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+    }
+
     const ANTHROPIC_API_KEY = Deno.env.get("ANTHROPIC_API_KEY");
     if (!ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY is not configured");
 
@@ -45,10 +108,8 @@ serve(async (req) => {
 
     systemPrompt += `\n\nCANDIDATE PROFILE:\n${profileContext}\n\nFAQ KNOWLEDGE:\n${faqContext}\n\nEXPERIENCE DETAILS:\n${expContext}\n\nSKILLS: ${skillsContext}`;
 
-    // Filter out system messages from the user-provided messages and format for Anthropic
-    const anthropicMessages = messages
-      .filter((m: any) => m.role === "user" || m.role === "assistant")
-      .map((m: any) => ({ role: m.role, content: m.content }));
+    // Already validated — safe to use directly
+    const anthropicMessages = messages.map((m: any) => ({ role: m.role, content: m.content }));
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -81,7 +142,6 @@ serve(async (req) => {
     }
 
     // Transform Anthropic SSE stream to OpenAI-compatible SSE format
-    // so the existing frontend streaming code works unchanged
     const { readable, writable } = new TransformStream();
     const writer = writable.getWriter();
     const encoder = new TextEncoder();
@@ -109,7 +169,6 @@ serve(async (req) => {
               const event = JSON.parse(jsonStr);
 
               if (event.type === "content_block_delta" && event.delta?.text) {
-                // Convert to OpenAI-compatible SSE format
                 const openAIChunk = {
                   choices: [{ delta: { content: event.delta.text } }],
                 };
@@ -125,7 +184,6 @@ serve(async (req) => {
           }
         }
 
-        // Ensure we send [DONE] even if message_stop wasn't received
         await writer.write(encoder.encode("data: [DONE]\n\n"));
       } catch (e) {
         console.error("Stream transform error:", e);

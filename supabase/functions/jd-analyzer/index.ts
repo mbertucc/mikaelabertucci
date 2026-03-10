@@ -6,13 +6,49 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+// ─── In-memory rate limiter ───────────────────────────────────────────
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+const RATE_LIMIT_MAX = 20; // max requests per IP per window
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  if (entry.count >= RATE_LIMIT_MAX) return false;
+  entry.count++;
+  return true;
+}
+
+// ─── Input validation constants ───────────────────────────────────────
+const MAX_JD_LENGTH = 10000;
+
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
+  // Rate limiting by IP
+  const clientIp = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("cf-connecting-ip") || "unknown";
+  if (!checkRateLimit(clientIp)) {
+    return new Response(JSON.stringify({ error: "Rate limit exceeded. Please try again later." }), {
+      status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
+
   try {
     const { jobDescription } = await req.json();
-    if (!jobDescription) {
-      return new Response(JSON.stringify({ error: "Job description is required" }), {
+
+    // ─── Input validation ───────────────────────────────────────
+    if (!jobDescription || typeof jobDescription !== "string") {
+      return new Response(JSON.stringify({ error: "Job description is required and must be a string" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+    if (jobDescription.length > MAX_JD_LENGTH) {
+      return new Response(JSON.stringify({ error: `Job description too long (max ${MAX_JD_LENGTH} characters)` }), {
         status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
