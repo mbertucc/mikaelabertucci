@@ -22,7 +22,7 @@ const questionSets = {
     "Shall I share more details about my AI framework?",
   ],
   projects: [
-    "Tell me about the Short-Term Rental Registry",
+    "Tell me about the STRR project",
     "What was your hardest project?",
     "How do you handle complex projects?",
   ],
@@ -90,7 +90,7 @@ interface ChatDrawerProps {
 const INITIAL_GREETING: Message = {
   role: "assistant",
   content:
-    "Hi! I'm Mikaela, a Product Owner who specializes in AI-augmented delivery. I currently manage **4 concurrent BC Registry portfolios** and save **~19.4 hours weekly** through AI automation.\n\nWhat would you like to know about my work?",
+    "Hi! I'm Mikaela. I build environments where people genuinely want to show up and do great work — and I use AI to cut through the noise so my teams can focus on what actually matters.\n\nI lead with clarity, ship with velocity, and I'm not afraid to be direct about what I bring to the table.\n\nWhat would you like to know?",
 };
 
 const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
