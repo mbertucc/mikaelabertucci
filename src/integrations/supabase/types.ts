@@ -336,6 +336,14 @@ export type Database = {
         Args: { p_session_id: string }
         Returns: undefined
       }
+      upsert_analytics_session: {
+        Args: { p_session_id: string; p_visitor_hash: string }
+        Returns: undefined
+      }
+      upsert_analytics_visitor: {
+        Args: { p_visitor_hash: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "user"
