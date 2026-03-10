@@ -21,6 +21,7 @@ const UserManagement = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<UserApproval[]>([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     checkAdminAndLoad();
@@ -30,11 +31,11 @@ const UserManagement = () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) { navigate("/admin/login"); return; }
 
-    const { data: isAdmin } = await supabase.rpc("has_role", {
+    const { data: adminCheck } = await supabase.rpc("has_role", {
       _user_id: session.user.id,
       _role: "admin",
     });
-    if (!isAdmin) { navigate("/admin"); return; }
+    setIsAdmin(!!adminCheck);
 
     await loadUsers();
     setLoading(false);
@@ -125,13 +126,13 @@ const UserManagement = () => {
               <TableHead>Roles</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Signed Up</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              {isAdmin && <TableHead className="text-right">Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={5} className="text-center text-muted-foreground font-body py-8">
+                <TableCell colSpan={isAdmin ? 5 : 4} className="text-center text-muted-foreground font-body py-8">
                   No users yet
                 </TableCell>
               </TableRow>
@@ -156,32 +157,34 @@ const UserManagement = () => {
                   <TableCell className="text-sm text-muted-foreground font-body">
                     {new Date(user.created_at).toLocaleDateString()}
                   </TableCell>
-                  <TableCell className="text-right">
-                    {user.status === "pending" && (
-                      <div className="flex gap-2 justify-end">
+                  {isAdmin && (
+                    <TableCell className="text-right">
+                      {user.status === "pending" && (
+                        <div className="flex gap-2 justify-end">
+                          <button
+                            onClick={() => updateStatus(user.id, "approved")}
+                            className="flex items-center gap-1 px-3 py-1.5 bg-green-500/20 text-green-400 text-xs font-body rounded-md hover:bg-green-500/30 transition-colors"
+                          >
+                            <Check className="w-3 h-3" /> Approve
+                          </button>
+                          <button
+                            onClick={() => updateStatus(user.id, "rejected")}
+                            className="flex items-center gap-1 px-3 py-1.5 bg-destructive/10 text-destructive text-xs font-body rounded-md hover:bg-destructive/20 transition-colors"
+                          >
+                            <X className="w-3 h-3" /> Reject
+                          </button>
+                        </div>
+                      )}
+                      {user.status !== "pending" && (
                         <button
-                          onClick={() => updateStatus(user.id, "approved")}
-                          className="flex items-center gap-1 px-3 py-1.5 bg-green-500/20 text-green-400 text-xs font-body rounded-md hover:bg-green-500/30 transition-colors"
+                          onClick={() => updateStatus(user.id, "pending")}
+                          className="px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-body rounded-md hover:text-foreground transition-colors"
                         >
-                          <Check className="w-3 h-3" /> Approve
+                          Reset to Pending
                         </button>
-                        <button
-                          onClick={() => updateStatus(user.id, "rejected")}
-                          className="flex items-center gap-1 px-3 py-1.5 bg-destructive/10 text-destructive text-xs font-body rounded-md hover:bg-destructive/20 transition-colors"
-                        >
-                          <X className="w-3 h-3" /> Reject
-                        </button>
-                      </div>
-                    )}
-                    {user.status !== "pending" && (
-                      <button
-                        onClick={() => updateStatus(user.id, "pending")}
-                        className="px-3 py-1.5 bg-secondary text-muted-foreground text-xs font-body rounded-md hover:text-foreground transition-colors"
-                      >
-                        Reset to Pending
-                      </button>
-                    )}
-                  </TableCell>
+                      )}
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             )}
