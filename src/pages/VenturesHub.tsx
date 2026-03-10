@@ -4,9 +4,11 @@ import {
   ArrowLeft, ArrowRight, Rocket, Lock, CreditCard, Hammer, Brain, Globe,
   BarChart3, Shield, Fingerprint, Check, X, Users, Bot, Search, LayoutDashboard,
   MessageSquare, Target, ClipboardList, BadgeCheck, IdCard, MapPin, Briefcase,
-  GraduationCap, Star, Wallet, ShieldCheck, Network
+  GraduationCap, Star, Wallet, ShieldCheck, Network, Download
 } from "lucide-react";
 import AuthGuard from "@/components/AuthGuard";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -126,6 +128,99 @@ const resumeFeatureLabels: Record<string, string> = {
   resumes: "Resumes", templates: "Templates", customDomain: "Custom Domain",
   aiTailoring: "AI Tailoring", resumeAgent: "Resume Agent", analytics: "Analytics",
   support: "Support", api: "API Access",
+};
+
+// ─── Context Export ────────────────────────────────────────────────────
+
+const generateContextExport = async () => {
+  try {
+    const [profileRes, instructionsRes, experiencesRes, skillsRes, faqRes] = await Promise.all([
+      supabase.from("profile").select("*").limit(1),
+      supabase.from("ai_instructions").select("*"),
+      supabase.from("experiences").select("*").order("sort_order"),
+      supabase.from("skills").select("*").order("sort_order"),
+      supabase.from("faq").select("*").order("sort_order"),
+    ]);
+
+    const profile = (profileRes.data || [])[0];
+    const instructions = instructionsRes.data || [];
+    const experiences = experiencesRes.data || [];
+    const skills = skillsRes.data || [];
+    const faqs = faqRes.data || [];
+
+    const systemPrompt = instructions.find((i: any) => i.key === "system_prompt")?.value || "";
+    const jdPrompt = instructions.find((i: any) => i.key === "jd_analyzer_prompt")?.value || "";
+    const siteMetrics = instructions.find((i: any) => i.key === "site_metrics")?.value || "";
+
+    let md = `# ${profile?.full_name || "Portfolio"} — Full Site Context Export\nGenerated: ${new Date().toISOString().split("T")[0]}\n\n---\n\n`;
+
+    // Profile
+    md += `## PROFILE\n\n`;
+    if (profile) {
+      md += `- **Name:** ${profile.full_name}\n`;
+      md += `- **Title:** ${profile.title}\n`;
+      md += `- **Email:** ${profile.email || ""}\n`;
+      md += `- **Status:** ${profile.status_badge}\n`;
+      md += `- **Company Badges:** ${(profile.company_badges || []).join(", ")}\n`;
+      md += `- **Positioning:** ${profile.positioning}\n`;
+    }
+
+    // System Prompt
+    md += `\n---\n\n## AI INSTRUCTIONS — SYSTEM PROMPT\n\n${systemPrompt}\n`;
+
+    // JD Analyzer
+    md += `\n---\n\n## AI INSTRUCTIONS — JD ANALYZER PROMPT\n\n${jdPrompt}\n`;
+
+    // Site Metrics
+    md += `\n---\n\n## AI INSTRUCTIONS — SITE METRICS\n\n\`\`\`json\n${siteMetrics}\n\`\`\`\n`;
+
+    // Experiences
+    md += `\n---\n\n## EXPERIENCES\n\n`;
+    experiences.forEach((exp: any, i: number) => {
+      md += `### ${i + 1}. ${exp.company}\n`;
+      md += `**Role:** ${exp.title_progression}\n`;
+      md += `**Date Range:** ${exp.date_range}\n`;
+      md += `**Achievements:**\n${(exp.achievements || []).map((a: string) => `- ${a}`).join("\n")}\n\n`;
+      if (exp.ai_situation) md += `**AI Situation:** ${exp.ai_situation}\n\n`;
+      if (exp.ai_approach) md += `**AI Approach:** ${exp.ai_approach}\n\n`;
+      if (exp.ai_technical_work) md += `**AI Technical Work:** ${exp.ai_technical_work}\n\n`;
+      if (exp.ai_lessons_learned) md += `**AI Lessons Learned:** ${exp.ai_lessons_learned}\n\n`;
+    });
+
+    // Skills
+    md += `---\n\n## SKILLS\n\n`;
+    const grouped: Record<string, any[]> = {};
+    skills.forEach((s: any) => {
+      if (!grouped[s.category]) grouped[s.category] = [];
+      grouped[s.category].push(s);
+    });
+    Object.entries(grouped).forEach(([cat, items]) => {
+      md += `### ${cat.charAt(0).toUpperCase() + cat.slice(1)}\n`;
+      items.forEach((s: any) => {
+        md += `- ${s.name}${s.note ? ` — ${s.note}` : ""}\n`;
+      });
+      md += "\n";
+    });
+
+    // FAQ
+    md += `---\n\n## FAQ\n\n`;
+    faqs.forEach((f: any, i: number) => {
+      md += `### ${i + 1}. ${f.question}\n${f.answer}\n\n`;
+    });
+
+    // Download
+    const blob = new Blob([md], { type: "text/markdown" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "full-context-export.md";
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Context export downloaded!");
+  } catch (err) {
+    console.error("Export error:", err);
+    toast.error("Failed to generate export");
+  }
 };
 
 // ─── Sub-Components ───────────────────────────────────────────────────
@@ -369,6 +464,21 @@ const VenturesHubContent = () => {
             </div>
           </section>
         )}
+        {/* Context Export */}
+        <section className="mt-20 border-t border-border/30 pt-12">
+          <div className="glass-card p-8 text-center space-y-4">
+            <h2 className="font-display text-sm uppercase tracking-[0.2em] text-muted-foreground">Context Export</h2>
+            <p className="font-body text-sm text-muted-foreground max-w-xl mx-auto">
+              Download a complete markdown export of all site context — profile, AI prompts, experiences, skills, and FAQ — for external review.
+            </p>
+            <button
+              onClick={generateContextExport}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-body text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              <Download className="w-4 h-4" /> Download Full Context Export
+            </button>
+          </div>
+        </section>
       </main>
     </div>
   );
