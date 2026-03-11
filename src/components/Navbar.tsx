@@ -36,7 +36,7 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
           </button>
           <button
             onClick={() => scrollTo("fit-check")}
-            className="text-sm font-body tracking-wide text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
+            className="text-sm font-body tracking-wide text-muted-foreground hover:text-accent-warm transition-colors hidden sm:block"
           >
             Fit Check
           </button>
