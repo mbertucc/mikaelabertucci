@@ -192,13 +192,15 @@ const DarkFactorySection = () => {
 
         {/* Steps */}
         <div className="grid gap-8 lg:grid-cols-3">
-          {steps.map((step) => {
+          {steps.map((step, idx) => {
             const s = accentStyles[step.accent];
             const Icon = step.icon;
             return (
-              <div
-                key={step.number}
-                className={`glass-card relative overflow-hidden p-8 flex flex-col gap-6 ring-1 ${s.ring} ${s.glow} transition-all duration-300 hover:scale-[1.02]`}
+              <ScrollReveal key={step.number} delay={idx * 0.15}>
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className={`glass-card relative overflow-hidden p-8 flex flex-col gap-6 ring-1 ${s.ring} ${s.glow} transition-all duration-300`}
               >
                 <div className="flex items-center gap-3">
                   <span className={`text-xs font-mono font-bold tracking-widest ${s.text}`}>
