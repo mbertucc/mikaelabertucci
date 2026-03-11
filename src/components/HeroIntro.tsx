@@ -20,9 +20,9 @@ const HeroIntro = () => {
         </h1>
 
         {/* Title */}
-        <p className="text-2xl md:text-3xl font-display italic text-primary">
-          {profile?.title || "Agentic Product Owner | Context Engineer"}
-        </p>
+         <p className="text-2xl md:text-3xl font-display italic text-accent-warm">
+           {profile?.title || "Agentic Product Owner | Context Engineer"}
+         </p>
       </div>
     </section>
   );

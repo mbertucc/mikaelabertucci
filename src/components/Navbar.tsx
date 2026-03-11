@@ -60,7 +60,7 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
           {/* Ask AI — icon-only on mobile */}
           <button
             onClick={onOpenChat}
-            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-primary text-primary-foreground font-body text-sm font-medium rounded-lg glow-primary hover:brightness-110 transition-all"
+            className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-accent-warm text-accent-warm-foreground font-body text-sm font-medium rounded-lg glow-warm hover:brightness-110 transition-all"
           >
             <MessageSquare className="w-4 h-4" />
             <span className="hidden sm:inline">Ask AI About Me</span>
