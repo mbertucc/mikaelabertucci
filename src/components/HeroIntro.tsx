@@ -8,10 +8,10 @@ const HeroIntro = () => {
       <div className="max-w-5xl mx-auto text-center space-y-6">
         {/* Status badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 glass-card text-sm font-body">
-          <span className="w-2 h-2 rounded-full bg-primary animate-pulse-glow" />
-          <span className="text-muted-foreground">
-            {profile?.status_badge || "🟢 Open to \"Dark Factory\" environments where Spec is the Product"}
-          </span>
+           <span className="w-2 h-2 rounded-full bg-accent-warm animate-pulse-glow" />
+           <span className="text-muted-foreground">
+             {profile?.status_badge || "🟢 Open to \"Dark Factory\" environments where Spec is the Product"}
+           </span>
         </div>
 
         {/* Name */}
