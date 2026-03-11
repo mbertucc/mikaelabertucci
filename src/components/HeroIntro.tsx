@@ -15,8 +15,8 @@ const HeroIntro = () => {
         </div>
 
         {/* Name */}
-        <h1 className="text-6xl md:text-8xl font-display leading-[0.95] tracking-tight text-foreground">
-          {profile?.full_name || "Mikaela Bertucci"}
+         <h1 className="text-7xl md:text-9xl font-display font-bold leading-[0.95] tracking-tight text-foreground">
+           {profile?.full_name || "Mikaela Bertucci"}
         </h1>
 
         {/* Title */}
