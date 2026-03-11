@@ -105,6 +105,8 @@
     --sidebar-accent-foreground: 159 28% 48%;
     --sidebar-border: 210 15% 20%;
     --sidebar-ring: 159 28% 42%;
+    --accent-warm: 12 80% 65%;
+    --accent-warm-foreground: 0 0% 100%;
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.1);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.12);
     --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.15), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
