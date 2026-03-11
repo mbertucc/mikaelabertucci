@@ -173,20 +173,22 @@ const DarkFactorySection = () => {
     <section id="dark-factory" className="py-12 px-6" ref={ref}>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-10 space-y-3">
-          <p className="text-xs font-body uppercase tracking-[0.3em] text-primary">
-            How I Actually Work
-          </p>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">
-            The Agentic Product Owner Workflow
-          </h2>
-          <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
-            Real example:{" "}
-            <span className="text-[hsl(var(--amber-warm))] font-medium">
-              Manufactured Home Registry Transfer
-            </span>
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-10 space-y-3">
+            <p className="text-xs font-body uppercase tracking-[0.3em] text-primary">
+              How I Actually Work
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">
+              The Agentic Product Owner Workflow
+            </h2>
+            <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
+              Real example:{" "}
+              <span className="text-[hsl(var(--amber-warm))] font-medium">
+                Manufactured Home Registry Transfer
+              </span>
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Steps */}
         <div className="grid gap-8 lg:grid-cols-3">
