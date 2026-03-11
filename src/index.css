@@ -149,6 +149,10 @@
     box-shadow: 0 0 20px hsl(159 28% 24% / 0.25), 0 0 60px hsl(159 28% 24% / 0.1);
   }
 
+  .glow-warm {
+    box-shadow: 0 0 20px hsl(var(--accent-warm) / 0.3), 0 0 60px hsl(var(--accent-warm) / 0.12);
+  }
+
   .text-gradient-primary {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70;
   }
