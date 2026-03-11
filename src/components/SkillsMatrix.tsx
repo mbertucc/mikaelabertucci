@@ -168,6 +168,7 @@ const SkillsMatrix = () => {
         </div>
       </section>
     </TooltipProvider>
+    </ScrollReveal>
   );
 };
 
