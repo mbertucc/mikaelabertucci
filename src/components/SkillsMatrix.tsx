@@ -60,6 +60,7 @@ const SkillsMatrix = () => {
   if (isLoading) return null;
 
   return (
+    <ScrollReveal>
     <TooltipProvider delayDuration={200}>
       <section className="py-10 px-6 bg-card/30">
         <div className="max-w-5xl mx-auto">
