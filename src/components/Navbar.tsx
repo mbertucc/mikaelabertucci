@@ -22,7 +22,7 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <button
           onClick={() => scrollTo("hero")}
-          className="font-display text-2xl text-primary tracking-wide"
+          className="font-display text-2xl text-accent-warm tracking-wide font-semibold"
         >
           MB
         </button>
