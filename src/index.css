@@ -38,6 +38,8 @@
     --teal-foreground: 34 16% 94%;
     --amber-warm: 28 45% 48%;
     --amber-warm-foreground: 210 20% 16%;
+    --accent-warm: 12 80% 60%;
+    --accent-warm-foreground: 0 0% 100%;
 
     --radius: 0.75rem;
 
@@ -55,6 +57,7 @@
     --chart-4: 210 18% 32%;
     --chart-5: 210 10% 55%;
     --sidebar: 34 14% 91%;
+    --font-display: 'Sora', ui-sans-serif, system-ui, -apple-system, sans-serif;
     --font-sans: 'Montserrat', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     --font-serif: 'Montserrat', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -102,6 +105,8 @@
     --sidebar-accent-foreground: 159 28% 48%;
     --sidebar-border: 210 15% 20%;
     --sidebar-ring: 159 28% 42%;
+    --accent-warm: 12 80% 65%;
+    --accent-warm-foreground: 0 0% 100%;
     --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.1);
     --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.12);
     --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.15), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
@@ -142,6 +147,10 @@
 
   .glow-primary {
     box-shadow: 0 0 20px hsl(159 28% 24% / 0.25), 0 0 60px hsl(159 28% 24% / 0.1);
+  }
+
+  .glow-warm {
+    box-shadow: 0 0 20px hsl(var(--accent-warm) / 0.3), 0 0 60px hsl(var(--accent-warm) / 0.12);
   }
 
   .text-gradient-primary {

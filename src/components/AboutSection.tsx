@@ -148,7 +148,7 @@ const AboutSection = () => {
                 </div>
                 {activeMetric && (
                   <button
-                    className="shrink-0 inline-flex items-center gap-1.5 text-xs font-body text-primary hover:text-primary/80 transition-colors duration-200 border border-primary/20 rounded-full px-3 py-1.5 hover:bg-primary/5 animate-fade-in"
+                    className="shrink-0 inline-flex items-center gap-1.5 text-xs font-body text-accent-warm hover:text-accent-warm/80 transition-colors duration-200 border border-accent-warm/20 rounded-full px-3 py-1.5 hover:bg-accent-warm/5 animate-fade-in"
                     onClick={() => {
                       const deepDivePrompts: Record<Exclude<MetricKey, null>, string> = {
                         velocity: `Tell me about the multi-agent Chain of Thought workflow you use for ${m?.about_velocity_time_to_draft ?? 2}x faster story drafting — specifically the Discovery Agent, Story Architect, and Reviewer Agent.`,

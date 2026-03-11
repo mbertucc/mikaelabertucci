@@ -13,9 +13,9 @@ export default {
   		}
   	},
   	extend: {
-  		fontFamily: {
+		fontFamily: {
 			display: [
-				'Montserrat',
+				'Sora',
   				'system-ui',
   				'sans-serif'
   			],
@@ -76,6 +76,10 @@ export default {
   			accent: {
   				DEFAULT: 'hsl(var(--accent))',
   				foreground: 'hsl(var(--accent-foreground))'
+  			},
+  			'accent-warm': {
+  				DEFAULT: 'hsl(var(--accent-warm))',
+  				foreground: 'hsl(var(--accent-warm-foreground))'
   			},
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',
