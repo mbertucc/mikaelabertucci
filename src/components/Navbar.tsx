@@ -42,7 +42,7 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
           </button>
           <button
             onClick={() => navigate("/ventures")}
-            className="items-center gap-1.5 text-sm font-body tracking-wide text-muted-foreground hover:text-foreground transition-colors hidden sm:flex"
+            className="items-center gap-1.5 text-sm font-body tracking-wide text-muted-foreground hover:text-accent-warm transition-colors hidden sm:flex"
           >
             <Lock className="w-3.5 h-3.5" />
             Ventures
