@@ -240,7 +240,8 @@ const DarkFactorySection = () => {
                     {step.statLabel}
                   </p>
                 </div>
-              </div>
+              </motion.div>
+              </ScrollReveal>
             );
           })}
         </div>
