@@ -30,7 +30,7 @@ const Navbar = ({ onOpenChat }: NavbarProps) => {
           {/* Desktop nav links */}
           <button
             onClick={() => scrollTo("experience")}
-            className="text-sm font-body tracking-wide text-muted-foreground hover:text-foreground transition-colors hidden sm:block"
+             className="text-sm font-body tracking-wide text-muted-foreground hover:text-accent-warm transition-colors hidden sm:block"
           >
             Experience
           </button>
