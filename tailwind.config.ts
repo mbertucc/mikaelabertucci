@@ -13,9 +13,9 @@ export default {
   		}
   	},
   	extend: {
-  		fontFamily: {
+		fontFamily: {
 			display: [
-				'Montserrat',
+				'Sora',
   				'system-ui',
   				'sans-serif'
   			],
