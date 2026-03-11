@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FileText, Cpu, Rocket, Clock, FileCheck, Layers, Brain } from "lucide-react";
+import { motion } from "framer-motion";
+import ScrollReveal from "@/components/ScrollReveal";
 import { useSiteMetrics, SiteMetrics } from "@/hooks/useSiteMetrics";
 
 const buildSteps = (m: SiteMetrics) => [
