@@ -91,7 +91,7 @@ const AboutSection = () => {
               <div className="space-y-4 text-center md:text-left">
                 <p className="text-base text-muted-foreground font-body leading-relaxed max-w-xl">
                   {profile?.positioning ||
-                    "As an Agentic Product Owner, I don't just manage a backlog; I orchestrate an AI-augmented ecosystem."}
+                    "I use AI to cut through the documentation overhead, saving 19.4 hours every week. That's not theory — that's what I'm doing today. I don't write production code. I write specs so clear that developers ship without coming back to ask questions."}
                 </p>
               </div>
             </div>
