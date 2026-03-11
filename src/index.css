@@ -38,6 +38,8 @@
     --teal-foreground: 34 16% 94%;
     --amber-warm: 28 45% 48%;
     --amber-warm-foreground: 210 20% 16%;
+    --accent-warm: 12 80% 60%;
+    --accent-warm-foreground: 0 0% 100%;
 
     --radius: 0.75rem;
 
