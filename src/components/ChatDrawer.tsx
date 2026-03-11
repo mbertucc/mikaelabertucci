@@ -87,10 +87,19 @@ interface ChatDrawerProps {
   initialMessage?: string;
 }
 
+function getTimeGreeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 6) return "Burning the midnight oil? I respect that. 🌙";
+  if (hour < 12) return "Good morning! ☀️ Coffee in hand, let's talk.";
+  if (hour < 17) return "Good afternoon! What can I help you with?";
+  if (hour < 21) return "Good evening! 🌆 Still getting things done — I like your energy.";
+  return "Working late? Same. Let's make it count. 🌙";
+}
+
 const INITIAL_GREETING: Message = {
   role: "assistant",
   content:
-    "Hi! I'm Mikaela. I build environments where people genuinely want to show up and do great work — and I use AI to cut through the noise so my teams can focus on what actually matters.\n\nI lead with clarity, ship with velocity, and I'm not afraid to be direct about what I bring to the table.\n\nWhat would you like to know?",
+    `${getTimeGreeting()}\n\nI'm Mikaela. I build environments where people genuinely want to show up and do great work — and I use AI to cut through the noise so my teams can focus on what actually matters.\n\nI lead with clarity, ship with velocity, and I'm not afraid to be direct about what I bring to the table.\n\nWhat would you like to know?`,
 };
 
 const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {

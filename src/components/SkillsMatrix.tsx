@@ -2,6 +2,7 @@ import { useSkills } from "@/hooks/usePortfolioData";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const categoryConfig = {
   strong: {
@@ -59,6 +60,7 @@ const SkillsMatrix = () => {
   if (isLoading) return null;
 
   return (
+    <ScrollReveal>
     <TooltipProvider delayDuration={200}>
       <section className="py-10 px-6 bg-card/30">
         <div className="max-w-5xl mx-auto">
@@ -122,6 +124,7 @@ const SkillsMatrix = () => {
                     <motion.span
                       initial={{ opacity: 0, x: 12 }}
                       animate={{ opacity: 1, x: 0 }}
+                      whileHover={{ scale: 1.08, y: -2 }}
                       transition={{ duration: 0.2, delay: i * 0.03 }}
                       className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 rounded-full text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
                         skill.note ? "cursor-help" : ""
@@ -165,6 +168,7 @@ const SkillsMatrix = () => {
         </div>
       </section>
     </TooltipProvider>
+    </ScrollReveal>
   );
 };
 

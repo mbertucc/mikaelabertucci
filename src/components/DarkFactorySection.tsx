@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FileText, Cpu, Rocket, Clock, FileCheck, Layers, Brain } from "lucide-react";
+import { motion } from "framer-motion";
+import ScrollReveal from "@/components/ScrollReveal";
 import { useSiteMetrics, SiteMetrics } from "@/hooks/useSiteMetrics";
 
 const buildSteps = (m: SiteMetrics) => [
@@ -171,30 +173,34 @@ const DarkFactorySection = () => {
     <section id="dark-factory" className="py-12 px-6" ref={ref}>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-10 space-y-3">
-          <p className="text-xs font-body uppercase tracking-[0.3em] text-primary">
-            How I Actually Work
-          </p>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">
-            The Agentic Product Owner Workflow
-          </h2>
-          <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
-            Real example:{" "}
-            <span className="text-[hsl(var(--amber-warm))] font-medium">
-              Manufactured Home Registry Transfer
-            </span>
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center mb-10 space-y-3">
+            <p className="text-xs font-body uppercase tracking-[0.3em] text-primary">
+              How I Actually Work
+            </p>
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">
+              The Agentic Product Owner Workflow
+            </h2>
+            <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
+              Real example:{" "}
+              <span className="text-[hsl(var(--amber-warm))] font-medium">
+                Manufactured Home Registry Transfer
+              </span>
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Steps */}
         <div className="grid gap-8 lg:grid-cols-3">
-          {steps.map((step) => {
+          {steps.map((step, idx) => {
             const s = accentStyles[step.accent];
             const Icon = step.icon;
             return (
-              <div
-                key={step.number}
-                className={`glass-card relative overflow-hidden p-8 flex flex-col gap-6 ring-1 ${s.ring} ${s.glow} transition-all duration-300 hover:scale-[1.02]`}
+              <ScrollReveal key={step.number} delay={idx * 0.15}>
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className={`glass-card relative overflow-hidden p-8 flex flex-col gap-6 ring-1 ${s.ring} ${s.glow} transition-all duration-300`}
               >
                 <div className="flex items-center gap-3">
                   <span className={`text-xs font-mono font-bold tracking-widest ${s.text}`}>
@@ -234,7 +240,8 @@ const DarkFactorySection = () => {
                     {step.statLabel}
                   </p>
                 </div>
-              </div>
+              </motion.div>
+              </ScrollReveal>
             );
           })}
         </div>
