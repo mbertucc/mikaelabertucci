@@ -105,6 +105,12 @@ const ExperienceSection = () => {
 
   const isExpanded = (id: string) => expandedCards.has(id);
 
+  const isPlainDescription = (role: typeof recentRoles[number]) => {
+    const hasAchievements = role.achievements && role.achievements.length > 0;
+    const hasDetails = DETAIL_SECTIONS.some(({ key }) => role[key as keyof typeof role]);
+    return !hasAchievements && !hasDetails && !!role.ai_situation;
+  };
+
   const renderCard = (role: typeof recentRoles[number], index: number, isGovRole = false) => (
     <ScrollReveal key={role.id} delay={index * 0.1}>
       <article className="relative pl-6 md:pl-8 group">
@@ -140,26 +146,35 @@ const ExperienceSection = () => {
             </p>
           </header>
 
-          {/* Primary sections (always visible) */}
-          <div className="space-y-4 pt-1">
-            {renderSections(PRIMARY_SECTIONS, role)}
-          </div>
-
-          {/* Detail sections (collapsible) */}
-          {DETAIL_SECTIONS.some(({ key }) => role[key]) && (
+          {isPlainDescription(role) ? (
+            /* Plain description — no Challenge/Outcome structure */
+            <p className="text-sm text-muted-foreground font-body leading-relaxed">
+              {role.ai_situation}
+            </p>
+          ) : (
             <>
-              {isExpanded(role.id) && (
-                <div className="space-y-4 animate-fade-in">
-                  {renderSections(DETAIL_SECTIONS, role)}
-                </div>
+              {/* Primary sections (always visible) */}
+              <div className="space-y-4 pt-1">
+                {renderSections(PRIMARY_SECTIONS, role)}
+              </div>
+
+              {/* Detail sections (collapsible) */}
+              {DETAIL_SECTIONS.some(({ key }) => role[key as keyof typeof role]) && (
+                <>
+                  {isExpanded(role.id) && (
+                    <div className="space-y-4 animate-fade-in">
+                      {renderSections(DETAIL_SECTIONS, role)}
+                    </div>
+                  )}
+                  <button
+                    onClick={() => toggleCard(role.id)}
+                    className="flex items-center gap-1.5 text-xs font-body font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {isExpanded(role.id) ? "Hide Details" : "Show Details"}
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded(role.id) ? "rotate-180" : ""}`} />
+                  </button>
+                </>
               )}
-              <button
-                onClick={() => toggleCard(role.id)}
-                className="flex items-center gap-1.5 text-xs font-body font-medium text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {isExpanded(role.id) ? "Hide Details" : "Show Details"}
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded(role.id) ? "rotate-180" : ""}`} />
-              </button>
             </>
           )}
         </div>
