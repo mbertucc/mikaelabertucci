@@ -184,9 +184,29 @@ const ExperienceSection = () => {
           </div>
         </ScrollReveal>
 
-        <div className="space-y-8">
-          {recentRoles.map((role, i) => renderCard(role, i))}
-        </div>
+        {/* BC Provincial Government Project Portfolio */}
+        <ScrollReveal>
+          <div className="relative border border-border/30 rounded-2xl p-6 md:p-8 bg-muted/20">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2.5">
+                <Building2 className="w-5 h-5 text-primary/70" />
+                <h3 className="text-xl md:text-2xl font-display font-semibold text-foreground">
+                  BC Provincial Government
+                </h3>
+              </div>
+              <span className="text-xs font-mono text-muted-foreground tracking-wide">
+                2018 – Present
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground font-body mb-8 max-w-xl">
+              Seven years delivering digital products across multiple ministries and programs.
+            </p>
+
+            <div className="space-y-8">
+              {recentRoles.map((role, i) => renderCard(role, i, true))}
+            </div>
+          </div>
+        </ScrollReveal>
 
         {earlierRoles.length > 0 && (
           <div className="mt-12">
