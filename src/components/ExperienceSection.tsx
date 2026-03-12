@@ -54,6 +54,14 @@ const ExperienceSection = () => {
     );
   };
 
+  const parseCompany = (company: string) => {
+    const parts = company.split(" — ");
+    if (parts.length >= 2) {
+      return { org: parts[0].trim(), project: parts.slice(1).join(" — ").trim() };
+    }
+    return { org: company, project: null };
+  };
+
   const recentRoles = (experiences || []).filter(
     (r) => r.sort_order < EARLIER_CAREER_CUTOFF || ALWAYS_SHOW_IDS.includes(r.id)
   );
