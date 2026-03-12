@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, History, MessageSquare } from "lucide-react";
+import { Building2, ChevronDown, History, MessageSquare } from "lucide-react";
 import { useExperiences } from "@/hooks/usePortfolioData";
 import ScrollReveal from "@/components/ScrollReveal";
 
