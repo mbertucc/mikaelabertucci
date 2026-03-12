@@ -81,7 +81,7 @@ const AugmentationSection = () => {
             AI Augmentation in Practice
           </h2>
           <p className="text-muted-foreground font-body text-lg max-w-3xl">
-            Here's what human-in-the-loop actually looks like — using the{" "}
+            What human-in-the-loop actually looks like — using the{" "}
             <span className="text-[hsl(var(--amber-warm))] font-medium">
               Manufactured Home Registry Self Serve Feature
             </span>{" "}
