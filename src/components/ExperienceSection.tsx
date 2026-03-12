@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, History, MessageSquare } from "lucide-react";
+import { Building2, ChevronDown, History, MessageSquare } from "lucide-react";
 import { useExperiences } from "@/hooks/usePortfolioData";
 import ScrollReveal from "@/components/ScrollReveal";
 
@@ -54,6 +54,14 @@ const ExperienceSection = () => {
     );
   };
 
+  const parseCompany = (company: string) => {
+    const parts = company.split(" — ");
+    if (parts.length >= 2) {
+      return { org: parts[0].trim(), project: parts.slice(1).join(" — ").trim() };
+    }
+    return { org: company, project: null };
+  };
+
   const recentRoles = (experiences || []).filter(
     (r) => r.sort_order < EARLIER_CAREER_CUTOFF || ALWAYS_SHOW_IDS.includes(r.id)
   );
@@ -97,7 +105,7 @@ const ExperienceSection = () => {
 
   const isExpanded = (id: string) => expandedCards.has(id);
 
-  const renderCard = (role: typeof recentRoles[number], index: number) => (
+  const renderCard = (role: typeof recentRoles[number], index: number, isGovRole = false) => (
     <ScrollReveal key={role.id} delay={index * 0.1}>
       <article className="relative pl-6 md:pl-8 group">
         {/* Agentic left accent line */}
@@ -109,7 +117,7 @@ const ExperienceSection = () => {
           <header className="space-y-1.5">
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-4">
               <h3 className="text-lg md:text-xl font-display font-semibold text-foreground tracking-[0.03em]">
-                {role.title_progression}
+                {isGovRole ? (parseCompany(role.company).project || role.title_progression) : role.title_progression}
               </h3>
               <div className="flex items-center gap-3 shrink-0">
                 <button
@@ -125,7 +133,11 @@ const ExperienceSection = () => {
                 </span>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground font-body">{role.company}</p>
+            <p className="text-sm text-muted-foreground font-body">
+              {isGovRole
+                ? `${parseCompany(role.company).org} · ${role.title_progression}`
+                : role.company}
+            </p>
           </header>
 
           {/* Primary sections (always visible) */}
@@ -172,9 +184,29 @@ const ExperienceSection = () => {
           </div>
         </ScrollReveal>
 
-        <div className="space-y-8">
-          {recentRoles.map((role, i) => renderCard(role, i))}
-        </div>
+        {/* BC Provincial Government Project Portfolio */}
+        <ScrollReveal>
+          <div className="relative border border-border/30 rounded-2xl p-6 md:p-8 bg-muted/20">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+              <div className="flex items-center gap-2.5">
+                <Building2 className="w-5 h-5 text-primary/70" />
+                <h3 className="text-xl md:text-2xl font-display font-semibold text-foreground">
+                  BC Provincial Government
+                </h3>
+              </div>
+              <span className="text-xs font-mono text-muted-foreground tracking-wide">
+                2018 – Present
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground font-body mb-8 max-w-xl">
+              Seven years delivering digital products across multiple ministries and programs.
+            </p>
+
+            <div className="space-y-8">
+              {recentRoles.map((role, i) => renderCard(role, i, true))}
+            </div>
+          </div>
+        </ScrollReveal>
 
         {earlierRoles.length > 0 && (
           <div className="mt-12">
