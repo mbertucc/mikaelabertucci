@@ -179,7 +179,7 @@ const ExperienceSection = () => {
               Experience
             </h2>
             <p className="text-sm text-muted-foreground font-body max-w-xl">
-              Every role here delivered measurable results. No filler. No padding.
+              Every role here delivered measurable results.
             </p>
           </div>
         </ScrollReveal>

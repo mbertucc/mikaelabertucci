@@ -4,10 +4,10 @@ import { useState, useEffect } from "react";
 
 const taglines = [
   "I build environments where people want to show up.",
-  "Spec is my product. Clarity is my superpower.",
+  "Spec is my product. Clarity is how I deliver it.",
   "19.4 hours saved per week — and counting.",
-  "AI-augmented. Human-driven. Results-obsessed.",
-  "I don't manage backlogs. I orchestrate ecosystems.",
+  "AI-augmented product ownership with human judgment at the center.",
+  "3 concurrent registry portfolios. One PO. AI-augmented workflows.",
 ];
 
 const HeroIntro = () => {

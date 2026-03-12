@@ -237,7 +237,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
                 Ask AI About Mikaela
               </p>
               <p className="text-xs text-muted-foreground font-body">
-                Brutally honest answers
+                Direct answers
               </p>
             </div>
           </div>

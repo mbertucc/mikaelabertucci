@@ -302,7 +302,7 @@ const DarkFactorySection = () => {
         </div>
 
         <p className="text-center text-xs text-muted-foreground font-body mt-6">
-          These numbers come from a real 6-week sprint cycle on the Manufactured Home Registry Self Serve feature. Not projections — actuals.
+          These numbers come from a real 6-week sprint cycle on the Manufactured Home Registry Self Serve feature.
         </p>
       </div>
     </section>
