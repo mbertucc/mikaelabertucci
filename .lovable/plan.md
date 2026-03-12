@@ -1,18 +1,25 @@
 
 
-## Fix Chat Text Readability
+## Reframe Top 5 as BC Government Project Portfolio
 
-### Problem
-The chat drawer has dark text on a dark background, making messages hard to read -- particularly the assistant message bubbles and input field in dark mode.
+All content (Challenge, Outcome, Approach, Technical Work, Lessons Learned) stays exactly as-is. Only the **visual grouping and card headers** change.
 
-### Changes to `src/components/ChatDrawer.tsx`
+### Changes — `src/components/ExperienceSection.tsx` only
 
-1. **Assistant message bubbles** (line 159): Change from `bg-secondary text-secondary-foreground` to `bg-muted/20 text-foreground` so the text is always clearly visible against the bubble background.
+**1. Add a BC Government wrapper around the top 5 cards**
+- A container with a header: **"BC Provincial Government"** + date range **"2018 – Present"**
+- A one-line intro: *"Seven years delivering digital products across multiple ministries and programs."*
+- Styled with a subtle left border or background tint to visually group them
 
-2. **Input field** (line 203): Change `text-secondary-foreground` and placeholder color to use `text-foreground` and `placeholder:text-muted-foreground` for better contrast.
+**2. Swap card header hierarchy**
+- Parse `company` field on `" — "` to extract the project name
+- **Project name** becomes the `h3` heading (e.g., "Multi-Registry Portfolio")
+- **Org + role title** drops to a smaller subtitle line (e.g., "BC Registries & Online Services · Certified Product Owner")
+- Date range and Ask AI button stay in the same position
 
-3. **Suggested question buttons** (line 187): Update `text-secondary-foreground` to `text-foreground` so they are legible in both light and dark mode.
+**3. Everything else untouched**
+- Challenge, Outcome sections remain always-visible
+- Approach, Technical Work, Lessons Learned remain in the collapsible "Show Details" toggle
+- Earlier Career section unchanged
+- `renderSections`, `renderBulletText`, all section constants — no changes
 
-4. **Loading spinner bubble** (line 172): Update from `bg-secondary` to `bg-muted/20` to match the assistant bubble style.
-
-These are purely class-name changes -- no structural or logic changes needed.
