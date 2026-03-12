@@ -93,7 +93,7 @@ type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
 const buildStatDescriptions = (m: SiteMetrics): Record<Exclude<StatKey, null>, string[]> => ({
   saved: [
     "Multilevel agent built specifically for the Manufactured Home Registry.",
-    "Automated discovery and drafting for this feature set. Not theory — this happened.",
+    "Automated discovery and drafting for this feature set — measured across a real 6-week cycle.",
   ],
   quality: [
     "Agent systematically uncovers edge cases & business requirements others miss.",
