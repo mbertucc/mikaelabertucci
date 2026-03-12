@@ -34,7 +34,7 @@ const workflowStages = [
 ];
 
 const strategicBenefits = [
-  "Surfaced gaps early — exposed unclear rules during backlog creation. Policy collaboration happened before it became a blocker.",
+  "Surfaced gaps early — exposed unclear rules during backlog creation. Collaboration happened before it became a blocker.",
   "Higher-quality collaboration — BA received complete stories with clear personas and acceptance criteria. No guessing.",
   "Reduced rework — UX/UI team got full context up front. Eliminated repeated requirement-gathering sessions.",
   "Bigger picture visible — end-to-end filing flow mapped before sprint 1. Early planning for later epics.",
