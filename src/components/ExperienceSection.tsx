@@ -105,7 +105,7 @@ const ExperienceSection = () => {
 
   const isExpanded = (id: string) => expandedCards.has(id);
 
-  const renderCard = (role: typeof recentRoles[number], index: number) => (
+  const renderCard = (role: typeof recentRoles[number], index: number, isGovRole = false) => (
     <ScrollReveal key={role.id} delay={index * 0.1}>
       <article className="relative pl-6 md:pl-8 group">
         {/* Agentic left accent line */}
