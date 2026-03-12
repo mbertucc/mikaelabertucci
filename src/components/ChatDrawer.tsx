@@ -99,7 +99,7 @@ function getTimeGreeting(): string {
 const INITIAL_GREETING: Message = {
   role: "assistant",
   content:
-    `${getTimeGreeting()}\n\nI'm Mikaela. I build environments where people genuinely want to show up and do great work — and I use AI to cut through the noise so my teams can focus on what actually matters.\n\nI lead with clarity, ship with velocity, and I'm not afraid to be direct about what I bring to the table.\n\nWhat would you like to know?`,
+    `${getTimeGreeting()}\n\nI'm Mikaela. I manage 3 concurrent registry portfolios at BC Registries and use AI to save 19.4 hours a week on documentation overhead.\n\nAsk me about my work, my AI framework, or what I'd bring to your team.`,
 };
 
 const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
@@ -237,7 +237,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
                 Ask AI About Mikaela
               </p>
               <p className="text-xs text-muted-foreground font-body">
-                Brutally honest answers
+                Direct answers
               </p>
             </div>
           </div>

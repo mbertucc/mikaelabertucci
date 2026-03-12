@@ -29,7 +29,7 @@ const AboutSection = () => {
       "I run a multi-stage PO Agent with a Chain of Thought workflow.",
       "Discovery stage scans 2500+ pages of legislation & policy. Extracts requirements automatically.",
       "Story Architect maps findings into Gherkin format. Reviewer validates against Definition of Ready.",
-      "Stories arrive 90% complete. That's not a target — that's what's happening.",
+      "Stories arrive 90% complete before human review begins.",
     ],
     precision: [
       "This comes from context engineering with product-specific agent environments.",

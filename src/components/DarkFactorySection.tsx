@@ -23,7 +23,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "primary" as const,
     icon: Cpu,
     content:
-      `I build **custom AI agents** using context engineering. Weeks of manual analysis of **legislation, policy, and business rules** — done in minutes. Structured, traceable outputs. **${m.dark_factory_hours_saved_weekly} hours saved per week**. That's what I'm doing today.`,
+      `I build **custom AI agents** using context engineering. Weeks of manual analysis of **legislation, policy, and business rules** — done in minutes. Structured, traceable outputs. **${m.dark_factory_hours_saved_weekly} hours saved per week**.`,
     stat: `${m.dark_factory_hours_saved_weekly}hrs`,
     statLabel: "Saved Per Week",
   },
@@ -93,7 +93,7 @@ type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
 const buildStatDescriptions = (m: SiteMetrics): Record<Exclude<StatKey, null>, string[]> => ({
   saved: [
     "Multilevel agent built specifically for the Manufactured Home Registry.",
-    "Automated discovery and drafting for this feature set. Not theory — this happened.",
+    "Automated discovery and drafting for this feature set — measured across a real 6-week cycle.",
   ],
   quality: [
     "Agent systematically uncovers edge cases & business requirements others miss.",
@@ -302,7 +302,7 @@ const DarkFactorySection = () => {
         </div>
 
         <p className="text-center text-xs text-muted-foreground font-body mt-6">
-          These numbers come from a real 6-week sprint cycle on the Manufactured Home Registry Self Serve feature. Not projections — actuals.
+          These numbers come from a real 6-week sprint cycle on the Manufactured Home Registry Self Serve feature.
         </p>
       </div>
     </section>
