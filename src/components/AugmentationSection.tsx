@@ -85,7 +85,7 @@ const AugmentationSection = () => {
             <span className="text-[hsl(var(--amber-warm))] font-medium">
               Manufactured Home Registry Self Serve Feature
             </span>{" "}
-            as the proving ground. AI saves ~19.4 hours each week. That's epics drafted, gaps surfaced, legislation checked, and rework eliminated across PO, BA, and UX.
+            as the proving ground. AI saves ~19.4 hours each week. Epics drafted, gaps surfaced, legislation checked, and rework eliminated across PO, BA, and UX.
           </p>
         </div>
 
