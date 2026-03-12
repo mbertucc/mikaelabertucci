@@ -72,7 +72,7 @@ const ExperienceSection = () => {
   const renderSections = (sections: readonly { key: string; label: string }[], role: any) => (
     <>
       {sections.map(({ key, label }) => {
-        const value = role[key];
+        const value = (role as any)[key];
         if (!value || (Array.isArray(value) && value.length === 0)) return null;
 
         return (
