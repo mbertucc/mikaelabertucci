@@ -194,8 +194,7 @@ const ExperienceSection = () => {
               Experience
             </h2>
             <p className="text-sm text-muted-foreground font-body max-w-xl">
-              Every role here delivered measurable results.
-            </p>
+               </p>
           </div>
         </ScrollReveal>
 

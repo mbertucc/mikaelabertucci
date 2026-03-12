@@ -27,14 +27,14 @@ const activities = [
 
 const workflowStages = [
   { stage: "System Setup", human: "Author templates, instructions & working agreements", ai: "Apply rules for structure & compliance", outcome: "Reusable foundation" },
-  { stage: "Scenario Definition", human: "Frame use cases, personas & policy context", ai: "Translate into MVP boundaries & backlog slices", outcome: "Accelerated context" },
+  { stage: "Scenario Definition", human: "Frame use cases, personas & legislative context", ai: "Translate into MVP boundaries & backlog slices", outcome: "Accelerated context" },
   { stage: "Co-Drafting", human: "Describe problems & desired results", ai: "Produce first-draft epics & stories from templates", outcome: "Quality drafts in minutes" },
-  { stage: "Strategic Refinement", human: "Interpret policy, run chain-of-thought checks", ai: "Surface gaps, contradictions & low-confidence areas", outcome: "Fewer downstream issues" },
+  { stage: "Strategic Refinement", human: "Interpret legislation, run chain-of-thought checks", ai: "Surface gaps, contradictions & low-confidence areas", outcome: "Fewer downstream issues" },
   { stage: "Validation & Sprint Prep", human: "Final calls on sequencing & readiness", ai: "Check completeness & forecast sprint load", outcome: "Clearer sprint plans" },
 ];
 
 const strategicBenefits = [
-  "Surfaced gaps early — exposed unclear rules during backlog creation. Policy collaboration happened before it became a blocker.",
+  "Surfaced gaps early — exposed unclear rules during backlog creation. Collaboration happened before it became a blocker.",
   "Higher-quality collaboration — BA received complete stories with clear personas and acceptance criteria. No guessing.",
   "Reduced rework — UX/UI team got full context up front. Eliminated repeated requirement-gathering sessions.",
   "Bigger picture visible — end-to-end filing flow mapped before sprint 1. Early planning for later epics.",
@@ -81,11 +81,11 @@ const AugmentationSection = () => {
             AI Augmentation in Practice
           </h2>
           <p className="text-muted-foreground font-body text-lg max-w-3xl">
-            Here's what human-in-the-loop actually looks like — using the{" "}
+            What human-in-the-loop actually looks like — using the{" "}
             <span className="text-[hsl(var(--amber-warm))] font-medium">
               Manufactured Home Registry Self Serve Feature
             </span>{" "}
-            as the proving ground. AI saves ~19.4 hours each week. That's epics drafted, gaps surfaced, legislation checked, and rework eliminated across PO, BA, and UX.
+            as the proving ground. AI saves ~19.4 hours each week. Epics drafted, gaps surfaced, legislation checked, and rework eliminated across PO, BA, and UX.
           </p>
         </div>
 
@@ -301,7 +301,7 @@ const AugmentationSection = () => {
             Human Value Retained
           </p>
           <p className="text-sm text-muted-foreground font-body mb-2 max-w-3xl">
-            Let me be direct: I stay fully in the driver seat. I set the vision. I define scope boundaries. I interpret legislation. I make every trade-off and prioritization decision. AI works inside the system I designed — it amplifies my decisions, it doesn't replace them.
+            I stay in the driver seat. I set the vision. I define scope boundaries. I interpret legislation. I make every trade-off and prioritization decision. AI works inside the system I designed — it amplifies my decisions, it doesn't replace them.
           </p>
           <p className="text-sm text-muted-foreground font-body mb-6 max-w-3xl">
             I also use AI to pressure-test ideas, explore edge cases, and run structured chain-of-thought checks — "Where are we guessing?", "What should we verify?", "Which sources might be outdated?" The result: clearer stories, stronger BA requirements, and designers who get full context up front.

@@ -12,7 +12,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "amber-warm" as const,
     icon: FileText,
     content:
-      `**${m.dark_factory_pages}+ pages** of the Manufactured Home Act, Regulations, and Policy. Dense legal language. Registration requirements, platform obligations, compliance triggers, municipal enforcement rules. All of it.`,
+      `**${m.dark_factory_pages}+ pages** of the Manufactured Home Act and associated Regulations — registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.`,
     stat: `${m.dark_factory_pages}+`,
     statLabel: "Pages of Legislation",
   },
@@ -23,7 +23,7 @@ const buildSteps = (m: SiteMetrics) => [
     accent: "primary" as const,
     icon: Cpu,
     content:
-      `I build **custom AI agents** using context engineering. Weeks of manual analysis of **legislation, policy, and business rules** — done in minutes. Structured, traceable outputs. **${m.dark_factory_hours_saved_weekly} hours saved per week**.`,
+      `I build **custom AI agents** using context engineering. Weeks of manual analysis of legislation and business rules — done in minutes. Structured, traceable outputs. **${m.dark_factory_hours_saved_weekly} hours saved per week**.`,
     stat: `${m.dark_factory_hours_saved_weekly}hrs`,
     statLabel: "Saved Per Week",
   },
