@@ -7,9 +7,11 @@ const EARLIER_CAREER_CUTOFF = 5;
 const ALWAYS_SHOW_IDS = ["64a6c882-9026-4cf9-b638-f5b5b3f0d063"];
 
 const renderBulletText = (text: string) => {
-  const parts = text.split(/(\$?\d[\d,.]*%\s*(?:hours?|hrs?|days?|weeks?|months?|products?|ministries|clients|sprints?|stories|municipalities|years?)?)/gi);
+  // First strip markdown bold markers, then highlight metrics
+  const cleaned = text.replace(/\*\*([^*]+)\*\*/g, '$1');
+  const parts = cleaned.split(/(\$?\d[\d,.]*%?\s*(?:hours?|hrs?|days?|weeks?|months?|products?|ministries|clients|sprints?|stories|municipalities|years?|million)?)/gi);
   return parts.map((part, i) => {
-    if (/^\$?\d[\d,.]*%\s*(?:hours?|hrs?|days?|weeks?|months?|products?|ministries|clients|sprints?|stories|municipalities|years?)?$/i.test(part)) {
+    if (/^\$?\d[\d,.]*%?\s*(?:hours?|hrs?|days?|weeks?|months?|products?|ministries|clients|sprints?|stories|municipalities|years?|million)?$/i.test(part)) {
       return (
         <span key={i} className="font-mono text-foreground font-medium tracking-tight">
           {part}
