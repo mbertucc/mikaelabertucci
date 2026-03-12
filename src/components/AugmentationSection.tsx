@@ -27,7 +27,7 @@ const activities = [
 
 const workflowStages = [
   { stage: "System Setup", human: "Author templates, instructions & working agreements", ai: "Apply rules for structure & compliance", outcome: "Reusable foundation" },
-  { stage: "Scenario Definition", human: "Frame use cases, personas & policy context", ai: "Translate into MVP boundaries & backlog slices", outcome: "Accelerated context" },
+  { stage: "Scenario Definition", human: "Frame use cases, personas & legislative context", ai: "Translate into MVP boundaries & backlog slices", outcome: "Accelerated context" },
   { stage: "Co-Drafting", human: "Describe problems & desired results", ai: "Produce first-draft epics & stories from templates", outcome: "Quality drafts in minutes" },
   { stage: "Strategic Refinement", human: "Interpret policy, run chain-of-thought checks", ai: "Surface gaps, contradictions & low-confidence areas", outcome: "Fewer downstream issues" },
   { stage: "Validation & Sprint Prep", human: "Final calls on sequencing & readiness", ai: "Check completeness & forecast sprint load", outcome: "Clearer sprint plans" },
