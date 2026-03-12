@@ -27,21 +27,21 @@ const AboutSection = () => {
   const metricDescriptions: Record<Exclude<MetricKey, null>, string[]> = {
     velocity: [
       "I run a multi-stage PO Agent with a Chain of Thought workflow.",
-      "Discovery stage scans 2500+ pages of legislation & policy. Extracts requirements automatically.",
+      "Discovery stage scans 2500+ pages of legislation and business rules. Extracts requirements automatically.",
       "Story Architect maps findings into Gherkin format. Reviewer validates against Definition of Ready.",
-      "Stories arrive 90% complete before human review begins.",
+      "Stories arrive 90% complete, validated against Definition of Ready before they hit the backlog.",
     ],
     precision: [
       "This comes from context engineering with product-specific agent environments.",
-      "Edge-Case Agent hunts for 'what-if' scenarios that cause mid-sprint pivots.",
+      "Edge-Case Agent identifies 'what-if' scenarios that cause mid-sprint pivots.",
       "Consistency Agent catches contradictions before they reach the backlog.",
       `Result: ${m?.about_precision_accuracy ?? 75}% increase in accuracy. Clarification loops virtually eliminated.`,
     ],
     culture: [
       `${m?.about_precision_requirement ?? 95}% precision means developers code instead of chasing missing details.`,
       `${m?.dark_factory_hours_saved_weekly ?? 20} hrs of automated PO overhead reinvested into unblocking the team.`,
-      `Sprint planning is ${m?.about_velocity_planning ?? 50}% faster — every item arrives truly Ready.`,
-      "The result: teams that thrive because they ship, not because they're managed.",
+      "Sprint planning is 50% faster because the work arrives ready — not because the process got heavier.",
+      "Teams thrive because they ship, not because they're managed.",
     ],
   };
 
