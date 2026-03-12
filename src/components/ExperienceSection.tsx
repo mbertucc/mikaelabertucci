@@ -135,7 +135,7 @@ const ExperienceSection = () => {
             </div>
             <p className="text-sm text-muted-foreground font-body">
               {isGovRole
-                ? `${parseCompany(role.company).org} · ${role.title_progression}`
+                ? role.title_progression
                 : role.company}
             </p>
           </header>
