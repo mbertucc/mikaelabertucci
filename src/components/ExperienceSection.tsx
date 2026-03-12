@@ -117,7 +117,7 @@ const ExperienceSection = () => {
           <header className="space-y-1.5">
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-4">
               <h3 className="text-lg md:text-xl font-display font-semibold text-foreground tracking-[0.03em]">
-                {role.title_progression}
+                {isGovRole ? (parseCompany(role.company).project || role.title_progression) : role.title_progression}
               </h3>
               <div className="flex items-center gap-3 shrink-0">
                 <button
@@ -133,7 +133,11 @@ const ExperienceSection = () => {
                 </span>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground font-body">{role.company}</p>
+            <p className="text-sm text-muted-foreground font-body">
+              {isGovRole
+                ? `${parseCompany(role.company).org} · ${role.title_progression}`
+                : role.company}
+            </p>
           </header>
 
           {/* Primary sections (always visible) */}
