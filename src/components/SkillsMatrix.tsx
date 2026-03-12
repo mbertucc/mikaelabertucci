@@ -7,18 +7,18 @@ import ScrollReveal from "@/components/ScrollReveal";
 const categoryConfig = {
   strong: {
     title: "Strong",
-    pillClass: "bg-primary/15 text-primary border-primary/25",
-    tagClass: "bg-primary/10 text-primary border-primary/20",
+    pillClass: "bg-[hsl(var(--bg-teal))] text-primary border-primary/25",
+    tagClass: "bg-[hsl(var(--bg-teal)/0.6)] text-primary border-primary/20",
   },
   moderate: {
     title: "Working Knowledge",
-    pillClass: "bg-muted text-muted-foreground border-border",
-    tagClass: "bg-muted text-foreground border-border",
+    pillClass: "bg-[hsl(var(--bg-olive)/0.6)] text-[hsl(var(--olive))] border-[hsl(var(--olive)/0.25)]",
+    tagClass: "bg-[hsl(var(--bg-olive)/0.4)] text-foreground border-[hsl(var(--olive)/0.2)]",
   },
   gap: {
     title: "Learning",
-    pillClass: "bg-accent/15 text-accent-foreground border-accent/25",
-    tagClass: "bg-accent/10 text-accent-foreground border-accent/20",
+    pillClass: "bg-[hsl(var(--bg-slate)/0.6)] text-secondary border-secondary/25",
+    tagClass: "bg-[hsl(var(--bg-slate)/0.4)] text-foreground border-secondary/20",
   },
 };
 
@@ -79,10 +79,10 @@ const SkillsMatrix = () => {
                   <button
                     key={cat}
                     onClick={() => setActiveCat(cat)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-body font-medium border transition-all ${
+                    className={`px-3 py-1.5 rounded-md text-xs font-body font-medium border transition-all ${
                       isActive
                         ? `${config.pillClass} shadow-sm`
-                        : "bg-transparent text-muted-foreground border-border/50 hover:border-border"
+                        : "bg-transparent text-muted-foreground border-[hsl(var(--divider))] hover:border-border"
                     }`}
                   >
                     {config.title}
@@ -126,7 +126,7 @@ const SkillsMatrix = () => {
                       animate={{ opacity: 1, x: 0 }}
                       whileHover={{ scale: 1.08, y: -2 }}
                       transition={{ duration: 0.2, delay: i * 0.03 }}
-                      className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 rounded-full text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
+                      className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 rounded-md text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
                         skill.note ? "cursor-help" : ""
                       }`}
                     >

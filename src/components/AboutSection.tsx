@@ -15,6 +15,24 @@ const metricLabels: Record<Exclude<MetricKey, null>, string> = {
   culture: "Culture",
 };
 
+const metricAccents: Record<Exclude<MetricKey, null>, { bg: string; text: string; pattern: string }> = {
+  velocity: {
+    bg: "bg-[hsl(var(--bg-teal))]",
+    text: "text-primary",
+    pattern: "mcm-pattern-atomic",
+  },
+  precision: {
+    bg: "bg-[hsl(var(--bg-olive))]",
+    text: "text-[hsl(var(--olive))]",
+    pattern: "mcm-pattern-diamond",
+  },
+  culture: {
+    bg: "bg-[hsl(var(--bg-slate))]",
+    text: "text-secondary",
+    pattern: "mcm-pattern-dots",
+  },
+};
+
 const defaultText =
   "Hover over a metric to see the numbers behind how I work.";
 
@@ -53,12 +71,19 @@ const AboutSection = () => {
     <section id="about" className="py-8 px-6">
       <div className="max-w-5xl mx-auto">
         <ScrollReveal>
-          <div className="glass-card p-8 md:p-12 space-y-8">
+          <div className="glass-card p-8 md:p-12 space-y-8 relative overflow-hidden">
+            {/* Decorative organic shape */}
+            <div className="absolute -top-8 -right-8 w-28 h-28 pointer-events-none opacity-[0.04]" style={{
+              borderRadius: '50% 60% 40% 70% / 60% 40% 60% 40%',
+              background: `hsl(var(--teal))`,
+              transform: 'rotate(-20deg)',
+            }} />
+
             {/* Top: Headshot + Bio */}
             <div className="flex flex-col md:flex-row items-center gap-10 md:gap-14">
               <div className="shrink-0">
                 <motion.div
-                  className="w-48 h-48 md:w-56 md:h-56 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-lg cursor-pointer"
+                  className="w-48 h-48 md:w-56 md:h-56 rounded-lg overflow-hidden border-2 border-primary/20 shadow-lg cursor-pointer"
                   whileHover={{ scale: 1.05, rotate: 2 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setHeadshotClicks((c) => c + 1)}
@@ -82,7 +107,7 @@ const AboutSection = () => {
                   <motion.p
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-xs text-accent-warm font-body text-center mt-2 italic"
+                    className="text-xs text-[hsl(var(--mustard))] font-body text-center mt-2 italic"
                   >
                     ✨ You found me! I like your curiosity.
                   </motion.p>
@@ -97,7 +122,7 @@ const AboutSection = () => {
             </div>
 
             {/* Divider */}
-            <div className="border-t border-border/30" />
+            <div className="border-t border-[hsl(var(--divider))]" />
 
             {/* Bottom: Impact Dashboard */}
             <div className="py-1" onMouseLeave={() => setActiveMetric(null)}>
@@ -105,46 +130,46 @@ const AboutSection = () => {
                 AI-Augmented Impact Dashboard
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-                {/* Velocity */}
+                {/* Velocity — Teal */}
                 <motion.div
-                  className="text-center space-y-3 cursor-pointer group"
+                  className={`text-center space-y-3 cursor-pointer group p-4 rounded-lg transition-colors duration-200 ${activeMetric === "velocity" ? metricAccents.velocity.bg : ""} ${metricAccents.velocity.pattern} relative`}
                   onMouseEnter={() => setActiveMetric("velocity")}
                   whileHover={{ scale: 1.03 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
-                  <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : ""}`}>
+                  <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "velocity" ? metricAccents.velocity.text : ""}`}>
                     <Zap className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "velocity" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
-                    <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "velocity" ? "text-primary" : "text-muted-foreground"}`}>Velocity</p>
+                    <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "velocity" ? metricAccents.velocity.text : "text-muted-foreground"}`}>Velocity</p>
                   </div>
                   <StatRing value={m?.about_velocity_time_to_draft ?? 2} max={m?.about_velocity_time_to_draft_max ?? 5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
                   <StatRing value={m?.about_velocity_planning ?? 50} max={100} label="Faster Planning" unit="%" size={90} hideRing />
                 </motion.div>
 
-                {/* Precision */}
+                {/* Precision — Olive */}
                 <motion.div
-                  className="text-center space-y-3 cursor-pointer group"
+                  className={`text-center space-y-3 cursor-pointer group p-4 rounded-lg transition-colors duration-200 ${activeMetric === "precision" ? metricAccents.precision.bg : ""} ${metricAccents.precision.pattern} relative`}
                   onMouseEnter={() => setActiveMetric("precision")}
                   whileHover={{ scale: 1.03 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
-                  <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "precision" ? "text-primary" : ""}`}>
-                    <Target className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "precision" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
-                    <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "precision" ? "text-primary" : "text-muted-foreground"}`}>Precision</p>
+                  <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "precision" ? metricAccents.precision.text : ""}`}>
+                    <Target className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "precision" ? "text-[hsl(var(--olive))] scale-125" : "text-primary"}`} strokeWidth={2.25} />
+                    <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "precision" ? metricAccents.precision.text : "text-muted-foreground"}`}>Precision</p>
                   </div>
                   <StatRing value={m?.about_precision_requirement ?? 95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
                   <StatRing value={m?.about_precision_accuracy ?? 75} max={100} label="Increase in Accuracy" unit="%" size={90} hideRing />
                 </motion.div>
 
-                {/* Culture */}
+                {/* Culture — Slate */}
                 <motion.div
-                  className="text-center space-y-3 col-span-2 md:col-span-1 cursor-pointer group"
+                  className={`text-center space-y-3 col-span-2 md:col-span-1 cursor-pointer group p-4 rounded-lg transition-colors duration-200 ${activeMetric === "culture" ? metricAccents.culture.bg : ""} ${metricAccents.culture.pattern} relative`}
                   onMouseEnter={() => setActiveMetric("culture")}
                   whileHover={{ scale: 1.03 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
                 >
-                  <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "culture" ? "text-primary" : ""}`}>
-                    <Users className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "culture" ? "text-primary scale-125" : "text-primary"}`} strokeWidth={2.25} />
-                    <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "culture" ? "text-primary" : "text-muted-foreground"}`}>Culture</p>
+                  <div className={`flex items-center justify-center gap-1.5 mb-1 transition-colors duration-200 ${activeMetric === "culture" ? metricAccents.culture.text : ""}`}>
+                    <Users className={`w-5 h-5 transition-transform duration-200 ${activeMetric === "culture" ? "text-secondary scale-125" : "text-primary"}`} strokeWidth={2.25} />
+                    <p className={`text-[10px] uppercase tracking-[0.2em] font-body transition-colors duration-200 ${activeMetric === "culture" ? metricAccents.culture.text : "text-muted-foreground"}`}>Culture</p>
                   </div>
                   <StatRing value={m?.about_culture_satisfaction ?? 80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
                   <StatRing value={m?.about_culture_strategy ?? 40} max={100} label="More Strategy Time" unit="%" size={90} hideRing />
@@ -152,7 +177,7 @@ const AboutSection = () => {
               </div>
 
               {/* Hover Detail Area */}
-              <div className="mt-6 border-t border-border/20 pt-5">
+              <div className="mt-6 border-t border-[hsl(var(--divider))] pt-5">
                 <div className="min-h-[5.5rem] md:min-h-[4.5rem] flex flex-col md:flex-row items-start gap-3">
                   <div className="flex-1 relative">
                     <div
@@ -160,7 +185,7 @@ const AboutSection = () => {
                       className="animate-fade-in"
                     >
                       {activeMetric && (
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mb-2">
+                        <p className={`text-[10px] uppercase tracking-[0.2em] font-body font-medium mb-2 ${metricAccents[activeMetric].text}`}>
                           {metricLabels[activeMetric]}
                         </p>
                       )}
@@ -182,7 +207,7 @@ const AboutSection = () => {
                   </div>
                   {activeMetric && (
                     <button
-                      className="shrink-0 inline-flex items-center gap-1.5 text-xs font-body text-accent-warm hover:text-accent-warm/80 transition-colors duration-200 border border-accent-warm/20 rounded-full px-3 py-1.5 hover:bg-accent-warm/5 animate-fade-in"
+                      className="shrink-0 inline-flex items-center gap-1.5 text-xs font-body text-[hsl(var(--mustard))] hover:text-[hsl(var(--mustard)/0.8)] transition-colors duration-200 border border-[hsl(var(--mustard)/0.3)] rounded-full px-3 py-1.5 hover:bg-[hsl(var(--mustard)/0.05)] animate-fade-in"
                       onClick={() => {
                         const deepDivePrompts: Record<Exclude<MetricKey, null>, string> = {
                           velocity: `Tell me about the multi-agent Chain of Thought workflow you use for ${m?.about_velocity_time_to_draft ?? 2}x faster story drafting — specifically the Discovery Agent, Story Architect, and Reviewer Agent.`,

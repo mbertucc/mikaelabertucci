@@ -37,9 +37,9 @@ const BeyondWorkSection = () => (
       {interests.map(({ label, icon: Icon }) => (
         <span
           key={label}
-          className="glass-card inline-flex items-center gap-2.5 px-4 py-2.5 rounded-full text-sm font-body text-foreground/80 transition-all duration-200 hover:scale-105 hover:bg-card/80 cursor-default"
+          className="glass-card inline-flex items-center gap-2.5 px-4 py-2.5 rounded-md text-sm font-body text-foreground/80 transition-all duration-200 hover:scale-105 hover:bg-card/80 cursor-default"
         >
-          <Icon className="w-4 h-4 text-primary shrink-0" />
+          <Icon className="w-4 h-4 text-[hsl(var(--mustard))] shrink-0" />
           {label}
         </span>
       ))}
