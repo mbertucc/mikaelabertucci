@@ -85,7 +85,7 @@ const ExperienceSection = () => {
               <div className="space-y-2">
                 {(value as string[]).map((a, j) => (
                   <div key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground font-body leading-relaxed">
-                    <span className="text-primary/50 mt-0.5 shrink-0 text-xs">▪</span>
+                    <span className="text-[hsl(var(--mustard)/0.6)] mt-0.5 shrink-0 text-xs">◆</span>
                     <span>{renderBulletText(a)}</span>
                   </div>
                 ))}
@@ -114,15 +114,15 @@ const ExperienceSection = () => {
   const renderCard = (role: typeof recentRoles[number], index: number, isGovRole = false) => (
     <ScrollReveal key={role.id} delay={index * 0.1}>
       <article className="relative pl-6 md:pl-8 group">
-        {/* Agentic left accent line */}
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-border/40 group-hover:bg-primary/50 transition-colors duration-500" />
+        {/* Left accent line */}
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-[hsl(var(--divider))] group-hover:bg-primary/50 transition-colors duration-500" />
         <div className="absolute left-[-2.5px] top-6 w-[6px] h-[6px] rounded-full bg-primary/60 group-hover:bg-primary transition-colors duration-300" />
 
         <div className="glass-card p-6 md:p-8 space-y-5">
           {/* Header */}
           <header className="space-y-1.5">
             <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-4">
-              <h3 className="text-lg md:text-xl font-display font-semibold text-foreground tracking-[0.03em]">
+              <h3 className="text-lg md:text-xl font-display text-foreground tracking-normal">
                 {isGovRole ? (parseCompany(role.company).project || role.title_progression) : role.title_progression}
               </h3>
               <div className="flex items-center gap-3 shrink-0">
@@ -200,11 +200,11 @@ const ExperienceSection = () => {
 
         {/* BC Provincial Government Project Portfolio */}
         <ScrollReveal>
-          <div className="relative border border-border/30 rounded-2xl p-6 md:p-8 bg-muted/20">
+          <div className="relative border border-[hsl(var(--divider))] rounded-lg p-6 md:p-8 bg-[hsl(var(--bg-teal)/0.3)]">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
               <div className="flex items-center gap-2.5">
                 <Building2 className="w-5 h-5 text-primary/70" />
-                <h3 className="text-xl md:text-2xl font-display font-semibold text-foreground">
+                <h3 className="text-xl md:text-2xl font-display text-foreground">
                   BC Provincial Government
                 </h3>
               </div>

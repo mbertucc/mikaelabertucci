@@ -225,11 +225,11 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
         className="fixed inset-0 z-50 bg-background/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-md bg-card border-l border-border flex flex-col animate-slide-in-right">
+      <div className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-md bg-card border-l border-[hsl(var(--divider))] flex flex-col animate-slide-in-right">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border">
+        <div className="flex items-center justify-between p-4 border-b border-[hsl(var(--divider))]">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-md bg-[hsl(var(--bg-teal))] flex items-center justify-center">
               <MessageSquare className="w-4 h-4 text-primary" />
             </div>
             <div>
@@ -243,7 +243,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-card"
+            className="p-2 text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-card"
           >
             <X className="w-5 h-5" />
           </button>
@@ -259,10 +259,10 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
               }`}
             >
               <div
-                className={`max-w-[85%] px-4 py-3 rounded-2xl text-sm font-body leading-relaxed ${
+                className={`max-w-[85%] px-4 py-3 rounded-lg text-sm font-body leading-relaxed ${
                   msg.role === "user"
-                    ? "bg-primary text-primary-foreground rounded-br-md"
-                    : "bg-muted/20 text-foreground rounded-bl-md"
+                    ? "bg-[hsl(var(--nav-bg))] text-[hsl(var(--nav-text))] rounded-br-sm"
+                    : "bg-[hsl(var(--bg-teal)/0.4)] text-foreground rounded-bl-sm"
                 }`}
               >
                 {msg.role === "assistant" ? (
@@ -275,7 +275,7 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
           ))}
           {isLoading && messages[messages.length - 1]?.role !== "assistant" && (
             <div className="flex justify-start">
-              <div className="bg-muted/20 px-4 py-3 rounded-2xl rounded-bl-md">
+              <div className="bg-[hsl(var(--bg-teal)/0.4)] px-4 py-3 rounded-lg rounded-bl-sm">
                 <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
               </div>
             </div>
@@ -283,14 +283,14 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Suggested Questions — always visible when not loading */}
+        {/* Suggested Questions */}
         {!isLoading && suggestions.length > 0 && (
           <div className="px-4 pb-3 flex flex-wrap gap-2">
             {suggestions.map((q) => (
               <button
                 key={q}
                 onClick={() => handleSend(q)}
-                className="px-3 py-1.5 text-xs font-body text-foreground bg-card border border-border hover:text-primary-foreground hover:bg-primary hover:border-primary/30 transition-colors rounded-full"
+                className="px-3 py-1.5 text-xs font-body text-foreground bg-card border border-[hsl(var(--divider))] hover:text-[hsl(var(--nav-text))] hover:bg-[hsl(var(--nav-bg))] hover:border-[hsl(var(--nav-bg))] transition-colors rounded-md"
               >
                 {q}
               </button>
@@ -299,19 +299,19 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
         )}
 
         {/* Input */}
-        <div className="p-4 border-t border-border">
+        <div className="p-4 border-t border-[hsl(var(--divider))]">
           <div className="flex gap-2">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSend()}
               placeholder="Ask me anything..."
-              className="flex-1 px-4 py-3 bg-card border border-border rounded-xl text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
+              className="flex-1 px-4 py-3 bg-card border border-[hsl(var(--divider))] rounded-md text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50"
             />
             <button
               onClick={() => handleSend()}
               disabled={!input.trim() || isLoading}
-              className="px-4 py-3 bg-primary text-primary-foreground rounded-xl hover:brightness-110 transition-all disabled:opacity-40"
+              className="px-4 py-3 bg-[hsl(var(--mustard))] text-[hsl(var(--mustard-foreground))] rounded-md hover:brightness-110 transition-all disabled:opacity-40"
             >
               <Send className="w-4 h-4" />
             </button>
@@ -363,9 +363,9 @@ function AssistantMessage({ content }: { content: string }) {
         seg.type === "callout" ? (
           <div
             key={i}
-            className="flex items-start gap-2 rounded-lg border border-[hsl(var(--amber-warm)/0.3)] bg-[hsl(var(--amber-warm)/0.1)] text-foreground text-xs leading-relaxed"
+            className="flex items-start gap-2 rounded-md border border-[hsl(var(--mustard)/0.3)] bg-[hsl(var(--mustard)/0.1)] text-foreground text-xs leading-relaxed p-2"
           >
-            <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[hsl(var(--amber-warm))]" />
+            <AlertTriangle className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[hsl(var(--mustard))]" />
             <span>{seg.text}</span>
           </div>
         ) : (

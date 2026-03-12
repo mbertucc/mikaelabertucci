@@ -38,7 +38,7 @@ const strategicBenefits = [
   "Higher-quality collaboration — BA received complete stories with clear personas and acceptance criteria. No guessing.",
   "Reduced rework — UX/UI team got full context up front. Eliminated repeated requirement-gathering sessions.",
   "Bigger picture visible — end-to-end filing flow mapped before sprint 1. Early planning for later epics.",
-  "Fewer downstream issues — stories complete on first draft. Design mismatches and policy corrections dropped.",
+  "Fewer downstream issues — stories complete on first draft. Design mismatches and corrections dropped.",
 ];
 
 const humanRetained = [
@@ -82,7 +82,7 @@ const AugmentationSection = () => {
           </h2>
           <p className="text-muted-foreground font-body text-lg max-w-3xl">
             What human-in-the-loop actually looks like — using the{" "}
-            <span className="text-[hsl(var(--amber-warm))] font-medium">
+            <span className="text-[hsl(var(--mustard))] font-medium">
               Manufactured Home Registry Self Serve Feature
             </span>{" "}
             as the proving ground. AI saves ~19.4 hours each week. Epics drafted, gaps surfaced, legislation checked, and rework eliminated across PO, BA, and UX.
@@ -92,40 +92,41 @@ const AugmentationSection = () => {
         {/* Top-level stat cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
           {[
-            { value: hoursSaved, unit: "hrs", label: "Saved Per Feature", sublabel: "6-week sprint cycle", icon: Clock, accent: "primary" },
-            { value: qualityDelta, unit: "%", label: "Quality Improvement", sublabel: "Clearer documentation", icon: FileCheck, accent: "teal" },
-            { value: storiesWritten, unit: "+", label: "Stories Drafted", sublabel: "With AI co-creation", icon: Layers, accent: "amber-warm" },
-            { value: cognitiveReduction, unit: "%", label: "Less Cognitive Load", sublabel: "Routine writing & formatting", icon: Brain, accent: "primary" },
+            { value: hoursSaved, unit: "hrs", label: "Saved Per Feature", sublabel: "6-week sprint cycle", icon: Clock, accent: "teal" },
+            { value: qualityDelta, unit: "%", label: "Quality Improvement", sublabel: "Clearer documentation", icon: FileCheck, accent: "olive" },
+            { value: storiesWritten, unit: "+", label: "Stories Drafted", sublabel: "With AI co-creation", icon: Layers, accent: "mustard" },
+            { value: cognitiveReduction, unit: "%", label: "Less Cognitive Load", sublabel: "Routine writing & formatting", icon: Brain, accent: "teal" },
           ].map((stat) => {
             const Icon = stat.icon;
-            const isAmber = stat.accent === "amber-warm";
-            const isTeal = stat.accent === "teal";
-            const textColor = isAmber
-              ? "text-[hsl(var(--amber-warm))]"
-              : isTeal
-              ? "text-[hsl(var(--teal))]"
+            const isMustard = stat.accent === "mustard";
+            const isOlive = stat.accent === "olive";
+            const textColor = isMustard
+              ? "text-[hsl(var(--mustard))]"
+              : isOlive
+              ? "text-[hsl(var(--olive))]"
               : "text-primary";
-            const bgColor = isAmber
-              ? "bg-[hsl(var(--amber-warm)/0.08)]"
-              : isTeal
-              ? "bg-[hsl(var(--teal)/0.08)]"
-              : "bg-primary/8";
+            const bgColor = isMustard
+              ? "bg-[hsl(var(--mustard)/0.08)]"
+              : isOlive
+              ? "bg-[hsl(var(--bg-olive))]"
+              : "bg-[hsl(var(--bg-teal))]";
 
             return (
-              <div key={stat.label} className="glass-card p-5 space-y-3">
-                <div className={`inline-flex p-2 rounded-lg ${bgColor}`}>
+              <div key={stat.label} className="glass-card p-5 space-y-3 relative overflow-hidden">
+                <div className="absolute inset-0 mcm-pattern-dots opacity-20 pointer-events-none" />
+                <div className={`inline-flex p-2 rounded-md ${bgColor} relative z-10`}>
                   <Icon className={`w-4 h-4 ${textColor}`} />
                 </div>
-                <div>
-                  <span className={`font-display text-3xl font-bold ${textColor}`}>
+                <div className="relative z-10">
+                  <span className={`font-display text-3xl ${textColor}`}>
                     {stat.unit === "hrs" ? stat.value.toFixed(1) : Math.round(stat.value)}
                   </span>
                   <span className={`text-lg font-display ${textColor}`}>{stat.unit}</span>
                 </div>
-                <p className="text-xs uppercase tracking-[0.15em] text-foreground font-body font-medium">
+                <p className="text-xs uppercase tracking-[0.15em] text-foreground font-body font-medium relative z-10">
                   {stat.label}
                 </p>
-                <p className="text-[10px] text-muted-foreground font-body">{stat.sublabel}</p>
+                <p className="text-[10px] text-muted-foreground font-body relative z-10">{stat.sublabel}</p>
               </div>
             );
           })}
@@ -149,9 +150,9 @@ const AugmentationSection = () => {
           </button>
 
           {workflowExpanded && (
-            <div className="border-t border-border/30 animate-fade-in">
+            <div className="border-t border-[hsl(var(--divider))] animate-fade-in">
               {/* Desktop headers */}
-              <div className="hidden md:grid grid-cols-4 gap-4 px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body border-b border-border/20">
+              <div className="hidden md:grid grid-cols-4 gap-4 px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body border-b border-[hsl(var(--divider)/0.5)]">
                 <span>Stage</span>
                 <span>My Role (Human)</span>
                 <span>AI Role (Partnering)</span>
@@ -161,7 +162,7 @@ const AugmentationSection = () => {
               {workflowStages.map((row, i) => (
                 <div
                   key={i}
-                  className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4 px-5 py-4 border-b border-border/10 last:border-b-0 hover:bg-card/60 transition-colors"
+                  className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4 px-5 py-4 border-b border-[hsl(var(--divider)/0.3)] last:border-b-0 hover:bg-card/60 transition-colors"
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-mono text-primary font-bold">0{i + 1}</span>
@@ -177,7 +178,7 @@ const AugmentationSection = () => {
                   </div>
                   <div>
                     <span className="text-[10px] text-muted-foreground md:hidden">Outcome: </span>
-                    <span className="text-xs text-[hsl(var(--teal))] font-body font-medium">{row.outcome}</span>
+                    <span className="text-xs text-[hsl(var(--olive))] font-body font-medium">{row.outcome}</span>
                   </div>
                 </div>
               ))}
@@ -186,7 +187,7 @@ const AugmentationSection = () => {
               <div className="hidden md:flex items-center justify-center py-4 gap-1 bg-card/30">
                 {workflowStages.map((s, i) => (
                   <div key={i} className="flex items-center gap-1">
-                    <span className="text-[9px] font-mono text-muted-foreground px-2 py-1 rounded bg-background/60 border border-border/30">{s.stage}</span>
+                    <span className="text-[9px] font-mono text-muted-foreground px-2 py-1 rounded bg-background/60 border border-[hsl(var(--divider)/0.5)]">{s.stage}</span>
                     {i < workflowStages.length - 1 && <ArrowRight className="w-3 h-3 text-primary/40" />}
                   </div>
                 ))}
@@ -213,8 +214,8 @@ const AugmentationSection = () => {
           </button>
 
           {tableExpanded && (
-            <div className="border-t border-border/30 animate-fade-in">
-              <div className="hidden md:grid grid-cols-5 gap-4 px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body border-b border-border/20">
+            <div className="border-t border-[hsl(var(--divider))] animate-fade-in">
+              <div className="hidden md:grid grid-cols-5 gap-4 px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body border-b border-[hsl(var(--divider)/0.5)]">
                 <span>Activity</span>
                 <span>Previous Effort</span>
                 <span>With AI</span>
@@ -225,7 +226,7 @@ const AugmentationSection = () => {
               {activities.map((row, i) => (
                 <div
                   key={i}
-                  className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 px-5 py-4 border-b border-border/10 last:border-b-0 hover:bg-card/60 transition-colors"
+                  className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 px-5 py-4 border-b border-[hsl(var(--divider)/0.3)] last:border-b-0 hover:bg-card/60 transition-colors"
                 >
                   <div>
                     <span className="text-sm text-foreground font-body font-medium">{row.activity}</span>
@@ -243,7 +244,7 @@ const AugmentationSection = () => {
                   </div>
                   <div className="flex items-center gap-2 md:block">
                     <span className="text-[10px] text-muted-foreground md:hidden">Saved: </span>
-                    <span className="text-sm text-[hsl(var(--teal))] font-mono font-bold">{row.saved}</span>
+                    <span className="text-sm text-[hsl(var(--olive))] font-mono font-bold">{row.saved}</span>
                   </div>
                   <div className="flex items-center gap-2 md:block">
                     <span className="text-[10px] text-muted-foreground md:hidden">Improvement: </span>
@@ -252,11 +253,11 @@ const AugmentationSection = () => {
                 </div>
               ))}
 
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 px-5 py-4 bg-primary/5 border-t border-primary/20">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-2 md:gap-4 px-5 py-4 bg-[hsl(var(--bg-teal)/0.3)] border-t border-primary/20">
                 <span className="text-sm text-foreground font-body font-bold">Total Per Cycle</span>
                 <span className="text-sm text-muted-foreground font-mono">~187 hrs</span>
                 <span className="text-sm text-primary font-mono font-medium">~73 hrs</span>
-                <span className="text-sm text-[hsl(var(--teal))] font-mono font-bold">≈114 hrs</span>
+                <span className="text-sm text-[hsl(var(--olive))] font-mono font-bold">≈114 hrs</span>
                 <span className="text-xs text-muted-foreground font-body italic">~19 hrs/week gained</span>
               </div>
             </div>
@@ -271,7 +272,7 @@ const AugmentationSection = () => {
           <div className="space-y-3">
             {strategicBenefits.map((benefit, i) => (
               <div key={i} className="flex items-start gap-3">
-                <CheckCircle2 className="w-4 h-4 text-[hsl(var(--teal))] shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-[hsl(var(--olive))] shrink-0 mt-0.5" />
                 <p className="text-sm text-muted-foreground font-body leading-relaxed">{benefit}</p>
               </div>
             ))}
@@ -279,10 +280,10 @@ const AugmentationSection = () => {
         </div>
 
         {/* Scenario Spreadsheet callout */}
-        <div className="glass-card p-6 md:p-8 mb-12 ring-1 ring-[hsl(var(--amber-warm)/0.2)]">
+        <div className="glass-card p-6 md:p-8 mb-12 ring-1 ring-[hsl(var(--mustard)/0.2)]">
           <div className="flex items-start gap-4">
-            <div className="p-2.5 rounded-lg bg-[hsl(var(--amber-warm)/0.08)] shrink-0">
-              <Lightbulb className="w-5 h-5 text-[hsl(var(--amber-warm))]" />
+            <div className="p-2.5 rounded-md bg-[hsl(var(--mustard)/0.08)] shrink-0">
+              <Lightbulb className="w-5 h-5 text-[hsl(var(--mustard))]" />
             </div>
             <div>
               <p className="text-sm text-foreground font-body font-medium mb-2">
@@ -310,7 +311,7 @@ const AugmentationSection = () => {
             {humanRetained.map((item) => {
               const Icon = item.icon;
               return (
-                <div key={item.label} className="flex items-center gap-3 p-3 rounded-lg bg-background/60 border border-border/30">
+                <div key={item.label} className="flex items-center gap-3 p-3 rounded-md bg-background/60 border border-[hsl(var(--divider))]">
                   <Icon className="w-4 h-4 text-primary shrink-0" />
                   <span className="text-xs text-foreground font-body font-medium">{item.label}</span>
                 </div>

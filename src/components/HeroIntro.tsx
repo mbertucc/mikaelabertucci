@@ -25,8 +25,23 @@ const HeroIntro = () => {
   const words = name.split(" ");
 
   return (
-    <section id="hero" className="pt-24 pb-2 px-6">
-      <div className="max-w-5xl mx-auto text-center space-y-6">
+    <section id="hero" className="pt-24 pb-2 px-6 relative overflow-hidden">
+      {/* Boomerang decorative shapes */}
+      <div className="absolute top-16 right-[10%] w-32 h-32 pointer-events-none opacity-[0.06]" style={{
+        borderRadius: '60% 40% 70% 30% / 50% 60% 40% 50%',
+        background: `hsl(var(--teal))`,
+        transform: 'rotate(-25deg)',
+      }} />
+      <div className="absolute bottom-8 left-[5%] w-20 h-20 pointer-events-none opacity-[0.05]" style={{
+        borderRadius: '40% 60% 30% 70% / 60% 40% 60% 40%',
+        background: `hsl(var(--mustard))`,
+        transform: 'rotate(15deg)',
+      }} />
+      <div className="absolute top-32 left-[15%] w-3 h-3 rounded-full pointer-events-none opacity-[0.12]" style={{
+        background: `hsl(var(--olive))`,
+      }} />
+
+      <div className="max-w-5xl mx-auto text-center space-y-6 relative z-10">
         {/* Status badge */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -34,14 +49,14 @@ const HeroIntro = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="inline-flex items-center gap-2 px-4 py-2 glass-card text-sm font-body"
         >
-          <span className="w-2 h-2 rounded-full bg-accent-warm animate-pulse-glow" />
+          <span className="w-2 h-2 rounded-full bg-[hsl(var(--mustard))] animate-pulse-glow" />
           <span className="text-muted-foreground">
             {profile?.status_badge || "🟢 Open to \"Dark Factory\" environments where Spec is the Product"}
           </span>
         </motion.div>
 
-        {/* Name — staggered word reveal */}
-        <h1 className="text-7xl md:text-9xl font-display font-bold leading-[0.95] tracking-tight text-foreground">
+        {/* Name — staggered word reveal with serif display */}
+        <h1 className="text-7xl md:text-9xl font-display font-normal leading-[0.95] text-foreground">
           {words.map((word, i) => (
             <motion.span
               key={word}
@@ -59,12 +74,12 @@ const HeroIntro = () => {
           ))}
         </h1>
 
-        {/* Title */}
+        {/* Title — mustard accent */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
-          className="text-2xl md:text-3xl font-display italic text-accent-warm"
+          className="text-2xl md:text-3xl font-display italic text-[hsl(var(--mustard))]"
         >
           {profile?.title || "Agentic Product Owner | Context Engineer"}
         </motion.p>

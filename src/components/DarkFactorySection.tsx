@@ -9,7 +9,7 @@ const buildSteps = (m: SiteMetrics) => [
     number: "01",
     label: "THE INPUT",
     title: "Legislative Complexity",
-    accent: "amber-warm" as const,
+    accent: "mustard" as const,
     icon: FileText,
     content:
       `**${m.dark_factory_pages}+ pages** of the Manufactured Home Act and associated Regulations — registration requirements, platform obligations, compliance triggers, and municipal enforcement rules.`,
@@ -20,7 +20,7 @@ const buildSteps = (m: SiteMetrics) => [
     number: "02",
     label: "THE PROCESS",
     title: "AI Synthesis",
-    accent: "primary" as const,
+    accent: "teal" as const,
     icon: Cpu,
     content:
       `I build **custom AI agents** using context engineering. Weeks of manual analysis of legislation and business rules — done in minutes. Structured, traceable outputs. **${m.dark_factory_hours_saved_weekly} hours saved per week**.`,
@@ -31,7 +31,7 @@ const buildSteps = (m: SiteMetrics) => [
     number: "03",
     label: "THE OUTPUT",
     title: "The Spec",
-    accent: "teal" as const,
+    accent: "olive" as const,
     icon: Rocket,
     content:
       `A **complete, hand-off-ready User Story**. Business rules, scenarios, edge cases, error handling, Gherkin/Markdown spec. **Designers and Developers** build from it immediately. Clarification loops reduced by **${m.dark_factory_clarification_reduction}%**.`,
@@ -41,26 +41,29 @@ const buildSteps = (m: SiteMetrics) => [
 ];
 
 const accentStyles = {
-  "amber-warm": {
-    border: "border-[hsl(var(--amber-warm))]",
-    text: "text-[hsl(var(--amber-warm))]",
-    bg: "bg-[hsl(var(--amber-warm)/0.08)]",
-    glow: "shadow-[0_0_24px_hsl(var(--amber-warm)/0.15)]",
-    ring: "ring-[hsl(var(--amber-warm)/0.25)]",
-  },
-  primary: {
-    border: "border-primary",
-    text: "text-primary",
-    bg: "bg-primary/8",
-    glow: "shadow-[0_0_24px_hsl(var(--primary)/0.15)]",
-    ring: "ring-primary/25",
+  mustard: {
+    border: "border-[hsl(var(--mustard))]",
+    text: "text-[hsl(var(--mustard))]",
+    bg: "bg-[hsl(var(--mustard)/0.08)]",
+    glow: "shadow-[0_0_20px_hsl(var(--mustard)/0.1)]",
+    ring: "ring-[hsl(var(--mustard)/0.2)]",
+    blob: `hsl(var(--mustard))`,
   },
   teal: {
-    border: "border-[hsl(var(--teal))]",
-    text: "text-[hsl(var(--teal))]",
-    bg: "bg-[hsl(var(--teal)/0.08)]",
-    glow: "shadow-[0_0_24px_hsl(var(--teal)/0.15)]",
-    ring: "ring-[hsl(var(--teal)/0.25)]",
+    border: "border-primary",
+    text: "text-primary",
+    bg: "bg-[hsl(var(--bg-teal))]",
+    glow: "shadow-[0_0_20px_hsl(var(--teal)/0.1)]",
+    ring: "ring-primary/20",
+    blob: `hsl(var(--teal))`,
+  },
+  olive: {
+    border: "border-[hsl(var(--olive))]",
+    text: "text-[hsl(var(--olive))]",
+    bg: "bg-[hsl(var(--bg-olive))]",
+    glow: "shadow-[0_0_20px_hsl(var(--olive)/0.1)]",
+    ring: "ring-[hsl(var(--olive)/0.2)]",
+    blob: `hsl(var(--olive))`,
   },
 };
 
@@ -82,10 +85,10 @@ const useAnimatedNumber = (target: number, isVisible: boolean, duration = 1200) 
 };
 
 const buildImpactStats = (m: SiteMetrics) => [
-  { target: m.dark_factory_total_hours_saved, unit: "hrs", label: "Saved Per Feature Set", icon: Clock, accent: "primary" as const, decimals: true, key: "saved" },
-  { target: m.dark_factory_quality_lift, unit: "%", label: "Quality Lift", icon: FileCheck, accent: "teal" as const, decimals: false, key: "quality" },
-  { target: m.dark_factory_stories_drafted, unit: "+", label: "Stories Drafted", icon: Layers, accent: "amber-warm" as const, decimals: false, key: "stories" },
-  { target: m.dark_factory_cognitive_load, unit: "%", label: "Less Cognitive Load", icon: Brain, accent: "primary" as const, decimals: false, key: "cognitive" },
+  { target: m.dark_factory_total_hours_saved, unit: "hrs", label: "Saved Per Feature Set", icon: Clock, accent: "teal" as const, decimals: true, key: "saved" },
+  { target: m.dark_factory_quality_lift, unit: "%", label: "Quality Lift", icon: FileCheck, accent: "olive" as const, decimals: false, key: "quality" },
+  { target: m.dark_factory_stories_drafted, unit: "+", label: "Stories Drafted", icon: Layers, accent: "mustard" as const, decimals: false, key: "stories" },
+  { target: m.dark_factory_cognitive_load, unit: "%", label: "Less Cognitive Load", icon: Brain, accent: "teal" as const, decimals: false, key: "cognitive" },
 ];
 
 type StatKey = "saved" | "quality" | "stories" | "cognitive" | null;
@@ -129,19 +132,21 @@ const ImpactStatCard = ({ stat, visible, isActive, onHover }: {
   const s = accentStyles[stat.accent];
   return (
     <div
-      className={`glass-card p-5 space-y-2 cursor-pointer transition-all duration-200 ${isActive ? "ring-1 ring-primary/30 scale-[1.02]" : ""}`}
+      className={`glass-card p-5 space-y-2 cursor-pointer transition-all duration-200 relative overflow-hidden ${isActive ? "ring-1 ring-primary/30 scale-[1.02]" : ""}`}
       onMouseEnter={onHover}
     >
-      <div className={`inline-flex p-2.5 rounded-lg ${s.bg}`}>
+      {/* Subtle pattern overlay */}
+      <div className="absolute inset-0 mcm-pattern-dots opacity-30 pointer-events-none" />
+      <div className={`inline-flex p-2.5 rounded-md ${s.bg} relative z-10`}>
         <Icon className={`w-5 h-5 ${s.text}`} strokeWidth={2.25} />
       </div>
-      <div>
-        <span className={`font-display text-2xl font-bold ${s.text}`}>
+      <div className="relative z-10">
+        <span className={`font-display text-2xl font-normal ${s.text}`}>
           {stat.decimals ? val.toFixed(1) : Math.round(val)}
         </span>
         <span className={`text-sm font-display ${s.text}`}>{stat.unit}</span>
       </div>
-      <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-body font-medium">
+      <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-body font-medium relative z-10">
         {stat.label}
       </p>
     </div>
@@ -183,7 +188,7 @@ const DarkFactorySection = () => {
             </h2>
             <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
               Real example:{" "}
-              <span className="text-[hsl(var(--amber-warm))] font-medium">
+              <span className="text-[hsl(var(--mustard))] font-medium">
                 Manufactured Home Registry Transfer
               </span>
             </p>
@@ -202,6 +207,17 @@ const DarkFactorySection = () => {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className={`glass-card relative overflow-hidden p-8 flex flex-col gap-6 ring-1 ${s.ring} ${s.glow} transition-all duration-300`}
               >
+                {/* Organic corner blob */}
+                <div className="absolute -top-4 -right-4 w-16 h-16 pointer-events-none opacity-[0.06]" style={{
+                  borderRadius: '50% 60% 40% 70% / 60% 40% 60% 40%',
+                  background: s.blob,
+                  transform: 'rotate(-15deg)',
+                }} />
+                {/* Small circular accent */}
+                <div className="absolute bottom-6 right-6 w-2 h-2 rounded-full pointer-events-none opacity-[0.15]" style={{
+                  background: s.blob,
+                }} />
+
                 <div className="flex items-center gap-3">
                   <span className={`text-xs font-mono font-bold tracking-widest ${s.text}`}>
                     {step.number}
@@ -212,7 +228,7 @@ const DarkFactorySection = () => {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className={`p-3 rounded-lg ${s.bg}`}>
+                  <div className={`p-3 rounded-md ${s.bg}`}>
                     <Icon className={`w-6 h-6 ${s.text}`} strokeWidth={2.25} />
                   </div>
                   <h3 className="font-display text-xl text-foreground">
@@ -232,8 +248,8 @@ const DarkFactorySection = () => {
                   )}
                 </p>
 
-                <div className="border-t border-border/50 pt-5 mt-auto">
-                  <p className={`font-display text-3xl font-bold ${s.text}`}>
+                <div className="border-t border-[hsl(var(--divider))] pt-5 mt-auto">
+                  <p className={`font-display text-3xl ${s.text}`}>
                     {step.stat}
                   </p>
                   <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">
@@ -248,12 +264,12 @@ const DarkFactorySection = () => {
 
         {/* Connecting line (desktop) */}
         <div className="hidden lg:flex items-center justify-center mt-10 gap-2">
-          <span className="h-px w-16 bg-[hsl(var(--amber-warm)/0.4)]" />
+          <span className="h-px w-16 bg-[hsl(var(--mustard)/0.4)]" />
           <span className="text-xs text-muted-foreground font-mono">→</span>
           <span className="h-px w-16 bg-primary/40" />
           <span className="text-xs text-muted-foreground font-mono">→</span>
-          <span className="h-px w-16 bg-[hsl(var(--teal)/0.4)]" />
-          <span className="text-xs text-[hsl(var(--teal))] font-mono font-bold">
+          <span className="h-px w-16 bg-[hsl(var(--olive)/0.4)]" />
+          <span className="text-xs text-[hsl(var(--olive))] font-mono font-bold">
             Ship-Ready
           </span>
         </div>
