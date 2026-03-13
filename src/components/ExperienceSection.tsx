@@ -191,10 +191,8 @@ const ExperienceSection = () => {
 
   return (
     <section id="experience" className="py-28 px-8 md:px-16 bg-popover relative overflow-hidden">
-      {/* Teal side accent */}
-      <div className="absolute left-0 top-0 bottom-0 w-[4px] md:w-[6px] bg-[hsl(var(--teal))]" style={{
-        boxShadow: 'var(--teal-side-shadow, none)',
-      }} />
+      {/* 6px teal left accent bar */}
+      <div className="absolute left-0 top-0 bottom-0 w-[6px] bg-primary" />
 
       {/* Dark mode: ambient glow */}
       <div className="hidden dark:block absolute -bottom-[100px] -right-[100px] w-[500px] h-[500px] rounded-full pointer-events-none" style={{
@@ -205,8 +203,9 @@ const ExperienceSection = () => {
       <div className="max-w-[1200px] mx-auto relative z-[1]">
         <ScrollReveal>
           {/* Header — double-ruled */}
-          <div className="flex items-baseline gap-5 mb-14 border-b-[3px] dark:border-b-[2px] border-foreground dark:border-[hsl(var(--nav-text)/0.2)] pb-5 relative">
-            <div className="absolute -bottom-[5px] dark:-bottom-[4px] left-0 w-full h-px bg-[hsl(var(--teal))] opacity-35 dark:opacity-25" />
+          <div className="flex items-baseline gap-5 mb-14 border-b-[3px] border-foreground pb-5 relative">
+            {/* Second 1px teal line 5px below via ::after */}
+            <div className="absolute left-0 w-full h-px bg-primary opacity-35" style={{ bottom: '-5px' }} />
             <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-[hsl(var(--teal))] dark:text-[hsl(var(--teal-lt))] whitespace-nowrap">
               Where I've Been
             </p>

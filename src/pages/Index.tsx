@@ -43,7 +43,7 @@ const Index = () => {
         <CoverlineStrip label="AI-Augmented Impact" />
 
         {/* Mustard quote banner */}
-        <section className="bg-[hsl(var(--mustard))] dark:bg-[hsl(var(--mustard-dk))] py-20 px-8 md:px-16 relative overflow-hidden">
+        <section className="bg-accent-warm py-20 px-8 md:px-16 relative overflow-hidden">
           {/* Diagonal stripe texture */}
           <div className="absolute inset-0 pointer-events-none" style={{
             backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 24px, hsl(0 0% 0% / 0.04) 24px, hsl(0 0% 0% / 0.04) 25px)',

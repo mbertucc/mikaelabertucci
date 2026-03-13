@@ -62,7 +62,7 @@ const SkillsMatrix = () => {
   return (
     <ScrollReveal>
     <TooltipProvider delayDuration={200}>
-      <section className="py-16 px-8 md:px-16 bg-card/30">
+      <section className="py-16 px-8 md:px-16 bg-card">
         <div className="max-w-[1200px] mx-auto">
           {/* Header row */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
