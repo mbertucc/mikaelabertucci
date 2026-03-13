@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Sparkles } from "lucide-react";
-import { motion } from "framer-motion";
-import headshot from "@/assets/headshot.png";
 import { useProfile } from "@/hooks/usePortfolioData";
 import { useSiteMetrics } from "@/hooks/useSiteMetrics";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -31,7 +29,6 @@ const metricDescriptions = (m: any): Record<Exclude<MetricKey, null>, string[]> 
 
 const defaultText = "Hover over a metric to see the numbers behind how I work.";
 
-// Flat ledger stats matching the mockup's 6-column grid
 const buildLedgerStats = (m: any) => [
   { value: `${m?.about_velocity_time_to_draft ?? 2}`, unit: "×", label: "Faster\nTime-to-Draft", key: "velocity" as const },
   { value: `${m?.about_precision_requirement ?? 95}`, unit: "%", label: "Requirement\nPrecision", key: "precision" as const },
@@ -45,15 +42,13 @@ const AboutSection = () => {
   const { data: profile } = useProfile();
   const { data: m } = useSiteMetrics();
   const [activeMetric, setActiveMetric] = useState<MetricKey>(null);
-  const [headshotClicks, setHeadshotClicks] = useState(0);
 
   const descriptions = metricDescriptions(m);
   const ledgerStats = buildLedgerStats(m);
   const displayItems = activeMetric ? descriptions[activeMetric] : null;
-  const easterEggActive = headshotClicks >= 3;
 
   return (
-    <section id="about" className="py-28 px-8 md:px-16 bg-background relative overflow-hidden">
+    <section id="about" className="py-28 px-8 md:px-16 bg-card relative overflow-hidden">
       {/* N° watermark */}
       <div className="absolute right-10 top-1/2 -translate-y-1/2 font-display text-[340px] font-black text-foreground/[0.025] dark:text-[hsl(var(--nav-text)/0.02)] leading-[1] tracking-[-10px] pointer-events-none select-none">
         N°
@@ -61,7 +56,6 @@ const AboutSection = () => {
 
       <div className="max-w-[1200px] mx-auto relative z-[1]">
         <ScrollReveal>
-          {/* Header */}
           <div className="flex items-baseline gap-5 mb-14">
             <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-primary whitespace-nowrap">
               Measured Results
@@ -72,24 +66,24 @@ const AboutSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* 6-column ledger stats grid — matching mockup */}
         <div onMouseLeave={() => setActiveMetric(null)}>
           {/* Double-rule top border */}
           <div className="relative mb-0">
-            <div className="h-[4px] dark:h-[3px] bg-foreground dark:bg-[hsl(var(--nav-text)/0.25)]" />
-            <div className="h-px bg-[hsl(var(--teal))] opacity-40 dark:opacity-30 mt-1.5" />
+            <div className="h-[3px] bg-foreground" />
+            <div className="h-px bg-primary opacity-40 mt-1" style={{ marginTop: '4px' }} />
           </div>
 
           <div className="grid grid-cols-3 md:grid-cols-6 border-b border-border">
             {ledgerStats.map((stat, idx) => (
               <div
                 key={idx}
-                className={`py-10 px-5 cursor-default transition-colors duration-200 ${
+                className={`py-10 px-5 cursor-default transition-colors duration-200 relative group ${
                   idx < ledgerStats.length - 1 ? "border-r border-border" : ""
-                } ${stat.highlight ? "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.12)]" : ""} ${
-                  activeMetric === stat.key && !stat.highlight ? "bg-card/60 dark:bg-card/40" : ""
+                } ${stat.highlight ? "bg-[hsl(var(--teal-pale))]" : ""} ${
+                  activeMetric === stat.key && !stat.highlight ? "bg-card/60" : ""
                 }`}
                 onMouseEnter={() => setActiveMetric(stat.key)}
+                style={activeMetric === stat.key ? { backgroundColor: 'hsl(var(--teal-pale))' } : undefined}
               >
                 <div className="mb-3">
                   <span className="font-display text-[48px] md:text-[56px] font-bold text-foreground leading-[1] tracking-[-2px]">
@@ -104,10 +98,11 @@ const AboutSection = () => {
                 <p className="font-body text-[9px] md:text-[10px] font-bold tracking-[2px] uppercase text-muted-foreground leading-[1.6] whitespace-pre-line">
                   {stat.label}
                 </p>
-                {/* Mustard underline on highlight */}
                 {stat.highlight && (
-                  <div className="h-[3px] bg-[hsl(var(--mustard))] mt-4 w-full" />
+                  <div className="h-[3px] bg-accent-warm mt-4 w-full" />
                 )}
+                {/* Mustard bar on hover — animates from 0 to 100% */}
+                <div className="absolute bottom-0 left-0 h-[3px] bg-accent-warm w-0 group-hover:w-full transition-all duration-300" />
               </div>
             ))}
           </div>
@@ -132,7 +127,7 @@ const AboutSection = () => {
             </div>
             {activeMetric && (
               <button
-                className="shrink-0 inline-flex items-center gap-2 text-xs font-body text-[hsl(var(--mustard))] hover:text-[hsl(var(--mustard)/0.8)] transition-colors duration-200 border border-[hsl(var(--mustard)/0.3)] px-4 py-2 hover:bg-[hsl(var(--mustard)/0.05)] animate-fade-in mt-4"
+                className="shrink-0 inline-flex items-center gap-2 text-xs font-body text-accent-warm hover:text-accent-warm/80 transition-colors duration-200 border border-accent-warm/30 px-4 py-2 hover:bg-accent-warm/5 animate-fade-in mt-4"
                 onClick={() => {
                   const deepDivePrompts: Record<Exclude<MetricKey, null>, string> = {
                     velocity: `Tell me about the multi-agent Chain of Thought workflow you use for ${m?.about_velocity_time_to_draft ?? 2}x faster story drafting.`,
@@ -153,42 +148,13 @@ const AboutSection = () => {
           </p>
         </div>
 
-        {/* Headshot + Bio row — below stats */}
+        {/* Bio text — no photo here */}
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16 mt-16">
-            <div className="shrink-0">
-              <motion.div
-                className="w-48 h-48 md:w-56 md:h-56 overflow-hidden border-2 border-primary/20 cursor-pointer"
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setHeadshotClicks((c) => c + 1)}
-                transition={{ type: "spring", stiffness: 300, damping: 15 }}
-              >
-                <motion.img
-                  src={headshot}
-                  alt={`${profile?.full_name || "Mikaela Bertucci"} — professional headshot`}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  animate={easterEggActive ? { rotate: [0, -5, 5, -3, 3, 0] } : {}}
-                  transition={easterEggActive ? { duration: 0.6, ease: "easeInOut" } : {}}
-                />
-              </motion.div>
-              {easterEggActive && (
-                <motion.p
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-xs text-[hsl(var(--mustard))] font-body text-center mt-2 italic"
-                >
-                  ✨ You found me! I like your curiosity.
-                </motion.p>
-              )}
-            </div>
-            <div className="space-y-4 text-center md:text-left">
-              <p className="text-[14px] text-muted-foreground font-body font-light leading-[1.85] max-w-xl">
-                {profile?.positioning ||
-                  "I use AI to cut through the documentation overhead, saving 19.4 hours every week. That's not theory — that's what I'm doing today. I don't write production code. I write specs so clear that developers ship without coming back to ask questions."}
-              </p>
-            </div>
+          <div className="mt-16 max-w-xl">
+            <p className="text-[14px] text-muted-foreground font-body font-light leading-[1.85]">
+              {profile?.positioning ||
+                "I use AI to cut through the documentation overhead, saving 19.4 hours every week. That's not theory — that's what I'm doing today. I don't write production code. I write specs so clear that developers ship without coming back to ask questions."}
+            </p>
           </div>
         </ScrollReveal>
       </div>
