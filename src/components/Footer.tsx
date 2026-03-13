@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <footer className="relative overflow-hidden">
       {/* CTA Section — Teal (light) / Black (dark) */}
-      <div className="bg-[hsl(var(--teal))] dark:bg-[hsl(0_0%_3%)] py-20 px-8 md:px-16 relative overflow-hidden">
+      <div className="bg-[hsl(var(--teal))] dark:bg-[hsl(0_0%_3%)] py-28 px-8 md:px-16 relative overflow-hidden">
         {/* Diagonal stripe texture */}
         <div className="absolute inset-0 pointer-events-none" style={{
           backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 24px, hsl(var(--nav-text) / 0.03) 24px, hsl(var(--nav-text) / 0.03) 25px)',
@@ -32,21 +32,21 @@ const Footer = () => {
           animation: 'glowPulse 14s ease-in-out infinite reverse',
         }} />
 
-        <div className="max-w-[1200px] mx-auto grid md:grid-cols-[1fr_auto] gap-16 items-center relative z-10">
+        <div className="max-w-[1200px] mx-auto grid md:grid-cols-[1fr_auto] gap-20 items-center relative z-10">
           <div>
-            <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-[hsl(var(--nav-text)/0.55)] dark:text-[hsl(var(--nav-text)/0.35)] mb-4 flex items-center gap-2.5">
+            <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-[hsl(var(--nav-text)/0.55)] dark:text-[hsl(var(--nav-text)/0.35)] mb-5 flex items-center gap-2.5">
               <span className="inline-block w-5 h-px bg-[hsl(var(--mustard))] opacity-50" />
               Ready to Work Together?
             </p>
-            <h2 className="font-display text-[50px] md:text-[68px] font-black uppercase text-[hsl(var(--nav-text))] leading-[0.88] tracking-[-2px] mb-5">
+            <h2 className="font-display text-[54px] md:text-[72px] font-black uppercase text-[hsl(var(--nav-text))] leading-[0.88] tracking-[-2px] mb-6">
               See If
-              <em className="block italic font-normal text-[40px] md:text-[54px] normal-case tracking-[-1px] text-[hsl(var(--mustard-lt))] dark:text-[hsl(var(--teal-lt))]" style={{
+              <em className="block italic font-normal text-[44px] md:text-[58px] normal-case tracking-[-1px] text-[hsl(var(--mustard-lt))] dark:text-[hsl(var(--teal-lt))]" style={{
                 textShadow: 'var(--cta-em-shadow, none)',
               }}>
                 I'm The Right Fit.
               </em>
             </h2>
-            <p className="font-body text-[12.5px] font-light text-[hsl(var(--nav-text)/0.6)] dark:text-[hsl(var(--nav-text)/0.35)] leading-[1.9] max-w-[420px]">
+            <p className="font-body text-[14px] font-light text-[hsl(var(--nav-text)/0.6)] dark:text-[hsl(var(--nav-text)/0.4)] leading-[1.85] max-w-[440px]">
               Paste a job description. Get an honest assessment — including when I'm not.
             </p>
           </div>
@@ -54,7 +54,7 @@ const Footer = () => {
           <div>
             <button
               onClick={() => document.getElementById("fit-check")?.scrollIntoView({ behavior: "smooth" })}
-              className="relative overflow-hidden bg-[hsl(var(--nav-text))] dark:bg-transparent dark:border dark:border-[hsl(var(--teal-dk))] text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))] px-12 py-5 font-body text-[10px] font-bold tracking-[3px] uppercase whitespace-nowrap transition-all duration-300 hover:tracking-[4px] hover:-translate-y-0.5 group"
+              className="relative overflow-hidden bg-[hsl(var(--nav-text))] dark:bg-transparent dark:border dark:border-[hsl(var(--teal-dk))] text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))] px-14 py-6 font-body text-[11px] font-bold tracking-[3px] uppercase whitespace-nowrap transition-all duration-300 hover:tracking-[4px] hover:-translate-y-0.5 group"
             >
               <span className="relative z-10">✦ Analyze Fit</span>
               {/* Hover fill */}
@@ -65,11 +65,11 @@ const Footer = () => {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-border py-6 px-8 md:px-16 bg-background">
+      <div className="border-t border-border py-8 px-8 md:px-16 bg-background">
         <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
-            <p className="font-display text-lg text-foreground">{profile?.full_name || "Mikaela Bertucci"}</p>
-            <p className="font-body text-[9px] font-medium tracking-[2px] uppercase text-muted-foreground mt-1">{profile?.title || "Agentic Product Owner | Context Engineer"}</p>
+            <p className="font-display text-xl text-foreground">{profile?.full_name || "Mikaela Bertucci"}</p>
+            <p className="font-body text-[10px] font-medium tracking-[2px] uppercase text-muted-foreground mt-1.5">{profile?.title || "Agentic Product Owner | Context Engineer"}</p>
           </div>
 
           <div className="flex items-center gap-6">

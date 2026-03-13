@@ -68,7 +68,7 @@ const AboutSection = () => {
   const easterEggActive = headshotClicks >= 3;
 
   return (
-    <section id="about" className="py-20 px-8 md:px-16 bg-card/50 relative overflow-hidden">
+    <section id="about" className="py-28 px-8 md:px-16 bg-card/50 relative overflow-hidden">
       {/* N° watermark */}
       <div className="absolute right-10 top-1/2 -translate-y-1/2 font-display text-[340px] font-black text-foreground/[0.025] dark:text-[hsl(var(--nav-text)/0.02)] leading-[1] tracking-[-10px] pointer-events-none select-none">
         N°
@@ -77,11 +77,11 @@ const AboutSection = () => {
       <div className="max-w-[1200px] mx-auto relative z-[1]">
         <ScrollReveal>
           {/* Header */}
-          <div className="flex items-baseline gap-5 mb-12">
-            <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-primary whitespace-nowrap">
+          <div className="flex items-baseline gap-5 mb-14">
+            <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-primary whitespace-nowrap">
               Measured Results
             </p>
-            <h2 className="font-display text-[36px] md:text-[44px] font-normal italic text-foreground tracking-[-0.5px]">
+            <h2 className="font-display text-[38px] md:text-[48px] font-normal italic text-foreground tracking-[-0.5px]">
               What This Looks Like in Practice
             </h2>
           </div>
@@ -89,7 +89,7 @@ const AboutSection = () => {
 
         {/* Headshot + Bio row */}
         <ScrollReveal>
-          <div className="flex flex-col md:flex-row items-center gap-10 md:gap-14 mb-12">
+          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16 mb-16">
             <div className="shrink-0">
               <motion.div
                 className="w-48 h-48 md:w-56 md:h-56 overflow-hidden border-2 border-primary/20 cursor-pointer"
@@ -123,7 +123,7 @@ const AboutSection = () => {
               )}
             </div>
             <div className="space-y-4 text-center md:text-left">
-              <p className="text-[12.5px] text-muted-foreground font-body font-light leading-[1.9] max-w-xl">
+              <p className="text-[14px] text-muted-foreground font-body font-light leading-[1.85] max-w-xl">
                 {profile?.positioning ||
                   "I use AI to cut through the documentation overhead, saving 19.4 hours every week. That's not theory — that's what I'm doing today. I don't write production code. I write specs so clear that developers ship without coming back to ask questions."}
               </p>
@@ -142,7 +142,7 @@ const AboutSection = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 relative">
             {/* Velocity — Teal */}
             <motion.div
-              className={`text-left space-y-3 cursor-default group p-8 transition-colors duration-200 border-r border-border relative ${activeMetric === "velocity" ? "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.15)]" : ""}`}
+              className={`text-left space-y-4 cursor-default group p-10 transition-colors duration-200 border-r border-border relative ${activeMetric === "velocity" ? "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.15)]" : ""}`}
               onMouseEnter={() => setActiveMetric("velocity")}
               whileHover={{ scale: 1.0 }}
             >
@@ -151,11 +151,9 @@ const AboutSection = () => {
                 boxShadow: activeMetric === "velocity" ? '0 0 8px hsl(var(--mustard) / 0.4)' : 'none',
               }} />
 
-              <div className="flex items-center gap-1.5 mb-1">
-                <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors duration-200 ${activeMetric === "velocity" ? "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.2)]" : "bg-transparent"}`}>
-                  <Zap className="w-4 h-4 text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]" strokeWidth={2.25} />
-                </div>
-                <p className={`font-body text-[8px] font-medium tracking-[1.5px] uppercase ${activeMetric === "velocity" ? metricAccents.velocity.text : "text-muted-foreground"}`}>Velocity</p>
+              <div className="flex items-center gap-2 mb-2">
+                <Zap className={`w-4 h-4 transition-colors duration-200 ${activeMetric === "velocity" ? "text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]" : "text-muted-foreground"}`} strokeWidth={2.25} />
+                <p className={`font-body text-[10px] font-semibold tracking-[2px] uppercase ${activeMetric === "velocity" ? metricAccents.velocity.text : "text-muted-foreground"}`}>Velocity</p>
               </div>
               <StatRing value={m?.about_velocity_time_to_draft ?? 2} max={m?.about_velocity_time_to_draft_max ?? 5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
               <StatRing value={m?.about_velocity_planning ?? 50} max={100} label="Faster Planning" unit="%" size={90} hideRing />
@@ -163,7 +161,7 @@ const AboutSection = () => {
 
             {/* Precision — Olive */}
             <motion.div
-              className={`text-left space-y-3 cursor-default group p-8 transition-colors duration-200 border-r border-border relative ${activeMetric === "precision" ? "bg-[hsl(var(--bg-olive))] dark:bg-[hsl(var(--olive)/0.12)]" : ""}`}
+              className={`text-left space-y-4 cursor-default group p-10 transition-colors duration-200 border-r border-border relative ${activeMetric === "precision" ? "bg-[hsl(var(--bg-olive))] dark:bg-[hsl(var(--olive)/0.12)]" : ""}`}
               onMouseEnter={() => setActiveMetric("precision")}
               whileHover={{ scale: 1.0 }}
             >
@@ -171,11 +169,9 @@ const AboutSection = () => {
                 boxShadow: activeMetric === "precision" ? '0 0 8px hsl(var(--mustard) / 0.4)' : 'none',
               }} />
 
-              <div className="flex items-center gap-1.5 mb-1">
-                <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors duration-200 ${activeMetric === "precision" ? "bg-[hsl(var(--bg-olive))]" : "bg-transparent"}`}>
-                  <Target className="w-4 h-4 text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]" strokeWidth={2.25} />
-                </div>
-                <p className={`font-body text-[8px] font-medium tracking-[1.5px] uppercase ${activeMetric === "precision" ? metricAccents.precision.text : "text-muted-foreground"}`}>Precision</p>
+              <div className="flex items-center gap-2 mb-2">
+                <Target className={`w-4 h-4 transition-colors duration-200 ${activeMetric === "precision" ? "text-[hsl(var(--olive))]" : "text-muted-foreground"}`} strokeWidth={2.25} />
+                <p className={`font-body text-[10px] font-semibold tracking-[2px] uppercase ${activeMetric === "precision" ? metricAccents.precision.text : "text-muted-foreground"}`}>Precision</p>
               </div>
               <StatRing value={m?.about_precision_requirement ?? 95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
               <StatRing value={m?.about_precision_accuracy ?? 75} max={100} label="Increase in Accuracy" unit="%" size={90} hideRing />
@@ -183,7 +179,7 @@ const AboutSection = () => {
 
             {/* Culture — Slate */}
             <motion.div
-              className={`text-left space-y-3 col-span-2 md:col-span-1 cursor-default group p-8 transition-colors duration-200 relative ${activeMetric === "culture" ? "bg-[hsl(var(--bg-slate))] dark:bg-[hsl(var(--slate)/0.12)]" : ""}`}
+              className={`text-left space-y-4 col-span-2 md:col-span-1 cursor-default group p-10 transition-colors duration-200 relative ${activeMetric === "culture" ? "bg-[hsl(var(--bg-slate))] dark:bg-[hsl(var(--slate)/0.12)]" : ""}`}
               onMouseEnter={() => setActiveMetric("culture")}
               whileHover={{ scale: 1.0 }}
             >
@@ -191,11 +187,9 @@ const AboutSection = () => {
                 boxShadow: activeMetric === "culture" ? '0 0 8px hsl(var(--mustard) / 0.4)' : 'none',
               }} />
 
-              <div className="flex items-center gap-1.5 mb-1">
-                <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors duration-200 ${activeMetric === "culture" ? "bg-[hsl(var(--bg-slate))]" : "bg-transparent"}`}>
-                  <Users className="w-4 h-4 text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]" strokeWidth={2.25} />
-                </div>
-                <p className={`font-body text-[8px] font-medium tracking-[1.5px] uppercase ${activeMetric === "culture" ? metricAccents.culture.text : "text-muted-foreground"}`}>Culture</p>
+              <div className="flex items-center gap-2 mb-2">
+                <Users className={`w-4 h-4 transition-colors duration-200 ${activeMetric === "culture" ? "text-secondary" : "text-muted-foreground"}`} strokeWidth={2.25} />
+                <p className={`font-body text-[10px] font-semibold tracking-[2px] uppercase ${activeMetric === "culture" ? metricAccents.culture.text : "text-muted-foreground"}`}>Culture</p>
               </div>
               <StatRing value={m?.about_culture_satisfaction ?? 80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
               <StatRing value={m?.about_culture_strategy ?? 40} max={100} label="More Strategy Time" unit="%" size={90} hideRing />
@@ -203,29 +197,29 @@ const AboutSection = () => {
           </div>
 
           {/* Hover Detail Area */}
-          <div className="mt-6 border-t border-border pt-5">
-            <div className="min-h-[5.5rem] md:min-h-[4.5rem] flex flex-col md:flex-row items-start gap-3">
+          <div className="mt-8 border-t border-border pt-6">
+            <div className="min-h-[6rem] md:min-h-[5rem] flex flex-col md:flex-row items-start gap-4">
               <div className="flex-1 relative">
                 <div
                   key={activeMetric || "default"}
                   className="animate-fade-in"
                 >
                   {activeMetric && (
-                    <p className={`text-[10px] uppercase tracking-[0.2em] font-body font-medium mb-2 ${metricAccents[activeMetric].text}`}>
+                    <p className={`text-[11px] uppercase tracking-[0.2em] font-body font-semibold mb-2.5 ${metricAccents[activeMetric].text}`}>
                       {metricLabels[activeMetric]}
                     </p>
                   )}
                   {displayItems ? (
-                    <ul className="space-y-1.5">
+                    <ul className="space-y-2">
                       {displayItems.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground font-body leading-relaxed">
-                          <span className="text-primary mt-1.5 shrink-0 w-1 h-1 rounded-full bg-primary" />
+                        <li key={i} className="flex items-start gap-2.5 text-[14px] text-muted-foreground font-body leading-relaxed">
+                          <span className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full bg-primary" />
                           {item}
                         </li>
                       ))}
                     </ul>
                   ) : (
-                    <p className="text-sm text-muted-foreground font-body leading-relaxed">
+                    <p className="text-[14px] text-muted-foreground font-body leading-relaxed">
                       {defaultText}
                     </p>
                   )}
@@ -233,7 +227,7 @@ const AboutSection = () => {
               </div>
               {activeMetric && (
                 <button
-                  className="shrink-0 inline-flex items-center gap-1.5 text-xs font-body text-[hsl(var(--mustard))] hover:text-[hsl(var(--mustard)/0.8)] transition-colors duration-200 border border-[hsl(var(--mustard)/0.3)] px-3 py-1.5 hover:bg-[hsl(var(--mustard)/0.05)] animate-fade-in"
+                  className="shrink-0 inline-flex items-center gap-2 text-xs font-body text-[hsl(var(--mustard))] hover:text-[hsl(var(--mustard)/0.8)] transition-colors duration-200 border border-[hsl(var(--mustard)/0.3)] px-4 py-2 hover:bg-[hsl(var(--mustard)/0.05)] animate-fade-in"
                   onClick={() => {
                     const deepDivePrompts: Record<Exclude<MetricKey, null>, string> = {
                       velocity: `Tell me about the multi-agent Chain of Thought workflow you use for ${m?.about_velocity_time_to_draft ?? 2}x faster story drafting — specifically the Discovery Agent, Story Architect, and Reviewer Agent.`,
@@ -253,7 +247,7 @@ const AboutSection = () => {
             </div>
           </div>
 
-          <p className="font-display text-[13px] italic text-muted-foreground mt-5 border-t border-border pt-4">
+          <p className="font-display text-[13px] italic text-muted-foreground mt-6 border-t border-border pt-5">
             Numbers drawn from a real 6-week sprint cycle — Manufactured Home Registry Self Serve feature.
           </p>
         </div>

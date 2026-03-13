@@ -25,21 +25,21 @@ const interests: Interest[] = [
 ];
 
 const BeyondWorkSection = () => (
-  <section className="px-8 md:px-16 py-20 max-w-[1200px] mx-auto">
-    <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-primary mb-3">
+  <section className="px-8 md:px-16 py-28 max-w-[1200px] mx-auto">
+    <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-primary mb-3">
       Beyond the Backlog
     </p>
-    <h2 className="font-display text-[28px] md:text-[34px] font-normal italic text-foreground mb-10 tracking-[-0.5px]">
+    <h2 className="font-display text-[30px] md:text-[38px] font-normal italic text-foreground mb-12 tracking-[-0.5px]">
       When I'm Not Shipping
     </h2>
 
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-3.5">
       {interests.map(({ label, icon: Icon }) => (
         <span
           key={label}
-          className="glass-card inline-flex items-center gap-2.5 px-4 py-2.5 text-sm font-body text-foreground/80 transition-all duration-200 hover:scale-105 hover:bg-card/80 cursor-default"
+          className="glass-card inline-flex items-center gap-3 px-5 py-3 text-[14px] font-body text-foreground/80 transition-all duration-200 hover:scale-105 hover:bg-card/80 hover:shadow-md cursor-default border border-transparent hover:border-border"
         >
-          <Icon className="w-4 h-4 text-[hsl(var(--mustard))] shrink-0" />
+          <Icon className="w-4.5 h-4.5 text-[hsl(var(--mustard))] shrink-0" />
           {label}
         </span>
       ))}
