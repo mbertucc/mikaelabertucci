@@ -23,7 +23,7 @@
     --secondary-foreground: 42 34% 93%;
 
     --muted: 46 10% 44%;            /* #7A7A68 label */
-    --muted-foreground: 46 10% 44%;
+    --muted-foreground: 50 8% 30%;   /* darker for readability */
 
     --accent: 180 36% 32%;          /* teal */
     --accent-foreground: 42 34% 93%;
