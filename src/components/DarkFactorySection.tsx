@@ -40,31 +40,16 @@ const buildSteps = (m: SiteMetrics) => [
   },
 ];
 
-const accentStyles = {
-  mustard: {
-    border: "border-[hsl(var(--mustard))]",
-    text: "text-[hsl(var(--mustard))]",
-    bg: "bg-[hsl(var(--mustard)/0.08)]",
-    glow: "shadow-[0_0_20px_hsl(var(--mustard)/0.1)]",
-    ring: "ring-[hsl(var(--mustard)/0.2)]",
-    blob: `hsl(var(--mustard))`,
-  },
-  teal: {
-    border: "border-primary",
-    text: "text-primary",
-    bg: "bg-[hsl(var(--bg-teal))]",
-    glow: "shadow-[0_0_20px_hsl(var(--teal)/0.1)]",
-    ring: "ring-primary/20",
-    blob: `hsl(var(--teal))`,
-  },
-  olive: {
-    border: "border-[hsl(var(--olive))]",
-    text: "text-[hsl(var(--olive))]",
-    bg: "bg-[hsl(var(--bg-olive))]",
-    glow: "shadow-[0_0_20px_hsl(var(--olive)/0.1)]",
-    ring: "ring-[hsl(var(--olive)/0.2)]",
-    blob: `hsl(var(--olive))`,
-  },
+const headerBgs: Record<string, string> = {
+  mustard: "bg-foreground dark:bg-[hsl(var(--charcoal))]",
+  teal: "bg-[hsl(var(--teal))] dark:bg-[hsl(var(--teal-dk))]",
+  olive: "bg-[hsl(var(--mustard-dk))] dark:bg-[hsl(var(--mustard)/0.35)]",
+};
+
+const statColors: Record<string, string> = {
+  mustard: "text-foreground dark:text-[hsl(var(--nav-text)/0.2)]",
+  teal: "text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal))]",
+  olive: "text-[hsl(var(--mustard-dk))] dark:text-[hsl(var(--mustard-dk))]",
 };
 
 const useAnimatedNumber = (target: number, isVisible: boolean, duration = 1200) => {
@@ -129,26 +114,25 @@ const ImpactStatCard = ({ stat, visible, isActive, onHover }: {
 }) => {
   const Icon = stat.icon;
   const val = useAnimatedNumber(stat.target, visible);
-  const s = accentStyles[stat.accent];
   return (
     <div
-      className={`glass-card p-5 space-y-2 cursor-pointer transition-all duration-200 relative overflow-hidden ${isActive ? "ring-1 ring-primary/30 scale-[1.02]" : ""}`}
+      className={`border border-border p-5 space-y-2 cursor-pointer transition-all duration-200 relative overflow-hidden ${isActive ? "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.15)] ring-1 ring-primary/30" : "bg-card/40 hover:bg-card/70"}`}
       onMouseEnter={onHover}
     >
-      {/* Subtle pattern overlay */}
-      <div className="absolute inset-0 mcm-pattern-dots opacity-30 pointer-events-none" />
-      <div className={`inline-flex p-2.5 rounded-md ${s.bg} relative z-10`}>
-        <Icon className={`w-5 h-5 ${s.text}`} strokeWidth={2.25} />
+      <div className="inline-flex p-2.5 bg-[hsl(var(--bg-teal))] dark:bg-[hsl(var(--teal)/0.1)] relative z-10">
+        <Icon className="w-5 h-5 text-primary" strokeWidth={2.25} />
       </div>
       <div className="relative z-10">
-        <span className={`font-display text-2xl font-normal ${s.text}`}>
+        <span className="font-display text-[44px] font-bold text-foreground leading-[1] tracking-[-1px]">
           {stat.decimals ? val.toFixed(1) : Math.round(val)}
         </span>
-        <span className={`text-sm font-display ${s.text}`}>{stat.unit}</span>
+        <span className="text-sm font-display text-muted-foreground">{stat.unit}</span>
       </div>
-      <p className="text-[10px] uppercase tracking-[0.15em] text-muted-foreground font-body font-medium relative z-10">
+      <p className="font-body text-[8px] font-medium tracking-[1.5px] uppercase text-muted-foreground relative z-10 leading-[1.6]">
         {stat.label}
       </p>
+      {/* Mustard underline on hover */}
+      <div className={`absolute bottom-0 left-0 h-[2px] bg-[hsl(var(--mustard))] transition-all duration-300 ${isActive ? "w-full" : "w-0"}`} />
     </div>
   );
 };
@@ -175,91 +159,85 @@ const DarkFactorySection = () => {
   }, []);
 
   return (
-    <section id="dark-factory" className="py-12 px-6" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
+    <section id="dark-factory" className="py-20 px-8 md:px-16 relative" ref={ref}>
+      {/* Dark mode: horizontal line pattern */}
+      <div className="hidden dark:block absolute inset-0 pointer-events-none" style={{
+        backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 79px, hsl(var(--teal) / 0.03) 79px, hsl(var(--teal) / 0.03) 80px)',
+      }} />
+
+      <div className="max-w-[1200px] mx-auto relative z-[1]">
+        {/* Header — editorial */}
         <ScrollReveal>
-          <div className="text-center mb-10 space-y-3">
-            <p className="text-xs font-body uppercase tracking-[0.3em] text-primary">
-              How I Actually Work
-            </p>
-            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-foreground leading-tight">
+          <div className="flex items-baseline gap-5 mb-14 border-b border-border pb-5">
+            <div className="flex items-center gap-2 font-body text-[9px] font-bold tracking-[4px] uppercase text-[hsl(var(--mustard-dk))] dark:text-[hsl(var(--mustard))] whitespace-nowrap">
+              <span className="inline-block w-1.5 h-1.5 bg-[hsl(var(--mustard))] rotate-45" style={{
+                boxShadow: 'var(--mustard-diamond-shadow, none)',
+              }} />
+              Three Steps
+            </div>
+            <h2 className="font-display text-[34px] md:text-[42px] font-normal italic text-foreground tracking-[-0.5px]">
               The Agentic Product Owner Workflow
             </h2>
-            <p className="text-muted-foreground font-body text-lg max-w-2xl mx-auto">
-              Real example:{" "}
-              <span className="text-[hsl(var(--mustard))] font-medium">
-                Manufactured Home Registry Transfer
-              </span>
-            </p>
           </div>
         </ScrollReveal>
 
-        {/* Steps */}
-        <div className="grid gap-8 lg:grid-cols-3">
-          {steps.map((step, idx) => {
-            const s = accentStyles[step.accent];
-            const Icon = step.icon;
-            return (
-              <ScrollReveal key={step.number} delay={idx * 0.15}>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className={`glass-card relative overflow-hidden p-8 flex flex-col gap-6 ring-1 ${s.ring} ${s.glow} transition-all duration-300`}
-              >
-                {/* Organic corner blob */}
-                <div className="absolute -top-4 -right-4 w-16 h-16 pointer-events-none opacity-[0.06]" style={{
-                  borderRadius: '50% 60% 40% 70% / 60% 40% 60% 40%',
-                  background: s.blob,
-                  transform: 'rotate(-15deg)',
-                }} />
-                {/* Small circular accent */}
-                <div className="absolute bottom-6 right-6 w-2 h-2 rounded-full pointer-events-none opacity-[0.15]" style={{
-                  background: s.blob,
-                }} />
+        <ScrollReveal>
+          <p className="text-muted-foreground font-body text-[12.5px] font-light leading-[1.9] mb-10">
+            Real example:{" "}
+            <span className="text-[hsl(var(--mustard))] font-medium">
+              Manufactured Home Registry Transfer
+            </span>
+          </p>
+        </ScrollReveal>
 
-                <div className="flex items-center gap-3">
-                  <span className={`text-xs font-mono font-bold tracking-widest ${s.text}`}>
+        {/* Workflow cards — 3-column editorial grid */}
+        <div className="grid md:grid-cols-3 border border-border">
+          {steps.map((step, idx) => (
+            <ScrollReveal key={step.number} delay={idx * 0.08}>
+              <motion.div
+                whileHover={{ backgroundColor: 'var(--card-hover-bg)' }}
+                className={`relative overflow-hidden transition-colors duration-200 ${idx < 2 ? "border-r border-border" : ""} hover:bg-popover`}
+              >
+                {/* Colored header bar */}
+                <div className={`px-8 py-5 flex items-center justify-between border-b border-[hsl(0_0%_100%/0.15)] dark:border-border ${headerBgs[step.accent]}`}>
+                  <span className="font-display text-[36px] font-black text-[hsl(var(--nav-text)/0.2)] dark:text-[hsl(var(--nav-text)/0.1)] leading-[1] tracking-[-1px]">
                     {step.number}
                   </span>
-                  <span className={`text-[10px] font-body uppercase tracking-[0.25em] px-2 py-0.5 rounded ${s.bg} ${s.text}`}>
+                  <span className="font-body text-[8px] font-bold tracking-[2.5px] uppercase text-[hsl(var(--nav-text)/0.7)] dark:text-[hsl(var(--nav-text)/0.5)]">
                     {step.label}
                   </span>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <div className={`p-3 rounded-md ${s.bg}`}>
-                    <Icon className={`w-6 h-6 ${s.text}`} strokeWidth={2.25} />
-                  </div>
-                  <h3 className="font-display text-xl text-foreground">
+                {/* Body */}
+                <div className="p-8">
+                  <h3 className="font-display text-[24px] font-bold text-foreground mb-3.5 leading-[1.15]">
                     {step.title}
                   </h3>
-                </div>
-
-                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-                  {step.content.split(/(\*\*.*?\*\*)/).map((seg, i) =>
-                    seg.startsWith("**") ? (
-                      <strong key={i} className="text-foreground font-semibold">
-                        {seg.slice(2, -2)}
-                      </strong>
-                    ) : (
-                      <span key={i}>{seg}</span>
-                    )
-                  )}
-                </p>
-
-                <div className="border-t border-[hsl(var(--divider))] pt-5 mt-auto">
-                  <p className={`font-display text-3xl ${s.text}`}>
-                    {step.stat}
+                  <p className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9]">
+                    {step.content.split(/(\*\*.*?\*\*)/).map((seg, i) =>
+                      seg.startsWith("**") ? (
+                        <strong key={i} className="text-foreground font-semibold">
+                          {seg.slice(2, -2)}
+                        </strong>
+                      ) : (
+                        <span key={i}>{seg}</span>
+                      )
+                    )}
                   </p>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider mt-1">
-                    {step.statLabel}
-                  </p>
+
+                  {/* Stat */}
+                  <div className="mt-6 pt-4.5 border-t border-border flex items-baseline gap-3">
+                    <span className={`font-display text-[48px] font-bold leading-[1] tracking-[-2px] transition-colors duration-200 ${statColors[step.accent]}`}>
+                      {step.stat}
+                    </span>
+                    <span className="font-body text-[8px] font-medium tracking-[1.5px] uppercase text-muted-foreground leading-[1.6] max-w-[80px]">
+                      {step.statLabel}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
-              </ScrollReveal>
-            );
-          })}
+            </ScrollReveal>
+          ))}
         </div>
 
         {/* Connecting line (desktop) */}
@@ -276,15 +254,16 @@ const DarkFactorySection = () => {
 
         {/* Impact Stats */}
         <div className="py-1" onMouseLeave={() => setActiveStat(null)}>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16">
-            {impactStats.map((stat) => (
-              <ImpactStatCard
-                key={stat.label}
-                stat={stat}
-                visible={visible}
-                isActive={activeStat === stat.key}
-                onHover={() => setActiveStat(stat.key as StatKey)}
-              />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 mt-16 border border-border">
+            {impactStats.map((stat, i) => (
+              <div key={stat.label} className={i < 3 ? "border-r border-border" : ""}>
+                <ImpactStatCard
+                  stat={stat}
+                  visible={visible}
+                  isActive={activeStat === stat.key}
+                  onHover={() => setActiveStat(stat.key as StatKey)}
+                />
+              </div>
             ))}
           </div>
 
@@ -317,7 +296,7 @@ const DarkFactorySection = () => {
           </div>
         </div>
 
-        <p className="text-center text-xs text-muted-foreground font-body mt-6">
+        <p className="font-display text-[13px] italic text-muted-foreground mt-6 border-t border-border pt-4">
           These numbers come from a real 6-week sprint cycle on the Manufactured Home Registry Self Serve feature.
         </p>
       </div>

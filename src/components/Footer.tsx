@@ -7,61 +7,69 @@ const Footer = () => {
 
   return (
     <footer className="relative overflow-hidden">
-      {/* CTA Section — dark background with diagonal stripe pattern */}
-      <div className="bg-[hsl(var(--nav-bg))] py-16 px-6 relative">
-        {/* Diagonal stripe pattern overlay */}
-        <div className="absolute inset-0 pointer-events-none mcm-pattern-stripes opacity-60" />
-        
-        {/* Large organic background shapes */}
-        <div className="absolute -bottom-12 -left-12 w-48 h-48 pointer-events-none opacity-[0.04]" style={{
-          borderRadius: '60% 40% 70% 30% / 50% 60% 40% 50%',
-          background: `hsl(var(--mustard))`,
-          transform: 'rotate(-30deg)',
-        }} />
-        <div className="absolute -top-8 -right-8 w-36 h-36 pointer-events-none opacity-[0.04]" style={{
-          borderRadius: '40% 60% 30% 70% / 60% 40% 60% 40%',
-          background: `hsl(var(--teal))`,
-          transform: 'rotate(20deg)',
+      {/* CTA Section — Teal (light) / Black (dark) */}
+      <div className="bg-[hsl(var(--teal))] dark:bg-[hsl(0_0%_3%)] py-20 px-8 md:px-16 relative overflow-hidden">
+        {/* Diagonal stripe texture */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: 'repeating-linear-gradient(-45deg, transparent, transparent 24px, hsl(var(--nav-text) / 0.03) 24px, hsl(var(--nav-text) / 0.03) 25px)',
         }} />
 
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="font-display text-3xl md:text-4xl text-[hsl(var(--nav-text))] mb-4">
-            Let's Talk
-          </h2>
-          <p className="text-[hsl(var(--nav-text)/0.7)] font-body mb-8 max-w-lg mx-auto">
-            This portfolio is AI-queryable. Ask it anything — or reach out directly.
-          </p>
-          <div className="flex items-center justify-center gap-4">
-            {profile?.linkedin_url && (
-              <a
-                href={profile.linkedin_url}
-                className="px-6 py-3 bg-[hsl(var(--mustard))] text-[hsl(var(--mustard-foreground))] font-body font-semibold text-sm rounded-md glow-warm hover:brightness-110 transition-all"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Connect on LinkedIn
-              </a>
-            )}
-            {profile?.github_url && (
-              <a
-                href={profile.github_url}
-                className="px-6 py-3 border border-[hsl(var(--nav-text)/0.3)] text-[hsl(var(--nav-text))] font-body font-medium text-sm rounded-md hover:border-[hsl(var(--nav-text)/0.6)] transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitHub
-              </a>
-            )}
+        {/* Mustard right bar */}
+        <div className="absolute right-0 top-0 bottom-0 w-2 bg-[hsl(var(--mustard))]" />
+
+        {/* Giant ghosted letter */}
+        <div className="absolute right-16 top-1/2 -translate-y-1/2 font-display text-[300px] md:text-[380px] font-black text-[hsl(var(--nav-text)/0.04)] dark:text-[hsl(var(--nav-text)/0.02)] leading-[1] tracking-[-15px] pointer-events-none select-none">
+          MB
+        </div>
+
+        {/* Dark mode: ambient glows */}
+        <div className="hidden dark:block absolute -left-[100px] -bottom-[100px] w-[500px] h-[500px] rounded-full pointer-events-none" style={{
+          background: 'radial-gradient(circle, hsl(var(--teal) / 0.06) 0%, transparent 70%)',
+          animation: 'glowPulse 10s ease-in-out infinite',
+        }} />
+        <div className="hidden dark:block absolute -right-[80px] -top-[80px] w-[400px] h-[400px] rounded-full pointer-events-none" style={{
+          background: 'radial-gradient(circle, hsl(var(--mustard) / 0.05) 0%, transparent 70%)',
+          animation: 'glowPulse 14s ease-in-out infinite reverse',
+        }} />
+
+        <div className="max-w-[1200px] mx-auto grid md:grid-cols-[1fr_auto] gap-16 items-center relative z-10">
+          <div>
+            <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-[hsl(var(--nav-text)/0.55)] dark:text-[hsl(var(--nav-text)/0.35)] mb-4 flex items-center gap-2.5">
+              <span className="inline-block w-5 h-px bg-[hsl(var(--mustard))] opacity-50" />
+              Ready to Work Together?
+            </p>
+            <h2 className="font-display text-[50px] md:text-[68px] font-black uppercase text-[hsl(var(--nav-text))] leading-[0.88] tracking-[-2px] mb-5">
+              See If
+              <em className="block italic font-normal text-[40px] md:text-[54px] normal-case tracking-[-1px] text-[hsl(var(--mustard-lt))] dark:text-[hsl(var(--teal-lt))]" style={{
+                textShadow: 'var(--cta-em-shadow, none)',
+              }}>
+                I'm The Right Fit.
+              </em>
+            </h2>
+            <p className="font-body text-[12.5px] font-light text-[hsl(var(--nav-text)/0.6)] dark:text-[hsl(var(--nav-text)/0.35)] leading-[1.9] max-w-[420px]">
+              Paste a job description. Get an honest assessment — including when I'm not.
+            </p>
+          </div>
+
+          <div>
+            <button
+              onClick={() => document.getElementById("fit-check")?.scrollIntoView({ behavior: "smooth" })}
+              className="relative overflow-hidden bg-[hsl(var(--nav-text))] dark:bg-transparent dark:border dark:border-[hsl(var(--teal-dk))] text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))] px-12 py-5 font-body text-[10px] font-bold tracking-[3px] uppercase whitespace-nowrap transition-all duration-300 hover:tracking-[4px] hover:-translate-y-0.5 group"
+            >
+              <span className="relative z-10">✦ Analyze Fit</span>
+              {/* Hover fill */}
+              <span className="absolute inset-0 bg-[hsl(var(--mustard))] dark:bg-[hsl(var(--teal-dk))] transform scale-x-0 origin-right dark:origin-bottom group-hover:scale-x-100 dark:group-hover:scale-y-100 transition-transform duration-300 z-0" />
+            </button>
           </div>
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-[hsl(var(--divider))] py-6 px-6 bg-background">
-        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="border-t border-border py-6 px-8 md:px-16 bg-background">
+        <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
             <p className="font-display text-lg text-foreground">{profile?.full_name || "Mikaela Bertucci"}</p>
-            <p className="text-xs text-muted-foreground font-body mt-1">{profile?.title || "Agentic Product Owner | Context Engineer"}</p>
+            <p className="font-body text-[9px] font-medium tracking-[2px] uppercase text-muted-foreground mt-1">{profile?.title || "Agentic Product Owner | Context Engineer"}</p>
           </div>
 
           <div className="flex items-center gap-6">

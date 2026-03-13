@@ -25,11 +25,11 @@ const interests: Interest[] = [
 ];
 
 const BeyondWorkSection = () => (
-  <section className="px-6 md:px-12 lg:px-24 py-20 max-w-6xl mx-auto">
-    <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body mb-3">
+  <section className="px-8 md:px-16 py-20 max-w-[1200px] mx-auto">
+    <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-primary mb-3">
       Beyond the Backlog
     </p>
-    <h2 className="font-display text-2xl md:text-3xl text-foreground mb-10">
+    <h2 className="font-display text-[28px] md:text-[34px] font-normal italic text-foreground mb-10 tracking-[-0.5px]">
       When I'm Not Shipping
     </h2>
 
@@ -37,7 +37,7 @@ const BeyondWorkSection = () => (
       {interests.map(({ label, icon: Icon }) => (
         <span
           key={label}
-          className="glass-card inline-flex items-center gap-2.5 px-4 py-2.5 rounded-md text-sm font-body text-foreground/80 transition-all duration-200 hover:scale-105 hover:bg-card/80 cursor-default"
+          className="glass-card inline-flex items-center gap-2.5 px-4 py-2.5 text-sm font-body text-foreground/80 transition-all duration-200 hover:scale-105 hover:bg-card/80 cursor-default"
         >
           <Icon className="w-4 h-4 text-[hsl(var(--mustard))] shrink-0" />
           {label}

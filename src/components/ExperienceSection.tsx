@@ -79,23 +79,31 @@ const ExperienceSection = () => {
 
         return (
           <div key={key}>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-primary/60 font-body mb-1.5">
+            <p className="font-body text-[8px] font-bold tracking-[3px] uppercase text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal))] mt-4 mb-1.5">
               {label}
             </p>
 
             {key === "achievements" ? (
-              <div className="space-y-2">
+              <ul className="list-none space-y-2">
                 {(value as string[]).map((a, j) => (
-                  <div key={j} className="flex items-start gap-2.5 text-sm text-muted-foreground font-body leading-relaxed">
-                    <span className="text-[hsl(var(--mustard)/0.6)] mt-0.5 shrink-0 text-xs">◆</span>
-                    <span>{renderBulletText(a)}</span>
-                  </div>
+                  <li key={j} className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9] pl-5 relative">
+                    <span className="absolute left-0 top-[9px] w-1.5 h-1.5 bg-[hsl(var(--mustard))] rotate-45 opacity-80" style={{
+                      boxShadow: 'var(--mustard-bullet-shadow, none)',
+                    }} />
+                    {renderBulletText(a)}
+                  </li>
                 ))}
-              </div>
+              </ul>
+            ) : key === "ai_situation" ? (
+              <p className="font-display text-[14px] italic text-muted-foreground leading-[1.85]">
+                {renderBulletText(value as string)}
+              </p>
+            ) : key === "ai_lessons_learned" ? (
+              <p className="font-display text-[14px] italic text-muted-foreground leading-[1.85]">
+                {renderBulletText(value as string)}
+              </p>
             ) : (
-              <p className={`text-sm text-muted-foreground font-body leading-relaxed ${
-                key === "ai_situation" ? "italic" : ""
-              } ${key === "ai_lessons_learned" ? "text-foreground/80" : ""}`}>
+              <p className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9]">
                 {renderBulletText(value as string)}
               </p>
             )}
@@ -114,63 +122,60 @@ const ExperienceSection = () => {
   };
 
   const renderCard = (role: typeof recentRoles[number], index: number, isGovRole = false) => (
-    <ScrollReveal key={role.id} delay={index * 0.1}>
-      <article className="relative pl-6 md:pl-8 group">
-        {/* Left accent line */}
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-[hsl(var(--divider))] group-hover:bg-primary/50 transition-colors duration-500" />
-        <div className="absolute left-[-2.5px] top-6 w-[6px] h-[6px] rounded-full bg-primary/60 group-hover:bg-primary transition-colors duration-300" />
+    <ScrollReveal key={role.id} delay={index * 0.06}>
+      <article className="grid md:grid-cols-[220px_1px_1fr] gap-0 mb-13 pb-13 border-b border-border last:border-b-0 last:mb-0">
+        {/* Sidebar — dates, org, tag */}
+        <div className="pr-9 mb-4 md:mb-0">
+          <p className="font-body text-[9px] font-bold tracking-[2px] uppercase text-[hsl(var(--teal))] dark:text-[hsl(var(--teal-lt))] mb-2">
+            {role.date_range}
+          </p>
+          <p className="font-display text-[15px] italic text-muted-foreground leading-[1.45] mb-3.5">
+            {isGovRole ? (parseCompany(role.company).org || role.company) : role.company}
+          </p>
+          {index === 0 && (
+            <span className="inline-block font-body text-[7px] font-bold tracking-[2px] uppercase bg-[hsl(var(--teal))] dark:bg-[hsl(var(--teal-dk))] dark:border dark:border-[hsl(var(--teal)/0.3)] text-[hsl(var(--nav-text))] px-2.5 py-0.5">
+              Current
+            </span>
+          )}
+        </div>
 
-        <div className="glass-card p-6 md:p-8 space-y-5">
-          {/* Header */}
-          <header className="space-y-1.5">
-            <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-4">
-              <h3 className="text-lg md:text-xl font-display text-foreground tracking-normal">
-                {isGovRole ? (parseCompany(role.company).project || role.title_progression) : role.title_progression}
-              </h3>
-              <div className="flex items-center gap-3 shrink-0">
-                <button
-                  onClick={() => handleAskAI(role)}
-                  className="inline-flex items-center gap-1.5 text-[11px] font-body font-medium text-primary/70 hover:text-primary transition-colors"
-                  aria-label={`Ask AI about ${role.title_progression}`}
-                >
-                  <MessageSquare className="w-3.5 h-3.5" />
-                  Ask AI
-                </button>
-                <span className="text-xs font-mono text-muted-foreground tracking-wide">
-                  {role.date_range}
-                </span>
-              </div>
-            </div>
-            <p className="text-sm text-muted-foreground font-body">
-              {isGovRole
-                ? role.title_progression
-                : role.company}
-            </p>
-          </header>
+        {/* Column rule */}
+        <div className="hidden md:block bg-border mx-10 self-stretch" />
+
+        {/* Main content */}
+        <div>
+          <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-4 mb-3.5">
+            <h3 className="font-display text-[22px] font-bold text-foreground leading-[1.2]">
+              {isGovRole ? (parseCompany(role.company).project || role.title_progression) : role.title_progression}
+            </h3>
+            <button
+              onClick={() => handleAskAI(role)}
+              className="inline-flex items-center gap-1.5 text-[11px] font-body font-medium text-primary/70 hover:text-primary transition-colors shrink-0"
+              aria-label={`Ask AI about ${role.title_progression}`}
+            >
+              <MessageSquare className="w-3.5 h-3.5" />
+              Ask AI
+            </button>
+          </div>
 
           {isPlainDescription(role) ? (
-            /* Plain description — no Challenge/Outcome structure */
-            <p className="text-sm text-muted-foreground font-body leading-relaxed">
+            <p className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9]">
               {role.ai_situation}
             </p>
           ) : (
             <>
-              {/* Primary sections (always visible) */}
-              <div className="space-y-4 pt-1">
-                {renderSections(PRIMARY_SECTIONS, role)}
-              </div>
+              {renderSections(PRIMARY_SECTIONS, role)}
 
-              {/* Detail sections (collapsible) */}
               {DETAIL_SECTIONS.some(({ key }) => role[key as keyof typeof role]) && (
                 <>
                   {isExpanded(role.id) && (
-                    <div className="space-y-4 animate-fade-in">
+                    <div className="animate-fade-in">
                       {renderSections(DETAIL_SECTIONS, role)}
                     </div>
                   )}
                   <button
                     onClick={() => toggleCard(role.id)}
-                    className="flex items-center gap-1.5 text-xs font-body font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    className="flex items-center gap-1.5 text-xs font-body font-medium text-muted-foreground hover:text-foreground transition-colors mt-4"
                   >
                     {isExpanded(role.id) ? "Hide Details" : "Show Details"}
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded(role.id) ? "rotate-180" : ""}`} />
@@ -185,44 +190,55 @@ const ExperienceSection = () => {
   );
 
   return (
-    <section id="experience" className="py-16 md:py-24 px-6">
-      <div className="max-w-4xl mx-auto">
+    <section id="experience" className="py-20 px-8 md:px-16 bg-popover relative overflow-hidden">
+      {/* Teal side accent */}
+      <div className="absolute left-0 top-0 bottom-0 w-[4px] md:w-[6px] bg-[hsl(var(--teal))]" style={{
+        boxShadow: 'var(--teal-side-shadow, none)',
+      }} />
+
+      {/* Dark mode: ambient glow */}
+      <div className="hidden dark:block absolute -bottom-[100px] -right-[100px] w-[500px] h-[500px] rounded-full pointer-events-none" style={{
+        background: 'radial-gradient(circle, hsl(var(--teal) / 0.04) 0%, transparent 70%)',
+        animation: 'glowPulse 12s ease-in-out infinite',
+      }} />
+
+      <div className="max-w-[1200px] mx-auto relative z-[1]">
         <ScrollReveal>
-          <div className="mb-12">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-3">
+          {/* Header — double-ruled */}
+          <div className="flex items-baseline gap-5 mb-13 border-b-[3px] dark:border-b-[2px] border-foreground dark:border-[hsl(var(--nav-text)/0.2)] pb-4 relative">
+            <div className="absolute -bottom-[5px] dark:-bottom-[4px] left-0 w-full h-px bg-[hsl(var(--teal))] opacity-35 dark:opacity-25" />
+            <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-[hsl(var(--teal))] dark:text-[hsl(var(--teal-lt))] whitespace-nowrap">
               Where I've Been
             </p>
-            <h2 className="text-4xl md:text-5xl font-display text-foreground mb-2">
-              Experience
+            <h2 className="font-display text-[36px] md:text-[44px] font-normal italic text-foreground tracking-[-0.5px]">
+              Experience & Impact
             </h2>
-            <p className="text-sm text-muted-foreground font-body max-w-xl">
-               </p>
           </div>
         </ScrollReveal>
 
-        {/* BC Provincial Government Project Portfolio */}
+        {/* BC Provincial Government wrapper */}
         <ScrollReveal>
-          <div className="relative border border-[hsl(var(--divider))] rounded-lg p-6 md:p-8 bg-[hsl(var(--bg-teal)/0.3)]">
+          <div className="mb-4">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
               <div className="flex items-center gap-2.5">
                 <Building2 className="w-5 h-5 text-primary/70" />
-                <h3 className="text-xl md:text-2xl font-display text-foreground">
+                <h3 className="font-display text-[22px] md:text-[28px] text-foreground">
                   BC Provincial Government
                 </h3>
               </div>
-              <span className="text-xs font-mono text-muted-foreground tracking-wide">
+              <span className="font-body text-[9px] font-bold tracking-[2px] uppercase text-muted-foreground">
                 2018 – Present
               </span>
             </div>
-            <p className="text-sm text-muted-foreground font-body mb-8 max-w-xl">
+            <p className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9] mb-12 max-w-xl">
               Seven years delivering digital products across multiple ministries and programs.
             </p>
-
-            <div className="space-y-8">
-              {recentRoles.map((role, i) => renderCard(role, i, true))}
-            </div>
           </div>
         </ScrollReveal>
+
+        <div className="space-y-0">
+          {recentRoles.map((role, i) => renderCard(role, i, true))}
+        </div>
 
         {earlierRoles.length > 0 && (
           <div className="mt-12">
@@ -236,7 +252,7 @@ const ExperienceSection = () => {
             </button>
 
             {showEarlierCareer && (
-              <div className="space-y-8 mt-8">
+              <div className="mt-8 space-y-0">
                 {earlierRoles.map((role, i) => renderCard(role, i))}
               </div>
             )}
