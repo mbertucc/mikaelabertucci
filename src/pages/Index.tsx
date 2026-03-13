@@ -33,14 +33,14 @@ const Index = () => {
     <div className="bg-background min-h-screen">
       <Navbar onOpenChat={() => handleOpenChat()} />
       <main>
-        {/* Hero — parchment bg */}
+        {/* Hero — mustard bg */}
         <HeroIntro />
+
+        {/* About — directly below hero, still on mustard */}
+        <AboutSection />
 
         {/* Coverline divider */}
         <CoverlineStrip label="AI-Augmented Impact" />
-
-        {/* Measured Results / Stats — parchment bg */}
-        <AboutSection />
 
         {/* Mustard quote banner */}
         <section className="bg-[hsl(var(--mustard))] dark:bg-[hsl(var(--mustard-dk))] py-20 px-8 md:px-16 relative overflow-hidden">

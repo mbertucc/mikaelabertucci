@@ -29,7 +29,7 @@ const HeroIntro = () => {
   const lastName = words.slice(1).join(" ") || "Bertucci";
 
   return (
-    <section id="hero" className="relative overflow-hidden" style={{ marginTop: '52px', minHeight: '680px' }}>
+    <section id="hero" className="relative overflow-hidden bg-[hsl(var(--mustard))] dark:bg-[hsl(var(--mustard-dk))]" style={{ marginTop: '52px', minHeight: '680px' }}>
       {/* Teal top strip */}
       <div className="absolute top-0 left-0 right-0 h-[5px] z-10" style={{
         background: 'linear-gradient(to right, hsl(var(--teal)), hsl(var(--teal-lt)), hsl(var(--teal)))',
