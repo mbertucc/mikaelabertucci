@@ -192,7 +192,9 @@ const AboutSection = () => {
               }} />
 
               <div className="flex items-center gap-1.5 mb-1">
-                <Users className={`w-4 h-4 transition-colors duration-200 ${activeMetric === "culture" ? "text-secondary" : "text-primary"}`} strokeWidth={2.25} />
+                <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors duration-200 ${activeMetric === "culture" ? "bg-[hsl(var(--bg-slate))]" : "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.12)]"}`}>
+                  <Users className="w-4 h-4 text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]" strokeWidth={2.25} />
+                </div>
                 <p className={`font-body text-[8px] font-medium tracking-[1.5px] uppercase ${activeMetric === "culture" ? metricAccents.culture.text : "text-muted-foreground"}`}>Culture</p>
               </div>
               <StatRing value={m?.about_culture_satisfaction ?? 80} max={100} label="Higher Team Satisfaction" unit="%" size={90} hideRing />
