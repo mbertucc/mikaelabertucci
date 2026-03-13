@@ -148,15 +148,6 @@ const AboutSection = () => {
           </p>
         </div>
 
-        {/* Bio text — no photo here */}
-        <ScrollReveal>
-          <div className="mt-16 max-w-xl">
-            <p className="text-[14px] text-muted-foreground font-body font-light leading-[1.85]">
-              {profile?.positioning ||
-                "I use AI to cut through the documentation overhead, saving 19.4 hours every week. That's not theory — that's what I'm doing today. I don't write production code. I write specs so clear that developers ship without coming back to ask questions."}
-            </p>
-          </div>
-        </ScrollReveal>
       </div>
     </section>
   );
