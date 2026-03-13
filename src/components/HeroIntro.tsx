@@ -175,11 +175,10 @@ const HeroIntro = () => {
               Victoria, BC · Portfolio 2025
             </p>
             <p className="font-display text-[18px] md:text-[20px] italic font-normal text-[hsl(var(--nav-text))] dark:text-[hsl(var(--nav-text))] leading-[1.5]">
-              I don't write production code — I write specs{" "}
+              I'm not just a PM or just an Agile coach. I translate — strategy into stories, chaos into structure, user needs into things{" "}
               <strong className="not-italic font-bold dark:text-[hsl(var(--mustard-lt))]">
-                developers ship
-              </strong>{" "}
-              without coming back to ask questions.
+                engineers can actually build.
+              </strong>
             </p>
           </motion.div>
 
