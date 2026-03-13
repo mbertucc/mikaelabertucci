@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import HeroIntro from "@/components/HeroIntro";
+import CoverlineStrip from "@/components/CoverlineStrip";
 import AboutSection from "@/components/AboutSection";
-
 import ExperienceSection from "@/components/ExperienceSection";
 import DarkFactorySection from "@/components/DarkFactorySection";
 import SkillsMatrix from "@/components/SkillsMatrix";
@@ -34,10 +34,12 @@ const Index = () => {
       <Navbar onOpenChat={() => handleOpenChat()} />
       <main>
         <HeroIntro />
+        <CoverlineStrip label="AI-Augmented Impact" />
         <AboutSection />
-        
-        <ExperienceSection />
+        <CoverlineStrip label="The Method" />
         <DarkFactorySection />
+        <CoverlineStrip label="Experience & Impact" />
+        <ExperienceSection />
         <SkillsMatrix />
         <BeyondWorkSection />
         <JDAnalyzer />
