@@ -215,28 +215,36 @@ const ExperienceSection = () => {
           </div>
         </ScrollReveal>
 
-        {/* BC Provincial Government wrapper */}
-        <ScrollReveal>
-          <div className="mb-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
-              <div className="flex items-center gap-2.5">
-                <Building2 className="w-5 h-5 text-primary/70" />
-                <h3 className="font-display text-[24px] md:text-[30px] text-foreground">
-                  BC Provincial Government
-                </h3>
-              </div>
-              <span className="font-body text-[10px] font-bold tracking-[2px] uppercase text-muted-foreground">
-                2018 – Present
-              </span>
-            </div>
-            <p className="font-body text-[14px] font-light text-muted-foreground leading-[1.85] mb-14 max-w-xl">
-              Seven years delivering digital products across multiple ministries and programs.
-            </p>
-          </div>
-        </ScrollReveal>
+        {/* BC Provincial Government — visual grouping frame */}
+        <div className="border-l-[3px] border-primary pl-8 md:pl-12 relative">
+          {/* Teal dot at top of the line */}
+          <div className="absolute -left-[7px] top-0 w-[11px] h-[11px] rounded-full bg-primary" />
 
-        <div className="space-y-0">
-          {recentRoles.map((role, i) => renderCard(role, i, true))}
+          <ScrollReveal>
+            <div className="mb-10">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
+                <div className="flex items-center gap-2.5">
+                  <Building2 className="w-5 h-5 text-primary/70" />
+                  <h3 className="font-display text-[24px] md:text-[30px] text-foreground">
+                    BC Provincial Government
+                  </h3>
+                </div>
+                <span className="font-body text-[10px] font-bold tracking-[2px] uppercase text-muted-foreground">
+                  2018 – Present
+                </span>
+              </div>
+              <p className="font-body text-[14px] font-light text-muted-foreground leading-[1.85] max-w-xl">
+                Seven years delivering digital products across multiple ministries and programs.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="space-y-0">
+            {recentRoles.map((role, i) => renderCard(role, i, true))}
+          </div>
+
+          {/* Teal dot at bottom of the line */}
+          <div className="absolute -left-[7px] bottom-0 w-[11px] h-[11px] rounded-full bg-primary" />
         </div>
 
         {earlierRoles.length > 0 && (
