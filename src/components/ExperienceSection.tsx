@@ -191,10 +191,8 @@ const ExperienceSection = () => {
 
   return (
     <section id="experience" className="py-28 px-8 md:px-16 bg-popover relative overflow-hidden">
-      {/* Teal side accent */}
-      <div className="absolute left-0 top-0 bottom-0 w-[4px] md:w-[6px] bg-[hsl(var(--teal))]" style={{
-        boxShadow: 'var(--teal-side-shadow, none)',
-      }} />
+      {/* 6px teal left accent bar */}
+      <div className="absolute left-0 top-0 bottom-0 w-[6px] bg-primary" />
 
       {/* Dark mode: ambient glow */}
       <div className="hidden dark:block absolute -bottom-[100px] -right-[100px] w-[500px] h-[500px] rounded-full pointer-events-none" style={{
