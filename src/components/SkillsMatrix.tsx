@@ -62,16 +62,16 @@ const SkillsMatrix = () => {
   return (
     <ScrollReveal>
     <TooltipProvider delayDuration={200}>
-      <section className="py-12 px-8 md:px-16 bg-card/30">
+      <section className="py-16 px-8 md:px-16 bg-card/30">
         <div className="max-w-[1200px] mx-auto">
           {/* Header row */}
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
             <div>
-              <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-primary mb-2">Capability Radar</p>
-              <h2 className="font-display text-[32px] md:text-[40px] font-normal italic text-foreground tracking-[-0.5px]">Skills Matrix</h2>
+              <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-primary mb-2">Capability Radar</p>
+              <h2 className="font-display text-[34px] md:text-[42px] font-normal italic text-foreground tracking-[-0.5px]">Skills Matrix</h2>
             </div>
             {/* Category pills */}
-            <div className="flex gap-2">
+            <div className="flex gap-2.5">
               {categories.map((cat) => {
                 const config = categoryConfig[cat];
                 const isActive = activeCat === cat;
@@ -79,7 +79,7 @@ const SkillsMatrix = () => {
                   <button
                     key={cat}
                     onClick={() => setActiveCat(cat)}
-                    className={`px-3 py-1.5 text-xs font-body font-medium border transition-all ${
+                    className={`px-4 py-2 text-[13px] font-body font-medium border transition-all ${
                       isActive
                         ? `${config.pillClass}`
                         : "bg-transparent text-muted-foreground border-border hover:border-foreground/30"
@@ -115,7 +115,7 @@ const SkillsMatrix = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.15 }}
-                className="flex gap-2.5 overflow-x-auto scrollbar-hide py-2 px-1"
+                className="flex gap-3 overflow-x-auto scrollbar-hide py-3 px-1"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
               >
                 {activeSkills.map((skill, i) => {
@@ -126,7 +126,7 @@ const SkillsMatrix = () => {
                       animate={{ opacity: 1, x: 0 }}
                       whileHover={{ scale: 1.08, y: -2 }}
                       transition={{ duration: 0.2, delay: i * 0.03 }}
-                      className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
+                      className={`inline-flex items-center whitespace-nowrap px-4 py-2.5 text-[14px] font-body border transition-colors shrink-0 ${config.tagClass} ${
                         skill.note ? "cursor-help" : ""
                       }`}
                     >
@@ -138,7 +138,7 @@ const SkillsMatrix = () => {
                     return (
                       <Tooltip key={skill.id}>
                         <TooltipTrigger asChild>{tag}</TooltipTrigger>
-                        <TooltipContent side="top" className="max-w-[240px] text-[11px] leading-relaxed">
+                        <TooltipContent side="top" className="max-w-[240px] text-[12px] leading-relaxed">
                           💡 {skill.note}
                         </TooltipContent>
                       </Tooltip>
@@ -162,7 +162,7 @@ const SkillsMatrix = () => {
             )}
           </div>
 
-          <p className="text-muted-foreground/60 font-body text-xs mt-3 italic">
+          <p className="text-muted-foreground/60 font-body text-[13px] mt-4 italic">
             Hover skills for honest notes — because knowing what I <em>don't</em> know matters too.
           </p>
         </div>

@@ -79,15 +79,15 @@ const ExperienceSection = () => {
 
         return (
           <div key={key}>
-            <p className="font-body text-[8px] font-bold tracking-[3px] uppercase text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal))] mt-4 mb-1.5">
+            <p className="font-body text-[10px] font-bold tracking-[3px] uppercase text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal))] mt-5 mb-2">
               {label}
             </p>
 
             {key === "achievements" ? (
-              <ul className="list-none space-y-2">
+              <ul className="list-none space-y-2.5">
                 {(value as string[]).map((a, j) => (
-                  <li key={j} className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9] pl-5 relative">
-                    <span className="absolute left-0 top-[9px] w-1.5 h-1.5 bg-[hsl(var(--mustard))] rotate-45 opacity-80" style={{
+                  <li key={j} className="font-body text-[14px] font-light text-muted-foreground leading-[1.85] pl-6 relative">
+                    <span className="absolute left-0 top-[10px] w-1.5 h-1.5 bg-[hsl(var(--mustard))] rotate-45 opacity-80" style={{
                       boxShadow: 'var(--mustard-bullet-shadow, none)',
                     }} />
                     {renderBulletText(a)}
@@ -95,15 +95,15 @@ const ExperienceSection = () => {
                 ))}
               </ul>
             ) : key === "ai_situation" ? (
-              <p className="font-display text-[14px] italic text-muted-foreground leading-[1.85]">
+              <p className="font-display text-[15px] italic text-muted-foreground leading-[1.8]">
                 {renderBulletText(value as string)}
               </p>
             ) : key === "ai_lessons_learned" ? (
-              <p className="font-display text-[14px] italic text-muted-foreground leading-[1.85]">
+              <p className="font-display text-[15px] italic text-muted-foreground leading-[1.8]">
                 {renderBulletText(value as string)}
               </p>
             ) : (
-              <p className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9]">
+              <p className="font-body text-[14px] font-light text-muted-foreground leading-[1.85]">
                 {renderBulletText(value as string)}
               </p>
             )}
@@ -123,17 +123,17 @@ const ExperienceSection = () => {
 
   const renderCard = (role: typeof recentRoles[number], index: number, isGovRole = false) => (
     <ScrollReveal key={role.id} delay={index * 0.06}>
-      <article className="grid md:grid-cols-[220px_1px_1fr] gap-0 mb-13 pb-13 border-b border-border last:border-b-0 last:mb-0">
+      <article className="grid md:grid-cols-[220px_1px_1fr] gap-0 mb-14 pb-14 border-b border-border last:border-b-0 last:mb-0">
         {/* Sidebar — dates, org, tag */}
         <div className="pr-9 mb-4 md:mb-0">
-          <p className="font-body text-[9px] font-bold tracking-[2px] uppercase text-[hsl(var(--teal))] dark:text-[hsl(var(--teal-lt))] mb-2">
+          <p className="font-body text-[10px] font-bold tracking-[2px] uppercase text-[hsl(var(--teal))] dark:text-[hsl(var(--teal-lt))] mb-2">
             {role.date_range}
           </p>
-          <p className="font-display text-[15px] italic text-muted-foreground leading-[1.45] mb-3.5">
+          <p className="font-display text-[16px] italic text-muted-foreground leading-[1.45] mb-4">
             {isGovRole ? (parseCompany(role.company).org || role.company) : role.company}
           </p>
           {index === 0 && (
-            <span className="inline-block font-body text-[7px] font-bold tracking-[2px] uppercase bg-[hsl(var(--teal))] dark:bg-[hsl(var(--teal-dk))] dark:border dark:border-[hsl(var(--teal)/0.3)] text-[hsl(var(--nav-text))] px-2.5 py-0.5">
+            <span className="inline-block font-body text-[8px] font-bold tracking-[2px] uppercase bg-[hsl(var(--teal))] dark:bg-[hsl(var(--teal-dk))] dark:border dark:border-[hsl(var(--teal)/0.3)] text-[hsl(var(--nav-text))] px-2.5 py-0.5">
               Current
             </span>
           )}
@@ -144,13 +144,13 @@ const ExperienceSection = () => {
 
         {/* Main content */}
         <div>
-          <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-4 mb-3.5">
-            <h3 className="font-display text-[22px] font-bold text-foreground leading-[1.2]">
+          <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 md:gap-4 mb-4">
+            <h3 className="font-display text-[24px] font-bold text-foreground leading-[1.2]">
               {isGovRole ? (parseCompany(role.company).project || role.title_progression) : role.title_progression}
             </h3>
             <button
               onClick={() => handleAskAI(role)}
-              className="inline-flex items-center gap-1.5 text-[11px] font-body font-medium text-primary/70 hover:text-primary transition-colors shrink-0"
+              className="inline-flex items-center gap-1.5 text-[12px] font-body font-medium text-primary/70 hover:text-primary transition-colors shrink-0"
               aria-label={`Ask AI about ${role.title_progression}`}
             >
               <MessageSquare className="w-3.5 h-3.5" />
@@ -159,7 +159,7 @@ const ExperienceSection = () => {
           </div>
 
           {isPlainDescription(role) ? (
-            <p className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9]">
+            <p className="font-body text-[14px] font-light text-muted-foreground leading-[1.85]">
               {role.ai_situation}
             </p>
           ) : (
@@ -175,7 +175,7 @@ const ExperienceSection = () => {
                   )}
                   <button
                     onClick={() => toggleCard(role.id)}
-                    className="flex items-center gap-1.5 text-xs font-body font-medium text-muted-foreground hover:text-foreground transition-colors mt-4"
+                    className="flex items-center gap-1.5 text-[13px] font-body font-medium text-muted-foreground hover:text-foreground transition-colors mt-5"
                   >
                     {isExpanded(role.id) ? "Hide Details" : "Show Details"}
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isExpanded(role.id) ? "rotate-180" : ""}`} />
@@ -190,7 +190,7 @@ const ExperienceSection = () => {
   );
 
   return (
-    <section id="experience" className="py-20 px-8 md:px-16 bg-popover relative overflow-hidden">
+    <section id="experience" className="py-28 px-8 md:px-16 bg-popover relative overflow-hidden">
       {/* Teal side accent */}
       <div className="absolute left-0 top-0 bottom-0 w-[4px] md:w-[6px] bg-[hsl(var(--teal))]" style={{
         boxShadow: 'var(--teal-side-shadow, none)',
@@ -205,12 +205,12 @@ const ExperienceSection = () => {
       <div className="max-w-[1200px] mx-auto relative z-[1]">
         <ScrollReveal>
           {/* Header — double-ruled */}
-          <div className="flex items-baseline gap-5 mb-13 border-b-[3px] dark:border-b-[2px] border-foreground dark:border-[hsl(var(--nav-text)/0.2)] pb-4 relative">
+          <div className="flex items-baseline gap-5 mb-14 border-b-[3px] dark:border-b-[2px] border-foreground dark:border-[hsl(var(--nav-text)/0.2)] pb-5 relative">
             <div className="absolute -bottom-[5px] dark:-bottom-[4px] left-0 w-full h-px bg-[hsl(var(--teal))] opacity-35 dark:opacity-25" />
-            <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-[hsl(var(--teal))] dark:text-[hsl(var(--teal-lt))] whitespace-nowrap">
+            <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-[hsl(var(--teal))] dark:text-[hsl(var(--teal-lt))] whitespace-nowrap">
               Where I've Been
             </p>
-            <h2 className="font-display text-[36px] md:text-[44px] font-normal italic text-foreground tracking-[-0.5px]">
+            <h2 className="font-display text-[38px] md:text-[48px] font-normal italic text-foreground tracking-[-0.5px]">
               Experience & Impact
             </h2>
           </div>
@@ -218,19 +218,19 @@ const ExperienceSection = () => {
 
         {/* BC Provincial Government wrapper */}
         <ScrollReveal>
-          <div className="mb-4">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
+          <div className="mb-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
               <div className="flex items-center gap-2.5">
                 <Building2 className="w-5 h-5 text-primary/70" />
-                <h3 className="font-display text-[22px] md:text-[28px] text-foreground">
+                <h3 className="font-display text-[24px] md:text-[30px] text-foreground">
                   BC Provincial Government
                 </h3>
               </div>
-              <span className="font-body text-[9px] font-bold tracking-[2px] uppercase text-muted-foreground">
+              <span className="font-body text-[10px] font-bold tracking-[2px] uppercase text-muted-foreground">
                 2018 – Present
               </span>
             </div>
-            <p className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9] mb-12 max-w-xl">
+            <p className="font-body text-[14px] font-light text-muted-foreground leading-[1.85] mb-14 max-w-xl">
               Seven years delivering digital products across multiple ministries and programs.
             </p>
           </div>
@@ -241,10 +241,10 @@ const ExperienceSection = () => {
         </div>
 
         {earlierRoles.length > 0 && (
-          <div className="mt-12">
+          <div className="mt-14">
             <button
               onClick={() => setShowEarlierCareer(!showEarlierCareer)}
-              className="flex items-center gap-2.5 text-sm font-body font-medium text-muted-foreground hover:text-foreground transition-colors group"
+              className="flex items-center gap-2.5 text-[14px] font-body font-medium text-muted-foreground hover:text-foreground transition-colors group"
             >
               <History className="w-4 h-4" />
               {showEarlierCareer ? "Hide Earlier Career" : `Earlier Career · ${earlierRoles.length} roles`}
@@ -252,7 +252,7 @@ const ExperienceSection = () => {
             </button>
 
             {showEarlierCareer && (
-              <div className="mt-8 space-y-0">
+              <div className="mt-10 space-y-0">
                 {earlierRoles.map((role, i) => renderCard(role, i))}
               </div>
             )}

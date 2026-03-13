@@ -116,19 +116,19 @@ const ImpactStatCard = ({ stat, visible, isActive, onHover }: {
   const val = useAnimatedNumber(stat.target, visible);
   return (
     <div
-      className={`border border-border p-5 space-y-2 cursor-pointer transition-all duration-200 relative overflow-hidden ${isActive ? "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.15)] ring-1 ring-primary/30" : "bg-card/40 hover:bg-card/70"}`}
+      className={`border border-border p-7 space-y-3 cursor-pointer transition-all duration-200 relative overflow-hidden ${isActive ? "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.15)] ring-1 ring-primary/30" : "bg-card/40 hover:bg-card/70"}`}
       onMouseEnter={onHover}
     >
-      <div className="inline-flex p-2.5 bg-[hsl(var(--bg-teal))] dark:bg-[hsl(var(--teal)/0.1)] relative z-10">
-        <Icon className="w-5 h-5 text-primary" strokeWidth={2.25} />
+      <div className="inline-flex p-2.5 bg-card/60 dark:bg-[hsl(var(--charcoal)/0.5)] relative z-10">
+        <Icon className={`w-5 h-5 transition-colors duration-200 ${isActive ? "text-primary" : "text-muted-foreground"}`} strokeWidth={2.25} />
       </div>
       <div className="relative z-10">
-        <span className="font-display text-[44px] font-bold text-foreground leading-[1] tracking-[-1px]">
+        <span className="font-display text-[48px] font-bold text-foreground leading-[1] tracking-[-1px]">
           {stat.decimals ? val.toFixed(1) : Math.round(val)}
         </span>
-        <span className="text-sm font-display text-muted-foreground">{stat.unit}</span>
+        <span className="text-base font-display text-muted-foreground ml-1">{stat.unit}</span>
       </div>
-      <p className="font-body text-[8px] font-medium tracking-[1.5px] uppercase text-muted-foreground relative z-10 leading-[1.6]">
+      <p className="font-body text-[10px] font-semibold tracking-[2px] uppercase text-muted-foreground relative z-10 leading-[1.6]">
         {stat.label}
       </p>
       {/* Mustard underline on hover */}
@@ -159,7 +159,7 @@ const DarkFactorySection = () => {
   }, []);
 
   return (
-    <section id="dark-factory" className="py-20 px-8 md:px-16 relative" ref={ref}>
+    <section id="dark-factory" className="py-28 px-8 md:px-16 relative" ref={ref}>
       {/* Dark mode: horizontal line pattern */}
       <div className="hidden dark:block absolute inset-0 pointer-events-none" style={{
         backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 79px, hsl(var(--teal) / 0.03) 79px, hsl(var(--teal) / 0.03) 80px)',
@@ -168,21 +168,21 @@ const DarkFactorySection = () => {
       <div className="max-w-[1200px] mx-auto relative z-[1]">
         {/* Header — editorial */}
         <ScrollReveal>
-          <div className="flex items-baseline gap-5 mb-14 border-b border-border pb-5">
-            <div className="flex items-center gap-2 font-body text-[9px] font-bold tracking-[4px] uppercase text-[hsl(var(--mustard-dk))] dark:text-[hsl(var(--mustard))] whitespace-nowrap">
+          <div className="flex items-baseline gap-5 mb-16 border-b border-border pb-6">
+            <div className="flex items-center gap-2 font-body text-[10px] font-bold tracking-[4px] uppercase text-[hsl(var(--mustard-dk))] dark:text-[hsl(var(--mustard))] whitespace-nowrap">
               <span className="inline-block w-1.5 h-1.5 bg-[hsl(var(--mustard))] rotate-45" style={{
                 boxShadow: 'var(--mustard-diamond-shadow, none)',
               }} />
               Three Steps
             </div>
-            <h2 className="font-display text-[34px] md:text-[42px] font-normal italic text-foreground tracking-[-0.5px]">
+            <h2 className="font-display text-[36px] md:text-[46px] font-normal italic text-foreground tracking-[-0.5px]">
               The Agentic Product Owner Workflow
             </h2>
           </div>
         </ScrollReveal>
 
         <ScrollReveal>
-          <p className="text-muted-foreground font-body text-[12.5px] font-light leading-[1.9] mb-10">
+          <p className="text-muted-foreground font-body text-[14px] font-light leading-[1.85] mb-12">
             Real example:{" "}
             <span className="text-[hsl(var(--mustard))] font-medium">
               Manufactured Home Registry Transfer
@@ -199,21 +199,21 @@ const DarkFactorySection = () => {
                 className={`relative overflow-hidden transition-colors duration-200 ${idx < 2 ? "border-r border-border" : ""} hover:bg-popover`}
               >
                 {/* Colored header bar */}
-                <div className={`px-8 py-5 flex items-center justify-between border-b border-[hsl(0_0%_100%/0.15)] dark:border-border ${headerBgs[step.accent]}`}>
-                  <span className="font-display text-[36px] font-black text-[hsl(var(--nav-text)/0.2)] dark:text-[hsl(var(--nav-text)/0.1)] leading-[1] tracking-[-1px]">
+                <div className={`px-8 py-6 flex items-center justify-between border-b border-[hsl(0_0%_100%/0.15)] dark:border-border ${headerBgs[step.accent]}`}>
+                  <span className="font-display text-[40px] font-black text-[hsl(var(--nav-text)/0.2)] dark:text-[hsl(var(--nav-text)/0.1)] leading-[1] tracking-[-1px]">
                     {step.number}
                   </span>
-                  <span className="font-body text-[8px] font-bold tracking-[2.5px] uppercase text-[hsl(var(--nav-text)/0.7)] dark:text-[hsl(var(--nav-text)/0.5)]">
+                  <span className="font-body text-[9px] font-bold tracking-[2.5px] uppercase text-[hsl(var(--nav-text)/0.7)] dark:text-[hsl(var(--nav-text)/0.5)]">
                     {step.label}
                   </span>
                 </div>
 
                 {/* Body */}
-                <div className="p-8">
-                  <h3 className="font-display text-[24px] font-bold text-foreground mb-3.5 leading-[1.15]">
+                <div className="p-8 md:p-10">
+                  <h3 className="font-display text-[26px] font-bold text-foreground mb-4 leading-[1.15]">
                     {step.title}
                   </h3>
-                  <p className="font-body text-[12.5px] font-light text-muted-foreground leading-[1.9]">
+                  <p className="font-body text-[14px] font-light text-muted-foreground leading-[1.85]">
                     {step.content.split(/(\*\*.*?\*\*)/).map((seg, i) =>
                       seg.startsWith("**") ? (
                         <strong key={i} className="text-foreground font-semibold">
@@ -226,11 +226,11 @@ const DarkFactorySection = () => {
                   </p>
 
                   {/* Stat */}
-                  <div className="mt-6 pt-4.5 border-t border-border flex items-baseline gap-3">
-                    <span className={`font-display text-[48px] font-bold leading-[1] tracking-[-2px] transition-colors duration-200 ${statColors[step.accent]}`}>
+                  <div className="mt-8 pt-5 border-t border-border flex items-baseline gap-3">
+                    <span className={`font-display text-[52px] font-bold leading-[1] tracking-[-2px] transition-colors duration-200 ${statColors[step.accent]}`}>
                       {step.stat}
                     </span>
-                    <span className="font-body text-[8px] font-medium tracking-[1.5px] uppercase text-muted-foreground leading-[1.6] max-w-[80px]">
+                    <span className="font-body text-[10px] font-semibold tracking-[2px] uppercase text-muted-foreground leading-[1.6] max-w-[100px]">
                       {step.statLabel}
                     </span>
                   </div>
@@ -241,20 +241,20 @@ const DarkFactorySection = () => {
         </div>
 
         {/* Connecting line (desktop) */}
-        <div className="hidden lg:flex items-center justify-center mt-10 gap-2">
+        <div className="hidden lg:flex items-center justify-center mt-12 gap-2">
           <span className="h-px w-16 bg-[hsl(var(--mustard)/0.4)]" />
-          <span className="text-xs text-muted-foreground font-mono">→</span>
+          <span className="text-sm text-muted-foreground font-mono">→</span>
           <span className="h-px w-16 bg-primary/40" />
-          <span className="text-xs text-muted-foreground font-mono">→</span>
+          <span className="text-sm text-muted-foreground font-mono">→</span>
           <span className="h-px w-16 bg-[hsl(var(--olive)/0.4)]" />
-          <span className="text-xs text-[hsl(var(--olive))] font-mono font-bold">
+          <span className="text-sm text-[hsl(var(--olive))] font-mono font-bold">
             Ship-Ready
           </span>
         </div>
 
         {/* Impact Stats */}
         <div className="py-1" onMouseLeave={() => setActiveStat(null)}>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 mt-16 border border-border">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-0 mt-20 border border-border">
             {impactStats.map((stat, i) => (
               <div key={stat.label} className={i < 3 ? "border-r border-border" : ""}>
                 <ImpactStatCard
@@ -268,27 +268,27 @@ const DarkFactorySection = () => {
           </div>
 
           {/* Hover Detail Area */}
-          <div className="mt-6 min-h-[5rem] md:min-h-[3.5rem]">
+          <div className="mt-8 min-h-[5.5rem] md:min-h-[4rem]">
             <div
               key={activeStat || "default"}
               className="animate-fade-in"
             >
               {activeStat && statDescriptions[activeStat] ? (
                 <>
-                  <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-body font-medium mb-2">
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-primary font-body font-semibold mb-2.5">
                     {statHoverLabels[activeStat]}
                   </p>
-                  <ul className="space-y-1.5">
+                  <ul className="space-y-2">
                     {statDescriptions[activeStat].map((item, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground font-body leading-relaxed">
-                        <span className="mt-1.5 shrink-0 w-1 h-1 rounded-full bg-primary" />
+                      <li key={i} className="flex items-start gap-2.5 text-[14px] text-muted-foreground font-body leading-relaxed">
+                        <span className="mt-2 shrink-0 w-1.5 h-1.5 rounded-full bg-primary" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </>
               ) : (
-                <p className="text-sm text-muted-foreground font-body leading-relaxed">
+                <p className="text-[14px] text-muted-foreground font-body leading-relaxed">
                   Hover over a metric to learn what it measures and why it matters.
                 </p>
               )}
@@ -296,7 +296,7 @@ const DarkFactorySection = () => {
           </div>
         </div>
 
-        <p className="font-display text-[13px] italic text-muted-foreground mt-6 border-t border-border pt-4">
+        <p className="font-display text-[14px] italic text-muted-foreground mt-8 border-t border-border pt-5">
           These numbers come from a real 6-week sprint cycle on the Manufactured Home Registry Self Serve feature.
         </p>
       </div>

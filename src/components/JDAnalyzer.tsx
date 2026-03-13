@@ -69,64 +69,64 @@ const JDAnalyzer = () => {
   };
 
   return (
-    <section id="fit-check" className="py-20 px-8 md:px-16">
+    <section id="fit-check" className="py-28 px-8 md:px-16">
       <div className="max-w-[1200px] mx-auto">
-        <div className="mb-12">
-          <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-[hsl(var(--mustard-dk))] dark:text-[hsl(var(--mustard))] mb-3">
+        <div className="mb-14">
+          <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-[hsl(var(--mustard-dk))] dark:text-[hsl(var(--mustard))] mb-3">
             Honest Assessment
           </p>
-          <h2 className="font-display text-[36px] md:text-[44px] font-normal italic text-foreground mb-4 tracking-[-0.5px]">Honest Fit Assessment</h2>
-          <p className="text-muted-foreground font-body text-[12.5px] font-light leading-[1.9] max-w-2xl">
+          <h2 className="font-display text-[38px] md:text-[48px] font-normal italic text-foreground mb-5 tracking-[-0.5px]">Honest Fit Assessment</h2>
+          <p className="text-muted-foreground font-body text-[14px] font-light leading-[1.85] max-w-2xl">
             Paste a job description. Get an honest assessment of whether I'm the right person—including when I'm not.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3 mb-6">
+        <div className="flex flex-wrap gap-3 mb-8">
           <button
             onClick={() => { setJdText(strongFitJD); setResult(null); }}
-            className="px-4 py-2 text-sm font-body bg-[hsl(var(--bg-teal))] text-primary border border-primary/20 hover:bg-[hsl(var(--bg-teal)/0.8)] transition-colors"
+            className="px-5 py-2.5 text-[13px] font-body bg-[hsl(var(--bg-teal))] text-primary border border-primary/20 hover:bg-[hsl(var(--bg-teal)/0.8)] transition-colors"
           >
             Strong Fit Example
           </button>
           <button
             onClick={() => { setJdText(weakFitJD); setResult(null); }}
-            className="px-4 py-2 text-sm font-body bg-[hsl(var(--bg-olive))] text-[hsl(var(--olive))] border border-[hsl(var(--olive)/0.3)] hover:bg-[hsl(var(--bg-olive)/0.8)] transition-colors"
+            className="px-5 py-2.5 text-[13px] font-body bg-[hsl(var(--bg-olive))] text-[hsl(var(--olive))] border border-[hsl(var(--olive)/0.3)] hover:bg-[hsl(var(--bg-olive)/0.8)] transition-colors"
           >
             Weak Fit Example
           </button>
         </div>
 
-        <div className="border border-border mb-6">
+        <div className="border border-border mb-8">
           <textarea
             value={jdText}
             onChange={(e) => setJdText(e.target.value)}
             placeholder="Paste job description here..."
-            className="w-full h-48 bg-transparent p-5 text-sm font-body text-foreground placeholder:text-muted-foreground/50 resize-none focus:outline-none"
+            className="w-full h-52 bg-transparent p-6 text-[14px] font-body text-foreground placeholder:text-muted-foreground/50 resize-none focus:outline-none leading-relaxed"
           />
         </div>
 
         <button
           onClick={handleAnalyze}
           disabled={!jdText.trim() || isAnalyzing}
-          className="flex items-center gap-2 px-6 py-3 bg-[hsl(var(--mustard))] text-[hsl(var(--mustard-foreground))] font-body font-bold text-[10px] tracking-[2px] uppercase glow-warm hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          className="flex items-center gap-2.5 px-8 py-3.5 bg-[hsl(var(--mustard))] text-[hsl(var(--mustard-foreground))] font-body font-bold text-[11px] tracking-[2px] uppercase glow-warm hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
           {isAnalyzing ? "Analyzing…" : "Analyze Fit"}
         </button>
 
         {result && (
-          <div className="mt-10 space-y-8 animate-fade-in">
-            <div className={`inline-flex items-center px-4 py-2 text-sm font-body font-semibold border ${verdictStyles[result.verdict]}`}>
+          <div className="mt-12 space-y-10 animate-fade-in">
+            <div className={`inline-flex items-center px-5 py-2.5 text-[14px] font-body font-semibold border ${verdictStyles[result.verdict]}`}>
               {result.verdictLabel}
             </div>
 
-            <p className="text-foreground font-body leading-relaxed">{result.opening}</p>
+            <p className="text-foreground font-body text-[15px] leading-relaxed">{result.opening}</p>
 
             <div>
-              <h4 className="font-body text-[8px] font-bold tracking-[3px] uppercase text-[hsl(var(--olive))] mb-3">Where I Don't Fit</h4>
-              <ul className="space-y-2">
+              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-[hsl(var(--olive))] mb-4">Where I Don't Fit</h4>
+              <ul className="space-y-2.5">
                 {result.gaps.map((g, i) => (
-                  <li key={i} className="text-sm text-muted-foreground font-body flex items-start gap-2">
+                  <li key={i} className="text-[14px] text-muted-foreground font-body flex items-start gap-2.5 leading-relaxed">
                     <span className="text-[hsl(var(--olive))] mt-0.5 shrink-0">✗</span>
                     {g}
                   </li>
@@ -135,10 +135,10 @@ const JDAnalyzer = () => {
             </div>
 
             <div>
-              <h4 className="font-body text-[8px] font-bold tracking-[3px] uppercase text-primary mb-3">What Transfers</h4>
-              <ul className="space-y-2">
+              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-primary mb-4">What Transfers</h4>
+              <ul className="space-y-2.5">
                 {result.transfers.map((t, i) => (
-                  <li key={i} className="text-sm text-muted-foreground font-body flex items-start gap-2">
+                  <li key={i} className="text-[14px] text-muted-foreground font-body flex items-start gap-2.5 leading-relaxed">
                     <span className="text-primary mt-0.5 shrink-0">▸</span>
                     {t}
                   </li>
@@ -147,14 +147,14 @@ const JDAnalyzer = () => {
             </div>
 
             <div>
-              <h4 className="font-body text-[8px] font-bold tracking-[3px] uppercase text-foreground/70 mb-3">My Recommendation</h4>
-              <p className="text-sm text-foreground font-body leading-relaxed">{result.recommendation}</p>
+              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-foreground/70 mb-4">My Recommendation</h4>
+              <p className="text-[14px] text-foreground font-body leading-relaxed">{result.recommendation}</p>
             </div>
 
-            <div className="border border-border p-6 border-l-[3px] border-l-[hsl(var(--mustard)/0.5)]">
-              <div className="flex items-start gap-3">
+            <div className="border border-border p-8 border-l-[3px] border-l-[hsl(var(--mustard)/0.5)]">
+              <div className="flex items-start gap-3.5">
                 <Lightbulb className="w-5 h-5 text-[hsl(var(--mustard))] shrink-0 mt-0.5" />
-                <p className="text-sm text-muted-foreground font-body italic leading-relaxed">
+                <p className="text-[14px] text-muted-foreground font-body italic leading-relaxed">
                   This signals something completely different than "please consider my resume." You're qualifying them.
                   Your time is valuable too.
                 </p>

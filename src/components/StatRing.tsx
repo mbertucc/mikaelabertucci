@@ -66,14 +66,14 @@ const StatRing = ({ value, max, label, unit = "", size = 100, strokeWidth = 6, c
         </svg>
       ) : Icon ? (
         <div style={{ width: size, height: size }} className="flex items-center justify-center">
-          <Icon className="w-10 h-10 text-primary" />
+          <Icon className="w-10 h-10 text-muted-foreground" />
         </div>
       ) : null}
       <div className="text-center mt-1">
         {!hideRing && Icon && <Icon className="w-4 h-4 text-muted-foreground mx-auto mb-0.5" />}
-        <span className="font-display text-2xl text-foreground font-bold">{animatedValue}{unit}</span>
+        <span className="font-display text-[28px] text-foreground font-bold">{animatedValue}{unit}</span>
       </div>
-      <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-body text-center leading-tight">{label}</p>
+      <p className="text-[11px] uppercase tracking-[0.15em] text-muted-foreground font-body text-center leading-tight">{label}</p>
     </div>
   );
 };
