@@ -172,7 +172,9 @@ const AboutSection = () => {
               }} />
 
               <div className="flex items-center gap-1.5 mb-1">
-                <Target className={`w-4 h-4 transition-colors duration-200 ${activeMetric === "precision" ? "text-[hsl(var(--olive))]" : "text-primary"}`} strokeWidth={2.25} />
+                <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors duration-200 ${activeMetric === "precision" ? "bg-[hsl(var(--bg-olive))]" : "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.12)]"}`}>
+                  <Target className="w-4 h-4 text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]" strokeWidth={2.25} />
+                </div>
                 <p className={`font-body text-[8px] font-medium tracking-[1.5px] uppercase ${activeMetric === "precision" ? metricAccents.precision.text : "text-muted-foreground"}`}>Precision</p>
               </div>
               <StatRing value={m?.about_precision_requirement ?? 95} max={100} label="Requirement Precision" unit="%" size={90} hideRing />
