@@ -133,7 +133,7 @@ const HeroIntro = () => {
             </span>
 
             {/* Rotating tagline — preserved logic */}
-            <div className="h-12 mt-2 max-w-[280px]">
+            <div className="h-14 mt-3 max-w-[340px]">
               <AnimatePresence mode="wait">
                 <motion.p
                   key={taglineIdx}
@@ -141,7 +141,7 @@ const HeroIntro = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.4, ease: "easeInOut" }}
-                  className="font-body text-[10px] font-light tracking-[1px] text-muted-foreground leading-[1.8]"
+                  className="font-body text-[13px] md:text-[14px] font-light tracking-[0.5px] text-foreground/70 leading-[1.6]"
                 >
                   {taglines[taglineIdx]}
                 </motion.p>
