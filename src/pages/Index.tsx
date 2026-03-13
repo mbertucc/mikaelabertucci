@@ -36,11 +36,11 @@ const Index = () => {
         {/* Hero — mustard bg */}
         <HeroIntro />
 
-        {/* About — directly below hero, still on mustard */}
-        <AboutSection />
-
-        {/* Coverline divider */}
+        {/* Coverline divider — directly below hero */}
         <CoverlineStrip label="AI-Augmented Impact" />
+
+        {/* About / Stats */}
+        <AboutSection />
 
         {/* Mustard quote banner */}
         <section className="bg-accent-warm py-20 px-8 md:px-16 relative overflow-hidden">
