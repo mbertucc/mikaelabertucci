@@ -152,7 +152,9 @@ const AboutSection = () => {
               }} />
 
               <div className="flex items-center gap-1.5 mb-1">
-                <Zap className={`w-4 h-4 transition-colors duration-200 ${activeMetric === "velocity" ? "text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]" : "text-primary"}`} strokeWidth={2.25} />
+                <div className={`w-8 h-8 rounded flex items-center justify-center transition-colors duration-200 ${activeMetric === "velocity" ? "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.2)]" : "bg-[hsl(var(--teal-pale))] dark:bg-[hsl(var(--teal)/0.12)]"}`}>
+                  <Zap className="w-4 h-4 text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]" strokeWidth={2.25} />
+                </div>
                 <p className={`font-body text-[8px] font-medium tracking-[1.5px] uppercase ${activeMetric === "velocity" ? metricAccents.velocity.text : "text-muted-foreground"}`}>Velocity</p>
               </div>
               <StatRing value={m?.about_velocity_time_to_draft ?? 2} max={m?.about_velocity_time_to_draft_max ?? 5} label="Faster Time-to-Draft" unit="x" size={90} hideRing />
