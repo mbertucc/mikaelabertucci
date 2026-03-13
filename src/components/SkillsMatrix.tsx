@@ -62,13 +62,13 @@ const SkillsMatrix = () => {
   return (
     <ScrollReveal>
     <TooltipProvider delayDuration={200}>
-      <section className="py-10 px-6 bg-card/30">
-        <div className="max-w-5xl mx-auto">
+      <section className="py-12 px-8 md:px-16 bg-card/30">
+        <div className="max-w-[1200px] mx-auto">
           {/* Header row */}
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-6">
             <div>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-primary font-body mb-2">Capability Radar</p>
-              <h2 className="text-3xl md:text-4xl font-display text-foreground">Skills Matrix</h2>
+              <p className="font-body text-[9px] font-bold tracking-[4px] uppercase text-primary mb-2">Capability Radar</p>
+              <h2 className="font-display text-[32px] md:text-[40px] font-normal italic text-foreground tracking-[-0.5px]">Skills Matrix</h2>
             </div>
             {/* Category pills */}
             <div className="flex gap-2">
@@ -79,10 +79,10 @@ const SkillsMatrix = () => {
                   <button
                     key={cat}
                     onClick={() => setActiveCat(cat)}
-                    className={`px-3 py-1.5 rounded-md text-xs font-body font-medium border transition-all ${
+                    className={`px-3 py-1.5 text-xs font-body font-medium border transition-all ${
                       isActive
-                        ? `${config.pillClass} shadow-sm`
-                        : "bg-transparent text-muted-foreground border-[hsl(var(--divider))] hover:border-border"
+                        ? `${config.pillClass}`
+                        : "bg-transparent text-muted-foreground border-border hover:border-foreground/30"
                     }`}
                   >
                     {config.title}
@@ -126,7 +126,7 @@ const SkillsMatrix = () => {
                       animate={{ opacity: 1, x: 0 }}
                       whileHover={{ scale: 1.08, y: -2 }}
                       transition={{ duration: 0.2, delay: i * 0.03 }}
-                      className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 rounded-md text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
+                      className={`inline-flex items-center whitespace-nowrap px-3.5 py-2 text-sm font-body border transition-colors shrink-0 ${config.tagClass} ${
                         skill.note ? "cursor-help" : ""
                       }`}
                     >
