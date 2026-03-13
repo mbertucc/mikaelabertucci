@@ -15,18 +15,18 @@ export default {
   	extend: {
 		fontFamily: {
 			display: [
-				'DM Serif Display',
+				'Bodoni Moda',
 				'Georgia',
 				'Times New Roman',
 				'serif'
 			],
 			body: [
-				'DM Sans',
+				'Montserrat',
 				'system-ui',
 				'sans-serif'
 			],
 			sans: [
-				'DM Sans',
+				'Montserrat',
 				'ui-sans-serif',
 				'system-ui',
 				'-apple-system',
@@ -37,7 +37,7 @@ export default {
 				'sans-serif'
 			],
 			serif: [
-				'DM Serif Display',
+				'Bodoni Moda',
 				'Georgia',
 				'Times New Roman',
 				'serif'
