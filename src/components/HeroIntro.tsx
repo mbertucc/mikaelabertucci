@@ -67,17 +67,6 @@ const HeroIntro = () => {
         {/* LEFT — massive stacked type */}
         <div className="px-8 md:px-16 py-14 relative z-[2] flex flex-col justify-center">
           {/* Status badge — preserved */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 mb-8 text-[9px] font-body font-bold tracking-[3px] uppercase text-[hsl(var(--teal-dk))] dark:text-[hsl(var(--teal-lt))]"
-          >
-            <span className="w-2 h-2 rounded-full bg-[hsl(var(--mustard))] animate-pulse-glow" />
-            <span className="text-muted-foreground text-[10px] tracking-[1px] font-normal normal-case font-body">
-              {profile?.status_badge || "🟢 Open to \"Dark Factory\" environments where Spec is the Product"}
-            </span>
-          </motion.div>
 
           {/* Name — massive Bodoni, staggered reveal */}
           <div className="relative">
