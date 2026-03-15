@@ -59,18 +59,18 @@ const HeroIntro = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.22 }}
-            className="relative mb-8 w-[280px] h-[220px]"
+            className="relative mb-8 w-[280px] h-[300px]"
           >
             {/* Teal offset border — 8px left, 8px up */}
             <div
               className="absolute border-2 border-primary"
-              style={{ top: '-8px', left: '-8px', width: '280px', height: '220px' }}
+              style={{ top: '-8px', left: '-8px', width: '280px', height: '300px' }}
             />
             {/* Photo */}
             <img
               src={headshot}
               alt={`${profile?.full_name || "Mikaela Bertucci"} — professional headshot`}
-              className="relative z-[1] w-[280px] h-[220px] object-cover object-top"
+              className="relative z-[1] w-[280px] h-[300px] object-cover object-top"
               loading="lazy"
             />
             {/* Mustard 28px square accent bottom-right */}
@@ -138,9 +138,12 @@ const HeroIntro = () => {
             style={{ borderTop: '1px solid hsl(var(--mustard))' }}
           >
             <div className="flex items-center gap-0 flex-wrap">
-              <span className="font-body text-[8px] font-semibold tracking-[2px] uppercase text-foreground">
+              <a
+                href="mailto:mikaela@bertucci.ca"
+                className="font-body text-[8px] font-semibold tracking-[2px] uppercase text-foreground hover:text-primary transition-colors"
+              >
                 mikaela@bertucci.ca
-              </span>
+              </a>
               <span className="mx-2 text-[8px] text-accent-warm">·</span>
               <a
                 href={profile?.linkedin_url || "https://linkedin.com/in/mikaelabertucci"}

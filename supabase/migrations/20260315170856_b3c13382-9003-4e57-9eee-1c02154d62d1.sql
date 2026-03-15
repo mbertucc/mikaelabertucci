@@ -1,0 +1,1 @@
+UPDATE profile SET linkedin_url = 'https://www.linkedin.com/in/mikaelabertucci/', email = 'mikaela@bertucci.ca' WHERE id = '6eb0e9da-af41-4ff1-801a-e0f9098bf257';

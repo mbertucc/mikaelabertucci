@@ -72,7 +72,7 @@ const AboutSection = () => {
           {/* Double-rule top border */}
           <div className="relative mb-0">
             <div className="h-[3px] bg-foreground" />
-            <div className="h-px bg-primary opacity-40 mt-1" style={{ marginTop: '4px' }} />
+            <div className="h-px bg-primary opacity-40" style={{ marginTop: '8px' }} />
           </div>
 
           <div className="grid grid-cols-3 md:grid-cols-6 border-b border-border">
@@ -101,7 +101,7 @@ const AboutSection = () => {
                   {stat.label}
                 </p>
                 {stat.highlight && (
-                  <div className="h-[3px] bg-accent-warm mt-4 w-full" />
+                  <div className="h-[3px] bg-accent-warm mt-6 w-full" />
                 )}
                 {/* Mustard bar on hover — animates from 0 to 100% */}
                 <div className="absolute bottom-0 left-0 h-[3px] bg-accent-warm w-0 group-hover:w-full transition-all duration-300" />
