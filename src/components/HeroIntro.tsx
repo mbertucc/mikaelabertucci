@@ -139,10 +139,10 @@ const HeroIntro = () => {
           >
             <div className="flex items-center gap-0 flex-wrap">
               <a
-                href="mailto:mikaela@bertucci.ca"
+                href="mailto:mikaelabertucci@me.com"
                 className="font-body text-[8px] font-semibold tracking-[2px] uppercase text-foreground hover:text-primary transition-colors"
               >
-                mikaela@bertucci.ca
+                mikaelabertucci@me.com
               </a>
               <span className="mx-2 text-[8px] text-accent-warm">·</span>
               <a
