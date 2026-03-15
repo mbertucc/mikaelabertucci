@@ -109,7 +109,6 @@ const AboutSection = () => {
               );
             })}
           </div>
-          </div>
 
           {/* Hover Detail Area */}
           <div className="mt-8 min-h-[5.5rem] md:min-h-[5rem]">
