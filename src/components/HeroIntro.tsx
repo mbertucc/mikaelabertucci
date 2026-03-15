@@ -138,9 +138,12 @@ const HeroIntro = () => {
             style={{ borderTop: '1px solid hsl(var(--mustard))' }}
           >
             <div className="flex items-center gap-0 flex-wrap">
-              <span className="font-body text-[8px] font-semibold tracking-[2px] uppercase text-foreground">
+              <a
+                href="mailto:mikaela@bertucci.ca"
+                className="font-body text-[8px] font-semibold tracking-[2px] uppercase text-foreground hover:text-primary transition-colors"
+              >
                 mikaela@bertucci.ca
-              </span>
+              </a>
               <span className="mx-2 text-[8px] text-accent-warm">·</span>
               <a
                 href={profile?.linkedin_url || "https://linkedin.com/in/mikaelabertucci"}
