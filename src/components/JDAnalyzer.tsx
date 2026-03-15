@@ -84,31 +84,31 @@ const JDAnalyzer = () => {
         <div className="flex flex-wrap gap-3 mb-8">
           <button
             onClick={() => { setJdText(strongFitJD); setResult(null); }}
-            className="px-5 py-2.5 text-[13px] font-body bg-[hsl(var(--nav-text)/0.15)] text-[hsl(var(--nav-text))] border border-[hsl(var(--nav-text)/0.2)] hover:bg-[hsl(var(--nav-text)/0.25)] transition-colors"
+            className="px-5 py-2.5 text-[13px] font-body bg-card text-foreground border border-border hover:bg-accent/10 transition-colors"
           >
             Strong Fit Example
           </button>
           <button
             onClick={() => { setJdText(weakFitJD); setResult(null); }}
-            className="px-5 py-2.5 text-[13px] font-body bg-[hsl(var(--nav-text)/0.15)] text-[hsl(var(--nav-text))] border border-[hsl(var(--nav-text)/0.2)] hover:bg-[hsl(var(--nav-text)/0.25)] transition-colors"
+            className="px-5 py-2.5 text-[13px] font-body bg-card text-foreground border border-border hover:bg-accent/10 transition-colors"
           >
             Weak Fit Example
           </button>
         </div>
 
-        <div className="border border-[hsl(var(--nav-text)/0.15)] mb-8 bg-[hsl(var(--nav-text)/0.05)]">
+        <div className="border border-border mb-8 bg-card/40">
           <textarea
             value={jdText}
             onChange={(e) => setJdText(e.target.value)}
             placeholder="Paste job description here..."
-            className="w-full h-52 bg-transparent p-6 text-[14px] font-body text-[hsl(var(--nav-text))] placeholder:text-[hsl(var(--nav-text)/0.3)] resize-none focus:outline-none leading-relaxed"
+            className="w-full h-52 bg-transparent p-6 text-[14px] font-body text-foreground placeholder:text-muted-foreground/70 resize-none focus:outline-none leading-relaxed"
           />
         </div>
 
         <button
           onClick={handleAnalyze}
           disabled={!jdText.trim() || isAnalyzing}
-          className="flex items-center gap-2.5 px-8 py-3.5 bg-[hsl(var(--nav-text))] text-[hsl(var(--teal-dk))] font-body font-bold text-[11px] tracking-[2px] uppercase hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+          className="flex items-center gap-2.5 px-8 py-3.5 bg-primary text-primary-foreground font-body font-bold text-[11px] tracking-[2px] uppercase hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
         >
           {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
           {isAnalyzing ? "Analyzing…" : "Analyze Fit"}
