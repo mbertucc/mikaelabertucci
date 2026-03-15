@@ -5,6 +5,7 @@ import { useSiteMetrics } from "@/hooks/useSiteMetrics";
 import ScrollReveal from "@/components/ScrollReveal";
 
 type MetricKey = "velocity" | "precision" | "culture" | null;
+type HoverTarget = { key: MetricKey; index: number } | null;
 
 const metricDescriptions = (m: any): Record<Exclude<MetricKey, null>, string[]> => ({
   velocity: [
@@ -34,15 +35,16 @@ const buildLedgerStats = (m: any) => [
   { value: `${m?.about_precision_requirement ?? 95}`, unit: "%", label: "Requirement\nPrecision", key: "precision" as const },
   { value: `${m?.dark_factory_clarification_reduction ?? 90}`, unit: "%", label: "Fewer Clarification\nLoops", key: "precision" as const, highlight: true },
   { value: `${m?.dark_factory_total_hours_saved ?? 116.5}`, unit: "", label: "Hours Saved\nPer Feature Set", key: "velocity" as const },
-  { value: `40→2.5`, unit: "", label: "Hours Per\nLegislative Domain", key: "velocity" as const },
-  { value: `3`, unit: "", label: "Registries\nConcurrently", key: "culture" as const },
+  { value: `40`, unit: "", label: "Hours Per Domain\nReduced to 2.5", key: "velocity" as const },
+  { value: `3`, unit: "", label: "Concurrent\nRegistries", key: "culture" as const },
 ];
 
 const AboutSection = () => {
   const { data: profile } = useProfile();
   const { data: m } = useSiteMetrics();
-  const [activeMetric, setActiveMetric] = useState<MetricKey>(null);
+  const [hoverTarget, setHoverTarget] = useState<HoverTarget>(null);
 
+  const activeMetric = hoverTarget?.key ?? null;
   const descriptions = metricDescriptions(m);
   const ledgerStats = buildLedgerStats(m);
   const displayItems = activeMetric ? descriptions[activeMetric] : null;
@@ -66,7 +68,7 @@ const AboutSection = () => {
           </div>
         </ScrollReveal>
 
-        <div onMouseLeave={() => setActiveMetric(null)}>
+        <div onMouseLeave={() => setHoverTarget(null)}>
           {/* Double-rule top border */}
           <div className="relative mb-0">
             <div className="h-[3px] bg-foreground" />
@@ -74,16 +76,16 @@ const AboutSection = () => {
           </div>
 
           <div className="grid grid-cols-3 md:grid-cols-6 border-b border-border">
-            {ledgerStats.map((stat, idx) => (
+            {ledgerStats.map((stat, idx) => {
+              const isHovered = hoverTarget?.index === idx;
+              return (
               <div
                 key={idx}
-                className={`py-10 px-5 cursor-default transition-colors duration-200 relative group ${
+                className={`py-10 px-5 cursor-default transition-colors duration-200 relative group overflow-hidden ${
                   idx < ledgerStats.length - 1 ? "border-r border-border" : ""
-                } ${stat.highlight ? "bg-[hsl(var(--teal-pale))]" : ""} ${
-                  activeMetric === stat.key && !stat.highlight ? "bg-card/60" : ""
-                }`}
-                onMouseEnter={() => setActiveMetric(stat.key)}
-                style={activeMetric === stat.key ? { backgroundColor: 'hsl(var(--teal-pale))' } : undefined}
+                } ${stat.highlight ? "bg-[hsl(var(--teal-pale))]" : ""}`}
+                onMouseEnter={() => setHoverTarget({ key: stat.key, index: idx })}
+                style={isHovered && !stat.highlight ? { backgroundColor: 'hsl(var(--teal-pale))' } : undefined}
               >
                 <div className="mb-3">
                   <span className="font-display text-[48px] md:text-[56px] font-bold text-foreground leading-[1] tracking-[-2px]">
@@ -104,7 +106,8 @@ const AboutSection = () => {
                 {/* Mustard bar on hover — animates from 0 to 100% */}
                 <div className="absolute bottom-0 left-0 h-[3px] bg-accent-warm w-0 group-hover:w-full transition-all duration-300" />
               </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Hover Detail Area */}
