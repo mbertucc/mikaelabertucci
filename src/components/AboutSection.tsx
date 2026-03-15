@@ -42,8 +42,9 @@ const buildLedgerStats = (m: any) => [
 const AboutSection = () => {
   const { data: profile } = useProfile();
   const { data: m } = useSiteMetrics();
-  const [activeMetric, setActiveMetric] = useState<MetricKey>(null);
+  const [hoverTarget, setHoverTarget] = useState<HoverTarget>(null);
 
+  const activeMetric = hoverTarget?.key ?? null;
   const descriptions = metricDescriptions(m);
   const ledgerStats = buildLedgerStats(m);
   const displayItems = activeMetric ? descriptions[activeMetric] : null;
