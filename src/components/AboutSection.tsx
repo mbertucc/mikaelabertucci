@@ -106,7 +106,9 @@ const AboutSection = () => {
                 {/* Mustard bar on hover — animates from 0 to 100% */}
                 <div className="absolute bottom-0 left-0 h-[3px] bg-accent-warm w-0 group-hover:w-full transition-all duration-300" />
               </div>
-            ))}
+              );
+            })}
+          </div>
           </div>
 
           {/* Hover Detail Area */}
