@@ -68,7 +68,7 @@ const AboutSection = () => {
           </div>
         </ScrollReveal>
 
-        <div onMouseLeave={() => setActiveMetric(null)}>
+        <div onMouseLeave={() => setHoverTarget(null)}>
           {/* Double-rule top border */}
           <div className="relative mb-0">
             <div className="h-[3px] bg-foreground" />
@@ -76,16 +76,16 @@ const AboutSection = () => {
           </div>
 
           <div className="grid grid-cols-3 md:grid-cols-6 border-b border-border">
-            {ledgerStats.map((stat, idx) => (
+            {ledgerStats.map((stat, idx) => {
+              const isHovered = hoverTarget?.index === idx;
+              return (
               <div
                 key={idx}
-                className={`py-10 px-5 cursor-default transition-colors duration-200 relative group ${
+                className={`py-10 px-5 cursor-default transition-colors duration-200 relative group overflow-hidden ${
                   idx < ledgerStats.length - 1 ? "border-r border-border" : ""
-                } ${stat.highlight ? "bg-[hsl(var(--teal-pale))]" : ""} ${
-                  activeMetric === stat.key && !stat.highlight ? "bg-card/60" : ""
-                }`}
-                onMouseEnter={() => setActiveMetric(stat.key)}
-                style={activeMetric === stat.key ? { backgroundColor: 'hsl(var(--teal-pale))' } : undefined}
+                } ${stat.highlight ? "bg-[hsl(var(--teal-pale))]" : ""}`}
+                onMouseEnter={() => setHoverTarget({ key: stat.key, index: idx })}
+                style={isHovered && !stat.highlight ? { backgroundColor: 'hsl(var(--teal-pale))' } : undefined}
               >
                 <div className="mb-3">
                   <span className="font-display text-[48px] md:text-[56px] font-bold text-foreground leading-[1] tracking-[-2px]">
