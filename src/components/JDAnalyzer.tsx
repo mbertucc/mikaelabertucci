@@ -72,11 +72,11 @@ const JDAnalyzer = () => {
     <div id="fit-check" className="py-20 px-8 md:px-16 relative z-10">
       <div className="max-w-[1200px] mx-auto">
         <div className="mb-10">
-          <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-[hsl(var(--mustard-lt))] dark:text-[hsl(var(--mustard))] mb-3">
+          <p className="font-body text-[10px] font-bold tracking-[4px] uppercase text-accent-warm mb-3">
             Honest Assessment
           </p>
-          <h3 className="font-display text-[32px] md:text-[40px] font-normal italic text-[hsl(var(--nav-text))] mb-4 tracking-[-0.5px]">Honest Fit Assessment</h3>
-          <p className="text-[hsl(var(--nav-text)/0.6)] dark:text-[hsl(var(--nav-text)/0.45)] font-body text-[14px] font-light leading-[1.85] max-w-2xl">
+          <h3 className="font-display text-[32px] md:text-[40px] font-normal italic text-foreground mb-4 tracking-[-0.5px]">Honest Fit Assessment</h3>
+          <p className="text-muted-foreground font-body text-[14px] font-light leading-[1.85] max-w-2xl">
             Paste a job description. Get an honest assessment of whether I'm the right person—including when I'm not.
           </p>
         </div>
