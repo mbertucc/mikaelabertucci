@@ -42,12 +42,12 @@ const HeroIntro = () => {
             </motion.span>
           </div>
 
-          {/* Triple rule — no gap */}
+          {/* Triple rule — increased spacing for clearer separation */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col gap-0 my-5"
+            className="flex flex-col gap-1.5 mt-6 mb-8"
           >
             <div className="h-[3px] bg-foreground w-full max-w-[340px]" />
             <div className="h-[3px] bg-primary w-[60%] max-w-[200px]" />
