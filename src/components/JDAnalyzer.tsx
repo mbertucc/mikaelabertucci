@@ -63,9 +63,9 @@ const JDAnalyzer = () => {
   };
 
   const verdictStyles = {
-    "strong-fit": "bg-[hsl(var(--nav-text)/0.9)] text-[hsl(var(--teal))] border-[hsl(var(--nav-text)/0.3)]",
-    "worth-conversation": "bg-[hsl(var(--nav-text)/0.6)] text-[hsl(var(--mustard-lt))] border-[hsl(var(--nav-text)/0.2)]",
-    "not-your-person": "bg-[hsl(var(--nav-text)/0.9)] text-[hsl(var(--mustard))] border-[hsl(var(--nav-text)/0.3)]",
+    "strong-fit": "bg-primary/10 text-primary border-primary/40",
+    "worth-conversation": "bg-accent-warm/10 text-accent-warm border-accent-warm/40",
+    "not-your-person": "bg-secondary/10 text-secondary border-secondary/40",
   };
 
   return (
