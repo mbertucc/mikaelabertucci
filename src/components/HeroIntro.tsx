@@ -59,18 +59,18 @@ const HeroIntro = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.22 }}
-            className="relative mb-8 w-[280px] h-[220px]"
+            className="relative mb-8 w-[280px] h-[300px]"
           >
             {/* Teal offset border — 8px left, 8px up */}
             <div
               className="absolute border-2 border-primary"
-              style={{ top: '-8px', left: '-8px', width: '280px', height: '220px' }}
+              style={{ top: '-8px', left: '-8px', width: '280px', height: '300px' }}
             />
             {/* Photo */}
             <img
               src={headshot}
               alt={`${profile?.full_name || "Mikaela Bertucci"} — professional headshot`}
-              className="relative z-[1] w-[280px] h-[220px] object-cover object-top"
+              className="relative z-[1] w-[280px] h-[300px] object-cover object-top"
               loading="lazy"
             />
             {/* Mustard 28px square accent bottom-right */}
