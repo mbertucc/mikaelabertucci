@@ -35,8 +35,8 @@ const buildLedgerStats = (m: any) => [
   { value: `${m?.about_precision_requirement ?? 95}`, unit: "%", label: "Requirement\nPrecision", key: "precision" as const },
   { value: `${m?.dark_factory_clarification_reduction ?? 90}`, unit: "%", label: "Fewer Clarification\nLoops", key: "precision" as const, highlight: true },
   { value: `${m?.dark_factory_total_hours_saved ?? 116.5}`, unit: "", label: "Hours Saved\nPer Feature Set", key: "velocity" as const },
-  { value: `40→2.5`, unit: "", label: "Hours Per\nLegislative Domain", key: "velocity" as const },
-  { value: `3`, unit: "", label: "Registries\nConcurrently", key: "culture" as const },
+  { value: `40`, unit: "", label: "Hours Per Domain\nReduced to 2.5", key: "velocity" as const },
+  { value: `3`, unit: "", label: "Concurrent\nRegistries", key: "culture" as const },
 ];
 
 const AboutSection = () => {
