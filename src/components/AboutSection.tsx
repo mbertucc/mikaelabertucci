@@ -5,6 +5,7 @@ import { useSiteMetrics } from "@/hooks/useSiteMetrics";
 import ScrollReveal from "@/components/ScrollReveal";
 
 type MetricKey = "velocity" | "precision" | "culture" | null;
+type HoverTarget = { key: MetricKey; index: number } | null;
 
 const metricDescriptions = (m: any): Record<Exclude<MetricKey, null>, string[]> => ({
   velocity: [
