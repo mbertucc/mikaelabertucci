@@ -120,14 +120,14 @@ const JDAnalyzer = () => {
               {result.verdictLabel}
             </div>
 
-            <p className="text-[hsl(var(--nav-text))] font-body text-[15px] leading-relaxed">{result.opening}</p>
+            <p className="text-foreground font-body text-[15px] leading-relaxed">{result.opening}</p>
 
             <div>
-              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-[hsl(var(--mustard-lt))] mb-4">Where I Don't Fit</h4>
+              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-accent-warm mb-4">Where I Don't Fit</h4>
               <ul className="space-y-2.5">
                 {result.gaps.map((g, i) => (
-                  <li key={i} className="text-[14px] text-[hsl(var(--nav-text)/0.7)] font-body flex items-start gap-2.5 leading-relaxed">
-                    <span className="text-[hsl(var(--mustard-lt))] mt-0.5 shrink-0">✗</span>
+                  <li key={i} className="text-[14px] text-muted-foreground font-body flex items-start gap-2.5 leading-relaxed">
+                    <span className="text-accent-warm mt-0.5 shrink-0">✗</span>
                     {g}
                   </li>
                 ))}
@@ -135,11 +135,11 @@ const JDAnalyzer = () => {
             </div>
 
             <div>
-              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-[hsl(var(--nav-text)/0.8)] mb-4">What Transfers</h4>
+              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-foreground/80 mb-4">What Transfers</h4>
               <ul className="space-y-2.5">
                 {result.transfers.map((t, i) => (
-                  <li key={i} className="text-[14px] text-[hsl(var(--nav-text)/0.7)] font-body flex items-start gap-2.5 leading-relaxed">
-                    <span className="text-[hsl(var(--nav-text))] mt-0.5 shrink-0">▸</span>
+                  <li key={i} className="text-[14px] text-muted-foreground font-body flex items-start gap-2.5 leading-relaxed">
+                    <span className="text-foreground mt-0.5 shrink-0">▸</span>
                     {t}
                   </li>
                 ))}
@@ -147,14 +147,14 @@ const JDAnalyzer = () => {
             </div>
 
             <div>
-              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-[hsl(var(--nav-text)/0.6)] mb-4">My Recommendation</h4>
-              <p className="text-[14px] text-[hsl(var(--nav-text))] font-body leading-relaxed">{result.recommendation}</p>
+              <h4 className="font-body text-[10px] font-bold tracking-[3px] uppercase text-foreground/60 mb-4">My Recommendation</h4>
+              <p className="text-[14px] text-foreground font-body leading-relaxed">{result.recommendation}</p>
             </div>
 
-            <div className="border border-[hsl(var(--nav-text)/0.15)] p-8 border-l-[3px] border-l-[hsl(var(--mustard)/0.6)] bg-[hsl(var(--nav-text)/0.05)]">
+            <div className="border border-border p-8 border-l-[3px] border-l-accent-warm bg-card/40">
               <div className="flex items-start gap-3.5">
-                <Lightbulb className="w-5 h-5 text-[hsl(var(--mustard-lt))] shrink-0 mt-0.5" />
-                <p className="text-[14px] text-[hsl(var(--nav-text)/0.7)] font-body italic leading-relaxed">
+                <Lightbulb className="w-5 h-5 text-accent-warm shrink-0 mt-0.5" />
+                <p className="text-[14px] text-muted-foreground font-body italic leading-relaxed">
                   This signals something completely different than "please consider my resume." You're qualifying them.
                   Your time is valuable too.
                 </p>
