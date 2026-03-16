@@ -83,9 +83,9 @@ const AboutSection = () => {
                 key={idx}
                 className={`py-10 px-5 cursor-default transition-colors duration-200 relative group overflow-hidden ${
                   idx < ledgerStats.length - 1 ? "border-r border-border" : ""
-                } ${stat.highlight ? "bg-[hsl(var(--teal-pale))]" : ""}`}
+                }`}
                 onMouseEnter={() => setHoverTarget({ key: stat.key, index: idx })}
-                style={isHovered && !stat.highlight ? { backgroundColor: 'hsl(var(--teal-pale))' } : undefined}
+                style={isHovered ? { backgroundColor: 'hsl(var(--teal-pale))' } : undefined}
               >
                 <div className="mb-3">
                   <span className="font-display text-[48px] md:text-[56px] font-bold text-foreground leading-[1] tracking-[-2px]">
@@ -100,9 +100,6 @@ const AboutSection = () => {
                 <p className="font-body text-[9px] md:text-[10px] font-bold tracking-[2px] uppercase text-muted-foreground leading-[1.6] whitespace-pre-line">
                   {stat.label}
                 </p>
-                {stat.highlight && (
-                  <div className="h-[3px] bg-accent-warm mt-6 w-full" />
-                )}
                 {/* Mustard bar on hover — animates from 0 to 100% */}
                 <div className="absolute bottom-0 left-0 h-[3px] bg-accent-warm w-0 group-hover:w-full transition-all duration-300" />
               </div>
