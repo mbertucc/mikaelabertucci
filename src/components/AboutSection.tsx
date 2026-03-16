@@ -70,9 +70,9 @@ const AboutSection = () => {
 
         <div onMouseLeave={() => setHoverTarget(null)}>
           {/* Double-rule top border */}
-          <div className="relative mb-0">
+          <div className="relative mb-0 flex flex-col gap-3">
             <div className="h-[3px] bg-foreground" />
-            <div className="h-px bg-primary opacity-40" style={{ marginTop: '8px' }} />
+            <div className="h-px bg-primary opacity-40" />
           </div>
 
           <div className="grid grid-cols-3 md:grid-cols-6 border-b border-border">
