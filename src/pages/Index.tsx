@@ -5,6 +5,7 @@ import CoverlineStrip from "@/components/CoverlineStrip";
 import AboutSection from "@/components/AboutSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import DarkFactorySection from "@/components/DarkFactorySection";
+import AIQueryablePortfolioSection from "@/components/AIQueryablePortfolioSection";
 import SkillsMatrix from "@/components/SkillsMatrix";
 import BeyondWorkSection from "@/components/BeyondWorkSection";
 import JDAnalyzer from "@/components/JDAnalyzer";
@@ -75,6 +76,10 @@ const Index = () => {
 
         {/* Workflow section — parchment bg */}
         <DarkFactorySection />
+
+        {/* AI-Queryable Portfolio */}
+        <CoverlineStrip label="AI-Queryable Portfolio" />
+        <AIQueryablePortfolioSection />
 
         {/* Experience coverline */}
         <CoverlineStrip label="Experience & Impact" />
