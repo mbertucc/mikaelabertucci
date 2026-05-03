@@ -66,6 +66,19 @@
 .r-hero-pulse { width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; animation: r-pulse 2s ease-in-out infinite; }
 @keyframes r-pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
+/* ── Hero right — portrait + spec card ── */
+.r-hero-right { display: flex; flex-direction: column; gap: 24px; align-items: center; }
+.r-portrait-orb { position: relative; width: 100%; max-width: 360px; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+.r-portrait-img { width: 78%; height: 78%; object-fit: cover; border-radius: 50%; border: 1px solid rgba(56,189,248,0.25); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6), 0 0 60px rgba(56,189,248,0.18), inset 0 0 0 4px rgba(8,13,26,0.5); position: relative; z-index: 4; }
+.r-portrait-glow { position: absolute; inset: 12%; border-radius: 50%; background: radial-gradient(circle at 35% 35%, rgba(56,189,248,0.45), rgba(99,102,241,0.18) 45%, transparent 70%); filter: blur(28px); z-index: 1; animation: r-portraitGlow 8s ease-in-out infinite; }
+.r-portrait-ring { position: absolute; border-radius: 50%; border: 1px solid; pointer-events: none; }
+.r-portrait-ring-1 { inset: 6%; border-color: rgba(56,189,248,0.22); animation: r-portraitDrift1 24s linear infinite; z-index: 2; }
+.r-portrait-ring-2 { inset: 0%; border-color: rgba(129,140,248,0.18); animation: r-portraitDrift2 32s linear infinite reverse; z-index: 2; }
+.r-portrait-ring-3 { inset: -8%; border-color: rgba(56,189,248,0.10); animation: r-portraitDrift1 40s linear infinite; z-index: 2; }
+@keyframes r-portraitGlow { 0%,100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.06); } }
+@keyframes r-portraitDrift1 { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes r-portraitDrift2 { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
 /* Spec card */
 .r-spec-card { background: linear-gradient(160deg, rgba(17,30,53,0.92), rgba(14,21,40,0.88)); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; box-shadow: 0 24px 80px rgba(0,0,0,0.4), 0 0 1px rgba(56,189,248,0.1); }
 .r-spec-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(56,189,248,0.4), rgba(139,92,246,0.3), transparent); }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import "../resume.css";
+import headshot from "@/assets/mikaela-headshot.png";
 
 /* ════════════════════════════════════════════════════════════
    DATA
@@ -15,7 +16,7 @@ const PROFILE = {
 const METHOD = [
   {
     num: "01", tone: "sky", label: "The Input", title: "Legislative Complexity",
-    body: "Three simultaneous registries — Manufactured Home, Personal Property, Business Registry — each with its own Act, regulations, edge cases, and municipal enforcement regime. A high-performing MHR/PPR team that pivoted mid-stream to support Business Registry migration.",
+    body: "Three simultaneous registries — Manufactured Home, Personal Property, Business Registry — each with its own Act, regulations, edge cases, and municipal enforcement regime. A scope normally split across two people.",
     stat: "3", statLbl: "Concurrent\nRegistries",
   },
   {
@@ -51,12 +52,12 @@ const LEDGER = [
     ],
   },
   {
-    key: "agents", value: "16", unit: "", label: "Personal Workflow\nAgents Built",
+    key: "agents", value: "16", unit: "", label: "Multilevel AI\nAgents Deployed",
     detailLabel: "Agent Architecture",
     detail: [
-      "16-agent personal workflow pipeline — legislative context across all three registries in parallel.",
+      "16-agent pipeline maintaining legislative context across all three registries in parallel.",
       "Edge-case detection, consistency checking, and Gherkin spec generation as discrete agent roles.",
-      "Expanded from the context-engineering framework I built at the Short-Term Rental Registry.",
+      "Expanded from the context-engineering framework I originated at the Short-Term Rental Registry.",
     ],
   },
   {
@@ -204,7 +205,7 @@ function Nav({ onAsk }: { onAsk: () => void }) {
           <button className="r-nav-link" onClick={() => go("method")}>Method</button>
           <button className="r-nav-link" onClick={() => go("experience")}>Experience</button>
           <button className="r-nav-link" onClick={() => go("fit")}>Fit Check</button>
-          <button className="r-btn r-btn-outline" onClick={onAsk}>◊ Ask the Oracle</button>
+          <button className="r-btn r-btn-outline" onClick={onAsk}>◊ Ask AI About Me</button>
         </div>
       </div>
     </nav>
@@ -272,15 +273,25 @@ function Hero({ onAsk }: { onAsk: () => void }) {
             I build products on Claude. As a solo founder I shipped <span className="accent">Delpheus</span> — an AI-native product spec platform — because the biggest bottleneck in AI-assisted development isn't the model. It's the human who can't translate business intent into something an agent can act on.
           </p>
           <div className="r-hero-meta">
+            <span className="r-hero-pill emerald"><span className="r-hero-pulse"/>Open to opportunities · SF / NYC</span>
             <span className="r-hero-pill">Founder · Delpheus</span>
             <span className="r-hero-pill indigo">Multi-Registry PO · BC Gov</span>
           </div>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button className="r-btn r-btn-primary r-btn-lg" onClick={onAsk}>◊ Ask the Oracle about me</button>
+            <button className="r-btn r-btn-primary r-btn-lg" onClick={onAsk}>◊ Ask AI About Me</button>
             <a className="r-btn r-btn-outline r-btn-lg" href="#ventures">See Delpheus →</a>
           </div>
         </div>
-        <SpecCard/>
+        <div className="r-hero-right">
+          <div className="r-portrait-orb">
+            <div className="r-portrait-ring r-portrait-ring-1"/>
+            <div className="r-portrait-ring r-portrait-ring-2"/>
+            <div className="r-portrait-ring r-portrait-ring-3"/>
+            <div className="r-portrait-glow"/>
+            <img src={headshot} alt="Mikaela Bertucci" className="r-portrait-img"/>
+          </div>
+          <SpecCard/>
+        </div>
       </div>
     </section>
   );
@@ -325,7 +336,7 @@ function Ventures() {
               ))}
             </div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 20 }}>
-              <a className="r-btn r-btn-primary" href="https://delpheus.com" target="_blank" rel="noopener noreferrer">Visit Delpheus →</a>
+              <a className="r-btn r-btn-primary" href="https://delpheus.ai" target="_blank" rel="noopener noreferrer">Visit Delpheus →</a>
               <a className="r-btn r-btn-outline" href={PROFILE.github} target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
           </div>
@@ -338,17 +349,25 @@ function Ventures() {
               </div>
             </div>
             <div className="r-ventures-card">
-              <div className="r-ventures-card-label indigo">◊ What I do with it</div>
+              <div className="r-ventures-card-label indigo">◊ What I built · solo</div>
               <ul className="r-ventures-list">
-                {["Prototype with Claude Code daily — agentic spec generation, context engineering.", "Architected three production edge functions calling the Claude API.", "Live product demo of the methodology I sell — not a portfolio of slides."].map((t, i) => (
+                {[
+                  "Full React + Vite + Tailwind frontend — architecture, auth, data model.",
+                  "Supabase backend with three production edge functions calling the Anthropic API.",
+                  "Spec-generation pipeline: rough intent → structured story map → Gherkin acceptance criteria.",
+                  "CI/CD on Vercel; live in production; iterating with Claude Code daily.",
+                ].map((t, i) => (
                   <li key={i}>{t}</li>
                 ))}
               </ul>
             </div>
             <div className="r-ventures-card emerald">
-              <div className="r-ventures-card-label emerald">◊ Why it matters here</div>
+              <div className="r-ventures-card-label emerald" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ display: "inline-block", width: 7, height: 7, borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981" }}/>
+                ◊ Why I built it
+              </div>
               <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: "#e2e8f0" }}>
-                This site is Delpheus in miniature — the Ask-the-Oracle chat, the Fit-Check, the living spec. If it convinces you, the methodology works.
+                11+ years in technology, and the recent leaps in AI taught me one thing: <strong style={{ color: "#f1f5f9" }}>the gap in AI-assisted coding isn't the tools.</strong> It's the ability to clearly specify what to build — without overbuilding, and without letting AI lead you down rabbit holes. I built my PO discipline directly into Delpheus to help founders, product owners, and engineers manage scope, focus on an MVP, and ship it.
               </p>
             </div>
           </div>
@@ -447,8 +466,8 @@ function Experience({ onAsk }: { onAsk: (seed: string) => void }) {
     <section className="r-section" id="experience">
       <div className="r-wrap-narrow">
         <div className="r-section-head-row">
-          <h2 className="r-section-title">11 years — <span className="accent">BC Provincial Government.</span></h2>
-          <span className="r-section-n">§ 04 · Experience</span>
+          <h2 className="r-section-title">Seven years — <span className="accent">BC Provincial Government.</span></h2>
+          <span className="r-section-n">§ 03 · Experience</span>
         </div>
         <div className="r-xp-umbrella">
           <div className="r-xp-umbrella-top">
@@ -506,7 +525,7 @@ function Skills() {
             <h2 className="r-section-title">Skills — <span className="accent">honest calibration.</span></h2>
             <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontSize: 14, color: "#94a3b8", marginTop: 12, maxWidth: 560 }}>Knowing what I don't know matters too.</p>
           </div>
-          <span className="r-section-n">§ 05 · Skills</span>
+          <span className="r-section-n">§ 04 · Skills</span>
         </div>
         <div className="r-skills-tabs">
           {(Object.keys(SKILLS) as Array<"strong" | "moderate" | "gap">).map(k => (
@@ -521,52 +540,6 @@ function Skills() {
           {cur.items.map(s => (
             <span key={s} className={`r-skill-chip ${tab}`}>{s}</span>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ════════════════════════════════════════════════════════════
-   AI-QUERYABLE PORTFOLIO
-   ════════════════════════════════════════════════════════════ */
-
-function AIQueryablePortfolio({ onAsk }: { onAsk: () => void }) {
-  return (
-    <section className="r-section" id="portfolio">
-      <div className="r-wrap-narrow">
-        <div className="r-section-head-row">
-          <h2 className="r-section-title">AI-queryable portfolio — <span className="accent">a working product, not a brochure.</span></h2>
-          <span className="r-section-n">§ 03 · Portfolio</span>
-        </div>
-        <div className="r-ventures-grid">
-          <div style={{ background: "linear-gradient(160deg, rgba(17,30,53,0.85), rgba(14,21,40,0.75))", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 20, padding: 40, position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(56,189,248,0.4), rgba(139,92,246,0.3), transparent)" }}/>
-            <p style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", fontStyle: "italic", fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#38bdf8", opacity: 0.75, marginBottom: 16 }}>◊ Origin</p>
-            <p style={{ fontSize: 15, lineHeight: 1.7, color: "#e2e8f0", margin: "0 0 20px" }}>
-              Built before Delpheus existed — this site was the proof of concept. Conceived and directed by Mikaela, with initial code by Nate B Jones. Originally built on Lovable, now migrated to Claude Code, Supabase, and Vercel.
-            </p>
-            <button className="r-btn r-btn-primary" onClick={onAsk}>◊ Ask the Oracle now →</button>
-          </div>
-
-          <div className="r-ventures-right">
-            <div className="r-ventures-card">
-              <div className="r-ventures-card-label sky">◊ What it does</div>
-              <ul className="r-ventures-list">
-                {[
-                  "An AI agent that answers questions about Mikaela's experience, skills, and work history — in plain language, on demand.",
-                  "Honest fit assessment: paste a job description, get a real answer — including when she's not the right fit.",
-                  "Live demo of the context engineering methodology that became the foundation for Delpheus.",
-                ].map((t, i) => <li key={i}>{t}</li>)}
-              </ul>
-            </div>
-            <div className="r-ventures-card emerald">
-              <div className="r-ventures-card-label emerald">◊ Why it matters</div>
-              <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: "#e2e8f0" }}>
-                This site is not a portfolio brochure. It's a working product. The methodology you're reading about is the same one powering the agent you can talk to right now.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -631,7 +604,7 @@ function FitCheck() {
       <div className="r-wrap-narrow">
         <div className="r-section-head-row">
           <h2 className="r-section-title">Honest fit assessment — <span className="accent">including when I'm not.</span></h2>
-          <span className="r-section-n">§ 06 · Fit</span>
+          <span className="r-section-n">§ 05 · Fit</span>
         </div>
         <div className="r-fit-wrap">
           <div className="r-fit-card">
@@ -688,7 +661,7 @@ function Beyond() {
       <div className="r-wrap-narrow">
         <div className="r-section-head-row">
           <h2 className="r-section-title">Beyond the backlog — <span className="accent">when I'm not shipping.</span></h2>
-          <span className="r-section-n">§ 07 · Off-Duty</span>
+          <span className="r-section-n">§ 06 · Off-Duty</span>
         </div>
         <div className="r-interests">
           {INTERESTS.map(i => (
@@ -882,7 +855,6 @@ const Index = () => {
         <Method/>
         <Ledger/>
         <QuoteBanner/>
-        <AIQueryablePortfolio onAsk={() => ask()}/>
         <Experience onAsk={ask}/>
         <Skills/>
         <FitCheck/>
