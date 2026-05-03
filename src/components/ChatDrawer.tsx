@@ -158,7 +158,8 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
 
         setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
-        while (true) {
+        let streamDone = false;
+        while (!streamDone) {
           const { done, value } = await reader.read();
           if (done) break;
           buffer += decoder.decode(value, { stream: true });
@@ -170,12 +171,18 @@ const ChatDrawer = ({ isOpen, onClose, initialMessage }: ChatDrawerProps) => {
             if (line.endsWith("\r")) line = line.slice(0, -1);
             if (!line.startsWith("data: ")) continue;
             const jsonStr = line.slice(6).trim();
-            if (jsonStr === "[DONE]") break;
             try {
               const parsed = JSON.parse(jsonStr);
-              const content = parsed.choices?.[0]?.delta?.content;
-              if (content) {
-                assistantContent += content;
+              if (parsed.type === "message_stop") {
+                streamDone = true;
+                break;
+              }
+              if (
+                parsed.type === "content_block_delta" &&
+                parsed.delta?.type === "text_delta" &&
+                parsed.delta.text
+              ) {
+                assistantContent += parsed.delta.text;
                 const final = assistantContent;
                 setMessages((prev) =>
                   prev.map((m, i) =>

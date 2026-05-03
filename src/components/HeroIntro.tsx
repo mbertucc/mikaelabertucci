@@ -94,7 +94,7 @@ const HeroIntro = () => {
             </span>
 
             <p className="font-body text-[10px] font-light text-[hsl(var(--text-mid))] leading-[1.85] max-w-[340px] mt-3">
-              11 years delivering complex government digital products across BC Registries and Citizens' Services.
+              Seven years delivering complex government digital products across BC Registries and Citizens' Services.
             </p>
           </motion.div>
         </div>

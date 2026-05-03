@@ -234,7 +234,7 @@ const ExperienceSection = () => {
                 </span>
               </div>
               <p className="font-body text-[14px] font-light text-muted-foreground leading-[1.85] max-w-xl">
-                11 years delivering digital products across multiple ministries and programs.
+                Seven years delivering digital products across multiple ministries and programs.
               </p>
             </div>
           </ScrollReveal>
