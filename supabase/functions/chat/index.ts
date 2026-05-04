@@ -113,7 +113,7 @@ serve(async (req) => {
       headers: {
         "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": "https://mikaelabertucci.lovable.app",
+        "HTTP-Referer": "https://mikaelabertucci.com",
         "X-Title": "Mikaela Bertucci Portfolio",
       },
       body: JSON.stringify({
