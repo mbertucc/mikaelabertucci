@@ -11,6 +11,7 @@ import VenturesHub from "./pages/VenturesHub";
 import UserManagement from "./pages/UserManagement";
 import SiteAnalytics from "./pages/SiteAnalytics";
 import NotFound from "./pages/NotFound";
+import Delpheus from "./pages/Delpheus";
 import { AnalyticsWrapper } from "./components/AnalyticsWrapper";
 import AuthGuard from "./components/AuthGuard";
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin/users" element={<AuthGuard requireAdmin={true}><UserManagement /></AuthGuard>} />
             <Route path="/admin/analytics" element={<AuthGuard requireAdmin={true}><SiteAnalytics /></AuthGuard>} />
+            <Route path="/delpheus" element={<Delpheus />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
