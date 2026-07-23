@@ -128,8 +128,8 @@ const EXPERIENCE = [
     sub: "Foundational legislative rigor", org: "BC Ministry of Citizens' Services", current: false,
     challenge: "Read legislation to extract obligations, triggers, and edge cases — the analytical rigor that later became the foundation of the AI context-engineering work.",
     outcomes: [
-      "Built the pattern-recognition muscle for legislative language that now powers the 16-agent pipeline.",
-      "Reading an Act and extracting rules is the same skill — just now with agents doing the first pass.",
+      "Developed deep fluency in legislative language — extracting obligations, triggers, and edge cases from complex Acts and Regulations under tight statutory deadlines.",
+      "Translated dense legal text into structured, actionable requirements for internal teams and external stakeholders.",
     ],
   },
   {
@@ -242,7 +242,7 @@ function SpecCard() {
         { k: "Based", v: <>Victoria, BC · <span className="hl">Open to opportunities</span></> },
         { k: "Hypothesis", v: <>AI handles the volume. <strong>I handle the accountability.</strong></> },
         { k: "Building", v: <><strong>Delpheus</strong> — AI-native product spec platform. Solo, on Anthropic's stack. <span className="hl">Live.</span></> },
-        { k: "Shipping", v: "16-agent pipeline · 3 concurrent registries · 116.5 hrs / sprint" },
+        { k: "Active", v: "16-agent pipeline across 3 concurrent registries — 116.5 hrs saved per 6-week cycle" },
         { k: "Certifications", v: "CSP-PO · A-CSPO · CIPP/C" },
         { k: "Blueprint", v: <span className="hl">See ventures ↓</span> },
       ].map(r => (
@@ -273,7 +273,7 @@ function Hero({ onAsk }: { onAsk: () => void }) {
             I build products on Claude. As a solo founder I shipped <span className="accent">Delpheus</span> — an AI-native product spec platform — because the biggest bottleneck in AI-assisted development isn't the model. It's the human who can't translate business intent into something an agent can act on.
           </p>
           <div className="r-hero-meta">
-            <span className="r-hero-pill emerald"><span className="r-hero-pulse"/>Open to opportunities · SF / NYC</span>
+            <span className="r-hero-pill emerald"><span className="r-hero-pulse"/>Victoria, BC · Open to SF / NYC</span>
             <span className="r-hero-pill">Founder · Delpheus</span>
             <span className="r-hero-pill indigo">Multi-Registry PO · BC Gov</span>
           </div>
@@ -423,7 +423,7 @@ function Ledger() {
       <div className="r-wrap-narrow">
         <div className="r-section-head-row">
           <h2 className="r-section-title">What this looks like <span className="accent">in practice.</span></h2>
-          <span className="r-section-n">§ 02 · Ledger</span>
+          <span className="r-section-n">§ 02 · Impact</span>
         </div>
         <div className="r-ledger" onMouseLeave={() => setActive("analysis")}>
           {LEDGER.map(l => (
@@ -590,7 +590,7 @@ function FitCheck() {
     } catch {
       setResult({
         verdict: "mid", verdictLabel: "Worth a Conversation",
-        opening: "The Oracle is resting. Here's a human template in the meantime.",
+        opening: "The AI is resting. Here's a human template in the meantime.",
         gaps: ["Real-time analysis needs a live connection.", "Your JD will be assessed against Mikaela's actual strengths and gaps."],
         transfers: ["Paste again when you're online.", "Or email hello@mikaelabertucci.com directly for a personal take."],
         recommendation: "If this were live, I'd tell you honestly whether Mikaela is the right person — including when she isn't. Try the Strong Fit Example for a preview.",
@@ -615,12 +615,12 @@ function FitCheck() {
               <button className="r-fit-example" onClick={() => { setText(""); setResult(null); setStatus("idle"); }}>Clear</button>
             </div>
             <textarea className="r-fit-textarea"
-              placeholder="Paste the job description here. The Oracle will tell you honestly — even if the honest answer is 'not your person.'"
+              placeholder="Paste the job description here. The AI will assess honestly — even if the honest answer is 'not your person.'"
               value={text}
               onChange={e => setText(e.target.value)}/>
             <div className="r-fit-actions">
               <button className="r-btn r-btn-primary" onClick={analyze} disabled={!text.trim() || status === "loading"}>
-                {status === "loading" ? <>Consulting<span className="r-loading-dots"><span/><span/><span/></span></> : <>◊ Consult the Oracle</>}
+                {status === "loading" ? <>Assessing<span className="r-loading-dots"><span/><span/><span/></span></> : <>◊ Get Fit Assessment</>}
               </button>
               <span className="r-fit-hint">Powered by Claude. Honest, not flattering.</span>
             </div>
@@ -681,7 +681,7 @@ interface DrawerMessage { role: "user" | "oracle"; text: string; }
 
 function AskDrawer({ open, onClose, seed }: { open: boolean; onClose: () => void; seed: string }) {
   const [messages, setMessages] = useState<DrawerMessage[]>([
-    { role: "oracle", text: "I am the Oracle. I've been consulted on Mikaela's work, her method, and her honest calibration. Ask what you'd like to know — and I'll answer plainly, not flatteringly." },
+    { role: "oracle", text: "I have full context on Mikaela's work, method, and honest calibration. Ask what you'd like to know — I'll answer plainly, not flatteringly." },
   ]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -744,7 +744,7 @@ function AskDrawer({ open, onClose, seed }: { open: boolean; onClose: () => void
         }
       }
     } catch {
-      setMessages(prev => [...prev, { role: "oracle", text: "The connection to the Oracle is resting. Try again in a moment — or reach Mikaela directly at hello@mikaelabertucci.com." }]);
+      setMessages(prev => [...prev, { role: "oracle", text: "The connection is resting. Try again in a moment — or reach Mikaela directly at hello@mikaelabertucci.com." }]);
     } finally {
       setBusy(false);
     }
@@ -760,8 +760,8 @@ function AskDrawer({ open, onClose, seed }: { open: boolean; onClose: () => void
           <div className="r-drawer-head-left">
             <LogoMark size={30}/>
             <div>
-              <p className="r-drawer-head-sub">◊ Consultation</p>
-              <h3 className="r-drawer-head-title">Ask the Oracle</h3>
+              <p className="r-drawer-head-sub">◊ AI</p>
+              <h3 className="r-drawer-head-title">Ask AI About Me</h3>
             </div>
           </div>
           <button className="r-drawer-close" onClick={onClose}>×</button>
@@ -772,14 +772,14 @@ function AskDrawer({ open, onClose, seed }: { open: boolean; onClose: () => void
               <div key={i} className="r-msg r-msg-user">{m.text}</div>
             ) : (
               <div key={i} className="r-msg r-msg-oracle">
-                <div className="r-msg-oracle-label">◊ The Oracle</div>
+                <div className="r-msg-oracle-label">◊ AI</div>
                 {m.text}
               </div>
             )
           ))}
           {busy && (
             <div className="r-msg r-msg-oracle">
-              <div className="r-msg-oracle-label">◊ Consulting…</div>
+              <div className="r-msg-oracle-label">◊ Thinking…</div>
               <span className="r-loading-dots" style={{ color: "#38bdf8" }}><span/><span/><span/></span>
             </div>
           )}
